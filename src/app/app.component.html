@@ -1,20 +1,160 @@
-<!--The content below is only a placeholder and can be replaced.-->
-<div style="text-align:center">
-  <h1>
-    Welcome to {{title}}!!
-  </h1>
-  <img width="300" src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4NCjwhLS0gR2VuZXJhdG9yOiBBZG9iZSBJbGx1c3RyYXRvciAxOS4xLjAsIFNWRyBFeHBvcnQgUGx1Zy1JbiAuIFNWRyBWZXJzaW9uOiA2LjAwIEJ1aWxkIDApICAtLT4NCjxzdmcgdmVyc2lvbj0iMS4xIiBpZD0iTGF5ZXJfMSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgeD0iMHB4IiB5PSIwcHgiDQoJIHZpZXdCb3g9IjAgMCAyNTAgMjUwIiBzdHlsZT0iZW5hYmxlLWJhY2tncm91bmQ6bmV3IDAgMCAyNTAgMjUwOyIgeG1sOnNwYWNlPSJwcmVzZXJ2ZSI+DQo8c3R5bGUgdHlwZT0idGV4dC9jc3MiPg0KCS5zdDB7ZmlsbDojREQwMDMxO30NCgkuc3Qxe2ZpbGw6I0MzMDAyRjt9DQoJLnN0MntmaWxsOiNGRkZGRkY7fQ0KPC9zdHlsZT4NCjxnPg0KCTxwb2x5Z29uIGNsYXNzPSJzdDAiIHBvaW50cz0iMTI1LDMwIDEyNSwzMCAxMjUsMzAgMzEuOSw2My4yIDQ2LjEsMTg2LjMgMTI1LDIzMCAxMjUsMjMwIDEyNSwyMzAgMjAzLjksMTg2LjMgMjE4LjEsNjMuMiAJIi8+DQoJPHBvbHlnb24gY2xhc3M9InN0MSIgcG9pbnRzPSIxMjUsMzAgMTI1LDUyLjIgMTI1LDUyLjEgMTI1LDE1My40IDEyNSwxNTMuNCAxMjUsMjMwIDEyNSwyMzAgMjAzLjksMTg2LjMgMjE4LjEsNjMuMiAxMjUsMzAgCSIvPg0KCTxwYXRoIGNsYXNzPSJzdDIiIGQ9Ik0xMjUsNTIuMUw2Ni44LDE4Mi42aDBoMjEuN2gwbDExLjctMjkuMmg0OS40bDExLjcsMjkuMmgwaDIxLjdoMEwxMjUsNTIuMUwxMjUsNTIuMUwxMjUsNTIuMUwxMjUsNTIuMQ0KCQlMMTI1LDUyLjF6IE0xNDIsMTM1LjRIMTA4bDE3LTQwLjlMMTQyLDEzNS40eiIvPg0KPC9nPg0KPC9zdmc+DQo=">
+<div id="menubar">
+  <nav class="navbar navbar-toggleable-md navbar-inverse bg-primary">
+    <button class="navbar-toggler navbar-toggler-right"
+            type="button"
+            data-toggle="collapse"
+            data-target="#navbariqmedi"
+            aria-controls="navbariqmedi"
+            aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <table>
+      <tr>
+        <td><img [src]="imageIqMedi" style="width: 50px"></td>
+        <td>
+          <a class="navbar-brand" href="" routerLink="/home" routerLinkActive="active">
+          <b>{{title}}</b>
+          </a>
+        </td>
+      </tr>
+    </table>
+    <div class="navbar-collapse collapse" id="navbariqmedi" aria-expanded="true">
+      <ul class="nav navbar-nav ml-auto">
+        <li class="nav-item" style="padding: 3px">
+          <button type="button" class="btn btn-success" style="width: 160px" data-toggle="modal" data-target="#loginModel">
+            <i class="fa fa-user" aria-hidden="true"></i>
+            <b>Iniciar Sesión</b>
+          </button>
+        </li>
+        <li class="nav-item" style="padding: 3px">
+          <button type="button" class="btn btn-success" style="width: 160px" data-toggle="modal" data-target="#crearModel">
+            <i class="fa fa-user-plus" aria-hidden="true"></i>
+            <b>Registrar</b>
+          </button>
+        </li>
+      </ul>
+    </div>
+  </nav>
 </div>
-<h2>Here are some links to help you start: </h2>
-<ul>
-  <li>
-    <h2><a target="_blank" href="https://angular.io/tutorial">Tour of Heroes</a></h2>
-  </li>
-  <li>
-    <h2><a target="_blank" href="https://github.com/angular/angular-cli/wiki">CLI Documentation</a></h2>
-  </li>
-  <li>
-    <h2><a target="_blank" href="http://angularjs.blogspot.ca/">Angular blog</a></h2>
-  </li>
-</ul>
+
+<div class="modal fade" id="loginModel" tabindex="-1" role="dialog" aria-labelledby="loginModelLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <form novalidate [formGroup]="formLogin">
+      <div class="modal-content bg-primary">
+        <div class="modal-header">
+          <h5 class="modal-title" id="loginModelLabel">
+            <img [src]="imageIqMedi" style="width: 50px">
+            <font color="white">Iniciar Sesión</font>
+          </h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="limpiarLogin()">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div style="width: 100%;text-align: center">
+            <i class="fa fa-user fa-5x" aria-hidden="true"></i>
+          </div>
+          <div class="input-group">
+          <div class="input-group-addon"><i class="fa fa-envelope" aria-hidden="true"></i></div>
+            <input type="email" class="form-control" id="email" placeholder="Email" formControlName="email">
+          </div>
+          <div *ngIf="formLogin.controls.email.errors && formLogin.controls.email.touched">
+            <div *ngIf="formLogin.controls.email.errors.required" class="alert alert-danger">
+              El campo es requerido
+            </div>
+          </div>
+          <br>
+          <div class="input-group">
+          <div class="input-group-addon"><i class="fa fa-key" aria-hidden="true"></i></div>
+            <input type="password" class="form-control" id="contrasenia" placeholder="Contraseña" formControlName="contrasenia">
+          </div>
+          <div *ngIf="formLogin.controls.contrasenia.errors && formLogin.controls.contrasenia.touched">
+            <div *ngIf="formLogin.controls.contrasenia.errors.required" class="alert alert-danger">
+              El campo es requerido
+            </div>
+            <div *ngIf="formLogin.controls.contrasenia.errors.maxlength" class="alert alert-danger">
+              El campo solo permite 20 caracteres
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="limpiarLogin()">
+            <i class="fa fa-window-close" aria-hidden="true"></i>
+            Cerrar
+          </button>
+          <button type="button" class="btn btn-success" (click)="login()" [disabled]="!formLogin.valid">
+            <i class="fa fa-check-square" aria-hidden="true"></i>
+            Iniciar Sesión
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+
+<div class="modal fade" id="crearModel" tabindex="-1" role="dialog" aria-labelledby="crearModelLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <form novalidate [formGroup]="formRegistrar">
+      <div class="modal-content bg-primary">
+        <div class="modal-header">
+          <h5 class="modal-title" id="crearModelLabel">
+            <img [src]="imageIqMedi" style="width: 50px">
+            <font color="white">Registrar</font>
+          </h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="limpiarRegistrar()">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div style="width: 100%;text-align: center">
+            <i class="fa fa-user-plus fa-5x" aria-hidden="true"></i>
+          </div>
+          <div class="input-group">
+          <div class="input-group-addon"><i class="fa fa-envelope" aria-hidden="true"></i></div>
+            <input type="email" class="form-control" id="email" placeholder="Email" formControlName="email">
+          </div>
+          <div *ngIf="formRegistrar.controls.email.errors && formRegistrar.controls.email.touched">
+            <div *ngIf="formRegistrar.controls.email.errors.required" class="alert alert-danger">
+              El campo es requerido
+            </div>
+          </div>
+          <br>
+          <div class="input-group">
+          <div class="input-group-addon"><i class="fa fa-key" aria-hidden="true"></i></div>
+            <input type="password" class="form-control" id="contrasenia" placeholder="Contraseña" formControlName="contrasenia">
+          </div>
+          <div *ngIf="formRegistrar.controls.contrasenia.errors && formRegistrar.controls.contrasenia.touched">
+            <div *ngIf="formRegistrar.controls.contrasenia.errors.required" class="alert alert-danger">
+              El campo es requerido
+            </div>
+            <div *ngIf="formRegistrar.controls.contrasenia.errors.maxlength" class="alert alert-danger">
+              El campo solo permite 20 caracteres
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="limpiarRegistrar()">
+            <i class="fa fa-window-close" aria-hidden="true"></i>
+            Cerrar
+          </button>
+          <button type="button" class="btn btn-success" data-dismiss="modal" (click)="registrar()" [disabled]="!formRegistrar.valid">
+            <i class="fa fa-check-square" aria-hidden="true"></i>
+            Registrar
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+
+<div id="cuerpo">
+  <router-outlet ></router-outlet>
+  <div class="card card-inverse card-primary mb-3 text-center">
+  <div class="card-block">
+    <blockquote class="card-blockquote">
+      <footer>Copyright 2016 - 2017 &copy;IQ-MEDI</footer>
+    </blockquote>
+  </div>
+</div>
+</div>
 
