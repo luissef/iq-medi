@@ -1,0 +1,20 @@
+<div style="height:350px;overflow-y: scroll;">
+  <table class="table table-bordered table-sm table-hover">
+      <thead>
+        <tr>
+          <th>Nombres</th>
+          <th>Apellidos</th>
+          <th>Fecha Nacimiento</th>
+          <th>Activo</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let estudiante of estudiantes">
+          <td>{{estudiante.nombres}}</td>
+          <td>{{estudiante.apellidos}}</td>
+          <td>{{estudiante.fecha_nacimiento}}</td>
+          <td>{{estudiante.isactive?'Activo':'Inactivo'}}</td>
+        </tr>
+      </tbody>
+  </table>
+</div>

@@ -5,32 +5,39 @@
             data-toggle="collapse"
             data-target="#navbariqmedi"
             aria-controls="navbariqmedi"
-            aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
+            aria-label="Toggle navigation" #btnmenuprincipal>
+      <span class="navbar-toggler-icon"></span><strong> Opciones</strong>
     </button>
     <table>
       <tr>
         <td><img [src]="imageIqMedi" style="width: 50px"></td>
         <td>
-          <a class="navbar-brand" href="" routerLink="/home" routerLinkActive="active">
-          <b>{{title}}</b>
-          </a>
+          <h3 style="color: white">{{title}}</h3>
         </td>
       </tr>
     </table>
     <div class="navbar-collapse collapse" id="navbariqmedi" aria-expanded="true">
       <ul class="nav navbar-nav ml-auto">
-        <li class="nav-item" style="padding: 3px">
+        <li class="nav-item" style="padding: 3px" *ngIf="!authService.isLoggedIn()">
           <button type="button" class="btn btn-success" style="width: 160px" data-toggle="modal" data-target="#loginModel">
             <i class="fa fa-user" aria-hidden="true"></i>
             <b>Iniciar Sesión</b>
           </button>
         </li>
-        <li class="nav-item" style="padding: 3px">
+        <li class="nav-item" style="padding: 3px" *ngIf="!authService.isLoggedIn()">
           <button type="button" class="btn btn-success" style="width: 160px" data-toggle="modal" data-target="#crearModel">
             <i class="fa fa-user-plus" aria-hidden="true"></i>
             <b>Registrar</b>
           </button>
+        </li>
+        <li class="nav-item dropdown" *ngIf="authService.isLoggedIn()">
+          <button class="btn btn-success dropdown-toggle" style="width: 160px" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <i class="fa fa-user" aria-hidden="true"></i>
+            <b>{{authService.usuario.usuario}}</b>
+          </button>
+          <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+            <a class="dropdown-item" (click)="logout()"><i class="fa fa-sign-out" aria-hidden="true"> <b>Salir</b></i></a>
+          </div>
         </li>
       </ul>
     </div>
@@ -46,7 +53,7 @@
             <img [src]="imageIqMedi" style="width: 50px">
             <font color="white">Iniciar Sesión</font>
           </h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="limpiarLogin()">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close" #btncerrarlogin (click)="limpiarLogin()">
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
@@ -54,8 +61,9 @@
           <div style="width: 100%;text-align: center">
             <i class="fa fa-user fa-5x" aria-hidden="true"></i>
           </div>
+          <br>
           <div class="input-group">
-          <div class="input-group-addon"><i class="fa fa-envelope" aria-hidden="true"></i></div>
+          <div class="input-group-addon"><i class="fa fa-envelope" aria-hidden="true"> <b>Email</b></i></div>
             <input type="email" class="form-control" id="email" placeholder="Email" formControlName="email">
           </div>
           <div *ngIf="formLogin.controls.email.errors && formLogin.controls.email.touched">
@@ -65,7 +73,7 @@
           </div>
           <br>
           <div class="input-group">
-          <div class="input-group-addon"><i class="fa fa-key" aria-hidden="true"></i></div>
+          <div class="input-group-addon"><i class="fa fa-key" aria-hidden="true"> <b>Contraseña</b></i></div>
             <input type="password" class="form-control" id="contrasenia" placeholder="Contraseña" formControlName="contrasenia">
           </div>
           <div *ngIf="formLogin.controls.contrasenia.errors && formLogin.controls.contrasenia.touched">
@@ -83,7 +91,7 @@
             Cerrar
           </button>
           <button type="button" class="btn btn-success" (click)="login()" [disabled]="!formLogin.valid">
-            <i class="fa fa-check-square" aria-hidden="true"></i>
+            <i class="fa fa-sign-in" aria-hidden="true"></i>
             Iniciar Sesión
           </button>
         </div>
@@ -101,7 +109,7 @@
             <img [src]="imageIqMedi" style="width: 50px">
             <font color="white">Registrar</font>
           </h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="limpiarRegistrar()">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close" #btncerrarregistrar (click)="limpiarRegistrar()">
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
@@ -109,8 +117,19 @@
           <div style="width: 100%;text-align: center">
             <i class="fa fa-user-plus fa-5x" aria-hidden="true"></i>
           </div>
+          <br>
           <div class="input-group">
-          <div class="input-group-addon"><i class="fa fa-envelope" aria-hidden="true"></i></div>
+          <div class="input-group-addon"><i class="fa fa-user" aria-hidden="true"> <b>Usuario</b></i></div>
+            <input type="text" class="form-control" id="usuario" placeholder="Usuario" formControlName="usuario">
+          </div>
+          <div *ngIf="formRegistrar.controls.usuario.errors && formRegistrar.controls.usuario.touched">
+            <div *ngIf="formRegistrar.controls.usuario.errors.required" class="alert alert-danger">
+              El campo es requerido
+            </div>
+          </div>
+          <br>
+          <div class="input-group">
+          <div class="input-group-addon"><i class="fa fa-envelope" aria-hidden="true"> <b>Email</b></i></div>
             <input type="email" class="form-control" id="email" placeholder="Email" formControlName="email">
           </div>
           <div *ngIf="formRegistrar.controls.email.errors && formRegistrar.controls.email.touched">
@@ -120,7 +139,7 @@
           </div>
           <br>
           <div class="input-group">
-          <div class="input-group-addon"><i class="fa fa-key" aria-hidden="true"></i></div>
+          <div class="input-group-addon"><i class="fa fa-key" aria-hidden="true"> <b>Contraseña</b></i></div>
             <input type="password" class="form-control" id="contrasenia" placeholder="Contraseña" formControlName="contrasenia">
           </div>
           <div *ngIf="formRegistrar.controls.contrasenia.errors && formRegistrar.controls.contrasenia.touched">
@@ -135,15 +154,48 @@
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="limpiarRegistrar()">
             <i class="fa fa-window-close" aria-hidden="true"></i>
-            Cerrar
+            <b>Cerrar</b>
           </button>
-          <button type="button" class="btn btn-success" data-dismiss="modal" (click)="registrar()" [disabled]="!formRegistrar.valid">
-            <i class="fa fa-check-square" aria-hidden="true"></i>
-            Registrar
+          <button type="button" class="btn btn-success" (click)="registrar()" [disabled]="!formRegistrar.valid">
+            <i class="fa fa-sign-in" aria-hidden="true"></i>
+            <b>Registrar</b>
           </button>
         </div>
       </div>
     </form>
+  </div>
+</div>
+
+<button type="button" class="btn btn-primary" data-toggle="modal" hidden data-target="#alertModal" #btnmostraralert></button>
+
+<div class="modal fade" id="alertModal" tabindex="-1" role="dialog" aria-labelledby="alertModalLabel" aria-hidden="true">
+  <div class="modal-dialog " role="document">
+    <div class="modal-content">
+      <div class="card card-inverse card-primary text-xs-center">
+          <div class="card-block">
+            <div class="modal-header">
+              <h5 class="modal-title" id="alertModalLabel">
+                <img [src]="imageIqMedi" style="width: 50px">
+                <font color="white">Mensaje</font>
+              </h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <div class="alert alert-danger">
+                <strong><i class="fa fa-exclamation-triangle" aria-hidden="true"></i> Alerta</strong> {{alerta}}
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-danger btn-block" data-dismiss="modal">
+                <i class="fa fa-times" aria-hidden="true"></i>
+                <b>Cerrar</b>
+              </button>
+            </div>
+          </div>
+      </div>
+    </div>
   </div>
 </div>
 

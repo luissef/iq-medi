@@ -1,0 +1,115 @@
+<ul class="nav nav-tabs">
+  <li class="nav-item dropdown">
+    <a class="nav-link dropdown-toggle active" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false"><i class="fa fa-user" aria-hidden="true"> <b>Estudiante</b></i></a>
+    <div class="dropdown-menu">
+      <a class="dropdown-item" href="#" data-toggle="modal" data-target="#registrarEstudianteModel"><i class="fa fa-user-plus" aria-hidden="true"> <b>Registrar Estudiante</b></i></a>
+      <div class="dropdown-divider"></div>
+      <a class="dropdown-item" href="#" routerLink="estudiante" routerLinkActive="active"><i class="fa fa-users" aria-hidden="true"> <b>Estudiantes</b></i><span class="sr-only">(current)</span></a>
+    </div>
+  </li>
+</ul>
+
+<div class="modal fade" id="registrarEstudianteModel" tabindex="-1" role="dialog" aria-labelledby="registrarEstudianteModelLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <form novalidate [formGroup]="formRegistrarEstudiante">
+      <div class="modal-content">
+        <div class="card card-inverse card-primary text-xs-center">
+          <div class="card-block">
+            <div class="modal-header">
+              <h5 class="modal-title" id="registrarEstudianteModelLabel">
+                <img [src]="imageIqMedi" style="width: 50px">
+                <font color="white">Registrar Estudiante</font>
+              </h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close" #btncerrarregistrarestudiante (click)="limpiarRegistrarEstudiante()">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <div style="width: 100%;text-align: center">
+                <i class="fa fa-user fa-5x" aria-hidden="true"></i>
+              </div>
+              <br>
+              <div class="input-group">
+              <div class="input-group-addon"><i class="fa fa-file-text" aria-hidden="true"> <b>Nombres</b></i></div>
+                <input type="text" class="form-control" id="nombres" placeholder="Nombres" formControlName="nombres">
+              </div>
+              <div *ngIf="formRegistrarEstudiante.controls.nombres.errors && formRegistrarEstudiante.controls.nombres.touched">
+                <div *ngIf="formRegistrarEstudiante.controls.nombres.errors.required" class="alert alert-danger">
+                  El campo es requerido
+                </div>
+              </div>
+              <br>
+              <div class="input-group">
+              <div class="input-group-addon"><i class="fa fa-file-text" aria-hidden="true"> <b>Apellidos</b></i></div>
+                <input type="text" class="form-control" id="apellidos" placeholder="Apellidos" formControlName="apellidos">
+              </div>
+              <div *ngIf="formRegistrarEstudiante.controls.apellidos.errors && formRegistrarEstudiante.controls.apellidos.touched">
+                <div *ngIf="formRegistrarEstudiante.controls.apellidos.errors.required" class="alert alert-danger">
+                  El campo es requerido
+                </div>
+              </div>
+              <br>
+              <div class="input-group">
+              <div class="input-group-addon"><i class="fa fa-calendar" aria-hidden="true"> <b>Fecha de Nacimiento</b></i></div>
+                <input type="date" class="form-control" id="fechanacimiento" placeholder="Fecha de Nacimiento" formControlName="fechanacimiento">
+              </div>
+              <div *ngIf="formRegistrarEstudiante.controls.fechanacimiento.errors && formRegistrarEstudiante.controls.fechanacimiento.touched">
+                <div *ngIf="formRegistrarEstudiante.controls.fechanacimiento.errors.required" class="alert alert-danger">
+                  El campo es requerido
+                </div>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-warning btn-block" data-dismiss="modal" (click)="limpiarRegistrarEstudiante()">
+                <i class="fa fa-times" aria-hidden="true"></i>
+                <b>Cerrar</b>
+              </button>
+              <button type="button" class="btn btn-success btn-block" (click)="registrarEstudiante()" [disabled]="!formRegistrarEstudiante.valid"
+                data-loading-text="<i class='fa fa-spinner fa-spin '></i> Processing">
+                <i class="fa fa-check" aria-hidden="true"></i>
+                <b>Registrar</b>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+
+<button type="button" class="btn btn-primary" data-toggle="modal" hidden data-target="#alertEstRegModal" #btnmostraralertregest></button>
+
+<div class="modal fade" id="alertEstRegModal" tabindex="-1" role="dialog" aria-labelledby="alertEstRegModalLabel" aria-hidden="true">
+  <div class="modal-dialog " role="document">
+    <div class="modal-content">
+      <div class="card card-inverse card-primary text-xs-center">
+          <div class="card-block">
+            <div class="modal-header">
+              <h5 class="modal-title" id="alertEstRegModalLabel">
+                <img [src]="imageIqMedi" style="width: 50px">
+                <font color="white">Mensaje</font>
+              </h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <div class="alert alert-info">
+                <strong><i class="fa fa-info" aria-hidden="true"></i></strong> {{mensaje}}
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-info btn-block" data-dismiss="modal">
+                <i class="fa fa-times" aria-hidden="true"></i>
+                <b>Cerrar</b>
+              </button>
+            </div>
+          </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="cuerpo">
+  <router-outlet ></router-outlet>
+</div>
