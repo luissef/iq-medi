@@ -2,7 +2,7 @@
   <div class="input-group">
     <span class="input-group-btn">
       <button class="btn btn-success" type="button" (click)="buscar()">
-        <i class="fa fa-refresh" aria-hidden="true"> <b>Refrescar</b></i>
+        <i class="fa fa-refresh" aria-hidden="true"> <b>Recargar</b></i>
       </button>
     </span>
     <input type="text" class="form-control" id="buscar" placeholder="CI/Nombres/Apellidos" formControlName="buscar">
@@ -53,12 +53,12 @@
           <td>{{estudiante.nombres}}</td>
           <td>{{estudiante.apellidos}}</td>
           <td>
-            <button type="button" class="btn btn-success" data-toggle="modal" data-target="#detalleEstudianteModel" (click)="setUpdEstudiante(estudiante)">
+            <button type="button" class="btn btn-outline-success btn-sm" data-toggle="modal" data-target="#detalleEstudianteModel" (click)="setUpdEstudiante(estudiante)">
               <i class="fa fa-pencil-square-o" aria-hidden="true"> <b>Actualizar</b></i>
             </button>
           </td>
           <td>
-            <button type="button" class="btn btn-warning" (click)="setDelEstudiante(estudiante)">
+            <button type="button" class="btn btn-outline-warning btn-sm" (click)="setDelEstudiante(estudiante)">
               <i class="fa fa-trash-o" aria-hidden="true"> <b>Eliminar</b></i>
             </button>
           </td>
