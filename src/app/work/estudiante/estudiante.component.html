@@ -40,6 +40,9 @@
             Apellidos
           </th>
           <th>
+            Evaluar el Coeficiente Intelectual
+          </th>
+          <th>
             Actualizar
           </th>
           <th>
@@ -52,6 +55,11 @@
           <td>{{estudiante.ci}}</td>
           <td>{{estudiante.nombres}}</td>
           <td>{{estudiante.apellidos}}</td>
+          <td>
+            <button type="button" class="btn btn-outline-success btn-sm" data-toggle="modal" data-target="#historialTestModal" (click)="setEvalEstudiante(estudiante)">
+              <i class="fa fa-list-ol" aria-hidden="true"> <b>Evaluar</b></i>
+            </button>
+          </td>
           <td>
             <button type="button" class="btn btn-outline-success btn-sm" data-toggle="modal" data-target="#detalleEstudianteModel" (click)="setUpdEstudiante(estudiante)">
               <i class="fa fa-pencil-square-o" aria-hidden="true"> <b>Actualizar</b></i>
@@ -67,7 +75,7 @@
   </table>
 </div>
 
-<div class="modal fade" id="detalleEstudianteModel" tabindex="-1" role="dialog" aria-labelledby="detalleEstudianteModelLabel" aria-hidden="true">
+<div class="modal fade" id="detalleEstudianteModel" tabindex="-1" data-keyboard="false" data-backdrop="static" role="dialog" aria-labelledby="detalleEstudianteModelLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <form novalidate [formGroup]="formDetalleEstudiante">
       <div class="modal-content">
@@ -129,13 +137,13 @@
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="limpiardetalleEstudiante()">
-                  <i class="fa fa-times" aria-hidden="true"></i>
-                  <b>Cerrar</b>
-                </button>
-                <button type="button" class="btn btn-success" (click)="updateEstudiante()" [disabled]="!formDetalleEstudiante.valid">
-                  <i class="fa fa-check" aria-hidden="true"></i>
-                  <b>Actualizar</b>
-                </button>
+                <i class="fa fa-times" aria-hidden="true"></i>
+                <b>Cerrar</b>
+              </button>
+              <button type="button" class="btn btn-success" (click)="updateEstudiante()" [disabled]="!formDetalleEstudiante.valid">
+                <i class="fa fa-check" aria-hidden="true"></i>
+                <b>Actualizar</b>
+              </button>
             </div>
           </div>
         </div>
@@ -146,7 +154,7 @@
 
 <button type="button" class="btn btn-primary" data-toggle="modal" hidden data-target="#borrarEstudianteModal" #btnBorrarEstudiante></button>
 
-<div class="modal fade" id="borrarEstudianteModal" tabindex="-1" role="dialog" aria-labelledby="borrarEstudianteModalLabel" aria-hidden="true">
+<div class="modal fade" id="borrarEstudianteModal" tabindex="-1" data-keyboard="false" data-backdrop="static" role="dialog" role="dialog" aria-labelledby="borrarEstudianteModalLabel" aria-hidden="true">
   <div class="modal-dialog " role="document">
     <div class="modal-content">
       <div class="card card-inverse card-primary text-xs-center">
@@ -179,4 +187,120 @@
       </div>
     </div>
   </div>
+</div>
+
+<div class="modal fade" id="historialTestModal" tabindex="-1" data-keyboard="false" data-backdrop="static" role="dialog" aria-labelledby="historialTestModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="historialTestModalLabel">Evaluaciones</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="limpiardetalleEstudiante()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <b>Tomar test: </b><table>
+          <tr>
+            <td *ngFor="let test of tests">
+              <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#testModal" (click)="setTestEstudiante(test)">
+                <i class="fa fa-list-alt" aria-hidden="true"></i>
+                <b>{{test.nombre}}</b>
+              </button>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="limpiardetalleEstudiante()">
+          <i class="fa fa-times" aria-hidden="true"></i>
+          <b>Cerrar</b>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="testModal" tabindex="-1" data-keyboard="false" data-backdrop="static" role="dialog" aria-labelledby="testModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="testModalLabel">Evaluando con test {{test?test.nombre:null}}</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="limpiarTest()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <button type="button" class="btn btn-success" data-toggle="modal" data-target="#preguntaModal" (click)="sigPregunta()">
+          <i class="fa fa-play" aria-hidden="true"> <b>Iniciar Test</b></i>
+        </button>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="limpiarTest()">
+          <i class="fa fa-times" aria-hidden="true"></i>
+          <b>Cerrar</b>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="preguntaModal" tabindex="-1" data-keyboard="false" data-backdrop="static" role="dialog" aria-labelledby="preguntaModalLabel" aria-hidden="true">
+  <form [formGroup]="formRespuestaPregunta">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="preguntaModalLabel">Evaluando con test {{test?test.nombre:null}}</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="cancelarTest()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <h5>Pregunta {{numero_pregunta}}</h5>
+
+        <ul *ngFor="let preg of pregunta">
+          <li>
+            <b>Pregunta: </b>{{preg.pregunta}}
+          </li>
+          <li>
+            <b>Consigna: </b> {{preg.aplicacion}}
+          </li>
+          <li>
+            <b>Modo de Preguntar: </b> {{preg.auxpregunta}}
+          </li>
+          <li>
+            <b>Consejo: </b> {{preg.consejo}}
+          </li>
+        </ul>
+
+          <fieldset class="form-group">
+            <h5>Opciones</h5>
+            <div class="form-check">
+              <label class="form-check-label">
+                <input type="radio" class="form-check-input" name="respuesta" formControlName="respuesta" id="respuesta" value="si">
+                Si
+              </label>
+              <label class="form-check-label">
+                <input type="radio" class="form-check-input" name="respuesta" formControlName="respuesta" id="respuesta" value="no">
+                No
+              </label>
+            </div>
+          </fieldset>
+          <div *ngIf="formRespuestaPregunta.controls.respuesta.errors && formRespuestaPregunta.controls.respuesta.touched">
+            <div *ngIf="formRespuestaPregunta.controls.respuesta.errors.required" class="alert alert-danger">
+              El campo es requerido
+            </div>
+          </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="cancelarTest()">
+          <i class="fa fa-times" aria-hidden="true"></i>
+          <b>Cancelar Test</b>
+        </button>
+        <button type="button" class="btn btn-success" (click)="sigPregunta()" [disabled]="!formRespuestaPregunta.valid">
+          <i class="fa fa-arrow-right" aria-hidden="true"> <b>Siguiente Pregunta</b></i>
+        </button>
+      </div>
+    </div>
+  </div>
+  </form>
 </div>

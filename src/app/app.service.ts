@@ -16,6 +16,8 @@ export class AppService {
   mensaje: string;
   usuario: Usuario;
   estudiantes: FirebaseListObservable<any[]>;
+  tests: FirebaseListObservable<any[]>;
+  pregunta: FirebaseListObservable<any[]>;
 
   constructor(
     private df: AngularFireDatabase,
@@ -61,13 +63,26 @@ export class AppService {
     return this.estudiantes;
   }
 
+  getTest(estudiante: Estudiante) {
+    this.tests = this.df.list('test') as FirebaseListObservable<any[]>;
+    return this.tests;
+  }
 
-  getEstudiantesFiltroCi(usuario: Usuario, ci: string) {
+  getPregunta(test: any, numero_pregunta: number) {
+    this.pregunta = this.df.list('test/' + test.$key + '/pregunta', {
+      query: {
+        orderByChild: 'numero_pregunta',
+        equalTo: numero_pregunta
+      }
+    }) as FirebaseListObservable<any[]>;
+    return this.pregunta;
+  }
+
+  getEstudiantesFiltroCi(usuario: Usuario, ci: number) {
     this.estudiantes = this.df.list('estudiante_usuario/' + usuario.id + '/estudiante', {
       query: {
         orderByChild: 'ci',
-        // tslint:disable-next-line:radix
-        equalTo: parseInt(ci)
+        equalTo: ci
       }
     }) as FirebaseListObservable<any[]>;
 
@@ -109,6 +124,7 @@ export class AppService {
       nombre: 'WISC III',
       isactive: usuario.isactive
     });*/
+
   }
 
   updateEstudiante(estudiante: Estudiante) {

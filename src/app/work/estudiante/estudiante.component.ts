@@ -12,14 +12,31 @@ import { Estudiante } from '../../modelos/estudiante';
   templateUrl: './estudiante.component.html'
 })
 export class EstudianteComponent implements OnInit {
-  estudiantes: any[];
+
   subEstudiantes: any;
+  subTests: any;
+  subPregunta: any;
+
   imageIqMedi: string;
+
   mensaje: string;
+
   formDetalleEstudiante: FormGroup;
   formBuscarFiltro: FormGroup;
+  formRespuestaPregunta: FormGroup;
+
+  estudiantes: any[];
+  tests: any[];
+  pregunta: any[];
   detallesestudiante: any;
+  test: any;
   estudiante: Estudiante;
+
+  // Cuestionario run
+  numeropreguntas: number;
+  numero_pregunta: number;
+  puntajetotal: number;
+  puntajeerror: number;
 
   @ViewChild('btncerrardetalleestudiante') btncerrardetalleestudiante: ElementRef;
   @ViewChild('btnBorrarEstudiante') btnBorrarEstudiante: ElementRef;
@@ -28,11 +45,13 @@ export class EstudianteComponent implements OnInit {
   constructor(
     private fbDetalleEstudiante: FormBuilder,
     private fbBuscarFiltro: FormBuilder,
+    private fbRespuestaPregunta: FormBuilder,
     private appService: AppService,
     private authService: AuthService
   ) {
     this.crearComponenteDetalleEstuadiante();
     this.crearComponenteBuscar();
+    this.crearComponenteRespuestaPregunta();
     this.imageIqMedi = '/assets/resources/iq-medi.png';
   }
 
@@ -40,6 +59,9 @@ export class EstudianteComponent implements OnInit {
     if (this.authService.isLoggedIn) {
       this.subEstudiantes = this.appService.getEstudiantes(this.authService.usuario)
       .subscribe(estudiantes => this.estudiantes = estudiantes);
+
+      this.subTests = this.appService.getTest(this.estudiante)
+      .subscribe(tests => this.tests = tests);
     }
   }
 
@@ -58,22 +80,42 @@ export class EstudianteComponent implements OnInit {
     });
   }
 
+  crearComponenteRespuestaPregunta() {
+    this.formRespuestaPregunta = this.fbRespuestaPregunta.group({
+      respuesta: ['', Validators.required]
+    });
+  }
+
   // tslint:disable-next-line:use-life-cycle-interface
   ngOnDestroy() {
     this.subEstudiantes.unsubscribe();
+    this.subTests.unsubscribe();
   }
 
   buscar() {
     if (this.authService.isLoggedIn) {
+      this.subEstudiantes.unsubscribe();
       this.subEstudiantes = this.appService.getEstudiantes(this.authService.usuario)
       .subscribe(estudiantes => this.estudiantes = estudiantes);
+      this.crearComponenteBuscar();
     }
   }
 
   buscarporci() {
-    if (this.formBuscarFiltro.value.buscar) {
+    let auxCi = this.formBuscarFiltro.value.buscar;
+
+    try {
+      // tslint:disable-next-line:radix
+      auxCi = parseInt(auxCi);
+    } catch (error) {
+      console.log(error);
+      auxCi = null;
+    }
+
+    if (auxCi) {
       if (this.authService.isLoggedIn) {
-        this.subEstudiantes = this.appService.getEstudiantesFiltroCi(this.authService.usuario, this.formBuscarFiltro.value.buscar)
+        this.subEstudiantes.unsubscribe();
+        this.subEstudiantes = this.appService.getEstudiantesFiltroCi(this.authService.usuario, auxCi)
         .subscribe(estudiantes => this.estudiantes = estudiantes);
       }
     }
@@ -82,6 +124,7 @@ export class EstudianteComponent implements OnInit {
   buscarpornombres() {
     if (this.formBuscarFiltro.value.buscar) {
       if (this.authService.isLoggedIn) {
+        this.subEstudiantes.unsubscribe();
         this.subEstudiantes = this.appService.getEstudiantesFiltroNombres(this.authService.usuario, this.formBuscarFiltro.value.buscar)
         .subscribe(estudiantes => this.estudiantes = estudiantes);
       }
@@ -91,6 +134,7 @@ export class EstudianteComponent implements OnInit {
   buscarporapellidos() {
     if (this.formBuscarFiltro.value.buscar) {
       if (this.authService.isLoggedIn) {
+        this.subEstudiantes.unsubscribe();
         this.subEstudiantes = this.appService.getEstudiantesFiltroApellidos(this.authService.usuario, this.formBuscarFiltro.value.buscar)
         .subscribe(estudiantes => this.estudiantes = estudiantes);
       }
@@ -101,6 +145,10 @@ export class EstudianteComponent implements OnInit {
     this.detallesestudiante = null;
     this.estudiante = null;
     this.crearComponenteDetalleEstuadiante();
+  }
+
+  limpiarTest() {
+    this.test = null;
   }
 
   setUpdEstudiante(estudiante: any) {
@@ -117,6 +165,18 @@ export class EstudianteComponent implements OnInit {
     this.detallesestudiante = estudiante;
     this.mensaje = 'Borrar estudiante ' + this.detallesestudiante.ci;
     this.btnBorrarEstudiante.nativeElement.click();
+  }
+
+  setEvalEstudiante(estudiante: any) {
+    this.detallesestudiante = estudiante;
+  }
+
+  setTestEstudiante(test: any) {
+    this.test = test;
+    this.numeropreguntas = test.numeropreguntas;
+    this.numero_pregunta = 0;
+    this.puntajetotal = 0;
+    this.puntajeerror = 0;
   }
 
   updateEstudiante() {
@@ -136,5 +196,38 @@ export class EstudianteComponent implements OnInit {
   deleteEstudiante() {
     this.appService.deleteEstudiante(this.detallesestudiante.$key);
     this.btnCerrarEliminarEstudianta.nativeElement.click();
+  }
+
+  sigPregunta() {
+    this.numero_pregunta = this.numero_pregunta + 1;
+
+    if (this.subPregunta) {
+      this.subPregunta.unsubscribe();
+    }
+
+    if (this.numero_pregunta < this.numeropreguntas) {
+      this.subPregunta = this.appService.getPregunta(this.test, this.numero_pregunta)
+      .subscribe(pregunta => this.pregunta = pregunta);
+      console.log(this.formRespuestaPregunta.value.respuesta);
+      if (this.formRespuestaPregunta.value.respuesta) {
+        if (this.formRespuestaPregunta.value.respuesta === 'si') {
+          this.puntajetotal = this.puntajetotal + 1;
+          console.log(this.puntajetotal.toString());
+        }else if ((this.formRespuestaPregunta.value.respuesta === 'no')) {
+          this.puntajeerror = this.puntajeerror + 1;
+          console.log(this.puntajeerror.toString());
+        }
+
+      }
+      this.crearComponenteRespuestaPregunta();
+    }
+  }
+
+  cancelarTest() {
+    this.numero_pregunta = 0;
+    this.puntajetotal = 0;
+    this.puntajeerror = 0;
+    this.subPregunta.unsubscribe();
+    this.pregunta = null;
   }
 }

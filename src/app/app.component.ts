@@ -89,6 +89,7 @@ export class AppComponent {
         this.appservice.getUsuario(this.usuario)
         .then(function(usuario) {
           if (usuario.isactive) {
+            auxAppService.pushChildUltimoAcceso(usuario);
             auxAuthService.login(usuario);
             auxBtncerrarlogin.nativeElement.click();
             auxBtnmenuprincipal.nativeElement.click();
