@@ -30,6 +30,16 @@
               </div>
               <br>
               <div class="input-group">
+              <div class="input-group-addon"><i class="fa fa-file-text" aria-hidden="true"> <b>Cédula de Identificación</b></i></div>
+                <input type="number" class="form-control" id="ci" placeholder="Cédula de Identificación" formControlName="ci">
+              </div>
+              <div *ngIf="formRegistrarEstudiante.controls.ci.errors && formRegistrarEstudiante.controls.ci.touched">
+                <div *ngIf="formRegistrarEstudiante.controls.ci.errors.required" class="alert alert-danger">
+                  El campo es requerido
+                </div>
+              </div>
+              <br>
+              <div class="input-group">
               <div class="input-group-addon"><i class="fa fa-file-text" aria-hidden="true"> <b>Nombres</b></i></div>
                 <input type="text" class="form-control" id="nombres" placeholder="Nombres" formControlName="nombres">
               </div>
@@ -60,12 +70,11 @@
               </div>
             </div>
             <div class="modal-footer">
-              <button type="button" class="btn btn-warning btn-block" data-dismiss="modal" (click)="limpiarRegistrarEstudiante()">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="limpiarRegistrarEstudiante()">
                 <i class="fa fa-times" aria-hidden="true"></i>
                 <b>Cerrar</b>
               </button>
-              <button type="button" class="btn btn-success btn-block" (click)="registrarEstudiante()" [disabled]="!formRegistrarEstudiante.valid"
-                data-loading-text="<i class='fa fa-spinner fa-spin '></i> Processing">
+              <button type="button" class="btn btn-success" (click)="registrarEstudiante()" [disabled]="!formRegistrarEstudiante.valid">
                 <i class="fa fa-check" aria-hidden="true"></i>
                 <b>Registrar</b>
               </button>
@@ -99,7 +108,7 @@
               </div>
             </div>
             <div class="modal-footer">
-              <button type="button" class="btn btn-info btn-block" data-dismiss="modal">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">
                 <i class="fa fa-times" aria-hidden="true"></i>
                 <b>Cerrar</b>
               </button>

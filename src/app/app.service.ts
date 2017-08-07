@@ -32,6 +32,7 @@ export class AppService {
 
   setEstudiante(estudiante: Estudiante) {
     this.df.database.ref('estudiante_usuario/' + estudiante.usuario).child('estudiante').push({
+      ci: estudiante.ci,
       nombres: estudiante.nombres,
       apellidos: estudiante.apellidos,
       fecha_nacimiento: estudiante.fecha_nacimiento,
@@ -60,7 +61,44 @@ export class AppService {
     return this.estudiantes;
   }
 
-  pushChildUltimoAcceso (usuario: Usuario) {
+
+  getEstudiantesFiltroCi(usuario: Usuario, ci: string) {
+    this.estudiantes = this.df.list('estudiante_usuario/' + usuario.id + '/estudiante', {
+      query: {
+        orderByChild: 'ci',
+        // tslint:disable-next-line:radix
+        equalTo: parseInt(ci)
+      }
+    }) as FirebaseListObservable<any[]>;
+
+    return this.estudiantes;
+  }
+
+  getEstudiantesFiltroNombres(usuario: Usuario, nombres: string) {
+    this.estudiantes = this.df.list('estudiante_usuario/' + usuario.id + '/estudiante', {
+      query: {
+        orderByChild: 'nombres',
+        // tslint:disable-next-line:radix
+        equalTo: nombres
+      }
+    }) as FirebaseListObservable<any[]>;
+
+    return this.estudiantes;
+  }
+
+  getEstudiantesFiltroApellidos(usuario: Usuario, apellidos: string) {
+    this.estudiantes = this.df.list('estudiante_usuario/' + usuario.id + '/estudiante', {
+      query: {
+        orderByChild: 'apellidos',
+        // tslint:disable-next-line:radix
+        equalTo: apellidos
+      }
+    }) as FirebaseListObservable<any[]>;
+
+    return this.estudiantes;
+  }
+
+  pushChildUltimoAcceso(usuario: Usuario) {
     // tslint:disable-next-line:prefer-const
     /*let auxFecha = new Date();
     this.df.database.ref('usuario/' + usuario.id).child('ultimoacceso').push({
@@ -71,5 +109,19 @@ export class AppService {
       nombre: 'WISC III',
       isactive: usuario.isactive
     });*/
+  }
+
+  updateEstudiante(estudiante: Estudiante) {
+    this.estudiantes.update(estudiante.id, {
+      ci: estudiante.ci,
+      nombres: estudiante.nombres,
+      apellidos: estudiante.apellidos,
+      fecha_nacimiento: estudiante.fecha_nacimiento,
+      isactive: estudiante.isactive
+    });
+  }
+
+  deleteEstudiante(key: string) {
+    this.estudiantes.remove(key);
   }
 }

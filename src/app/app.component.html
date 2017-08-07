@@ -88,11 +88,11 @@
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="limpiarLogin()">
             <i class="fa fa-window-close" aria-hidden="true"></i>
-            Cerrar
+            <b>Cerrar</b>
           </button>
           <button type="button" class="btn btn-success" (click)="login()" [disabled]="!formLogin.valid">
             <i class="fa fa-sign-in" aria-hidden="true"></i>
-            Iniciar Sesión
+            <b>Iniciar Sesión</b>
           </button>
         </div>
       </div>
@@ -188,7 +188,7 @@
               </div>
             </div>
             <div class="modal-footer">
-              <button type="button" class="btn btn-danger btn-block" data-dismiss="modal">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">
                 <i class="fa fa-times" aria-hidden="true"></i>
                 <b>Cerrar</b>
               </button>

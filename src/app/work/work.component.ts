@@ -32,6 +32,7 @@ export class WorkComponent implements OnInit {
 
   crearComponenteRegistrarEstuadiante() {
     this.formRegistrarEstudiante = this.fbRegistrarEstudiante.group({
+      ci: ['', Validators.required],
       nombres: ['', Validators.required],
       apellidos: ['', Validators.required],
       fechanacimiento: ['', Validators.required]
@@ -42,11 +43,13 @@ export class WorkComponent implements OnInit {
     this.estudiante = new Estudiante(
       null,
       this.authService.usuario.id,
+      this.formRegistrarEstudiante.value.ci,
       this.formRegistrarEstudiante.value.nombres,
       this.formRegistrarEstudiante.value.apellidos,
       this.formRegistrarEstudiante.value.fechanacimiento,
       true
     );
+
     this.btncerrarregistroestudiante.nativeElement.click();
     this.appService.setEstudiante(this.estudiante);
     this.btnmostraralert.nativeElement.click();
