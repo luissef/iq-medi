@@ -124,7 +124,6 @@ export class AppService {
       nombre: 'WISC III',
       isactive: usuario.isactive
     });*/
-
   }
 
   updateEstudiante(estudiante: Estudiante) {

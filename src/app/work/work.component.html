@@ -1,10 +1,10 @@
 <ul class="nav nav-tabs">
   <li class="nav-item dropdown">
-    <a class="nav-link dropdown-toggle active" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false"><i class="fa fa-user" aria-hidden="true"> <b>Estudiante</b></i></a>
+    <a class="nav-link dropdown-toggle active" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false"><i class="fa fa-user" aria-hidden="true"> <b>Persona</b></i></a>
     <div class="dropdown-menu">
-      <a class="dropdown-item" href="#" data-toggle="modal" data-target="#registrarEstudianteModel"><i class="fa fa-user-plus" aria-hidden="true"> <b>Registrar Estudiante</b></i></a>
+      <a class="dropdown-item" href="#" data-toggle="modal" data-target="#registrarEstudianteModel"><i class="fa fa-user-plus" aria-hidden="true"> <b>Registrar Persona</b></i></a>
       <div class="dropdown-divider"></div>
-      <a class="dropdown-item" href="#" routerLink="estudiante" routerLinkActive="active"><i class="fa fa-users" aria-hidden="true"> <b>Estudiantes</b></i><span class="sr-only">(current)</span></a>
+      <a class="dropdown-item" href="#" routerLink="persona" routerLinkActive="active"><i class="fa fa-users" aria-hidden="true"> <b>Personas</b></i><span class="sr-only">(current)</span></a>
     </div>
   </li>
 </ul>
@@ -18,7 +18,7 @@
             <div class="modal-header">
               <h5 class="modal-title" id="registrarEstudianteModelLabel">
                 <img [src]="imageIqMedi" style="width: 50px">
-                <font color="white">Registrar Estudiante</font>
+                <font color="white">Registrar Persona</font>
               </h5>
               <button type="button" class="close" data-dismiss="modal" aria-label="Close" #btncerrarregistrarestudiante (click)="limpiarRegistrarEstudiante()">
                 <span aria-hidden="true">&times;</span>

@@ -84,7 +84,7 @@
             <div class="modal-header">
               <h5 class="modal-title" id="detalleEstudianteModelLabel">
                 <img [src]="imageIqMedi" style="width: 50px">
-                <font color="white">Detalle Estudiante</font>
+                <font color="white">Detalles Persona</font>
               </h5>
               <button type="button" class="close" data-dismiss="modal" aria-label="Close" #btncerrardetalleestudiante (click)="limpiardetalleEstudiante()">
                 <span aria-hidden="true">&times;</span>
@@ -179,7 +179,7 @@
                 <b>No</b>
               </button>
               <button type="button" class="btn btn-success" (click)="deleteEstudiante()">
-                <i class="fa fa-times" aria-hidden="true"></i>
+                <i class="fa fa-check" aria-hidden="true"></i>
                 <b>Si</b>
               </button>
             </div>
@@ -190,7 +190,7 @@
 </div>
 
 <div class="modal fade" id="historialTestModal" tabindex="-1" data-keyboard="false" data-backdrop="static" role="dialog" aria-labelledby="historialTestModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
+  <div class="modal-dialog modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title" id="historialTestModalLabel">Evaluaciones</h5>
@@ -199,7 +199,7 @@
         </button>
       </div>
       <div class="modal-body">
-        <b>Tomar test: </b><table>
+        <b>Tests Disponibles: </b><table>
           <tr>
             <td *ngFor="let test of tests">
               <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#testModal" (click)="setTestEstudiante(test)">
@@ -221,17 +221,17 @@
 </div>
 
 <div class="modal fade" id="testModal" tabindex="-1" data-keyboard="false" data-backdrop="static" role="dialog" aria-labelledby="testModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
+  <div class="modal-dialog modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="testModalLabel">Evaluando con test {{test?test.nombre:null}}</h5>
+        <h5 class="modal-title" id="testModalLabel">Evaluando con Test&nbsp;{{test?test.nombre:null}}</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="limpiarTest()">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
       <div class="modal-body">
         <button type="button" class="btn btn-success" data-toggle="modal" data-target="#preguntaModal" (click)="sigPregunta()">
-          <i class="fa fa-play" aria-hidden="true"> <b>Iniciar Test</b></i>
+          <i class="fa fa-play" aria-hidden="true"> <b>Iniciar Evaluación</b></i>
         </button>
       </div>
       <div class="modal-footer">
@@ -246,10 +246,10 @@
 
 <div class="modal fade" id="preguntaModal" tabindex="-1" data-keyboard="false" data-backdrop="static" role="dialog" aria-labelledby="preguntaModalLabel" aria-hidden="true">
   <form [formGroup]="formRespuestaPregunta">
-  <div class="modal-dialog" role="document">
+  <div class="modal-dialog modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="preguntaModalLabel">Evaluando con test {{test?test.nombre:null}}</h5>
+        <h5 class="modal-title" id="preguntaModalLabel">Evaluando con Test&nbsp;{{test?test.nombre:null}}</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="cancelarTest()">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -257,44 +257,46 @@
       <div class="modal-body">
         <h5>Pregunta {{numero_pregunta}}</h5>
 
-        <ul *ngFor="let preg of pregunta">
-          <li>
-            <b>Pregunta: </b>{{preg.pregunta}}
+        <ul class="list-group" *ngFor="let preg of pregunta">
+          <li class="list-group-item active"><i class="fa fa-question-circle-o" aria-hidden="true"> <b>Preguntar:&nbsp;</b></i>{{preg.pregunta}}</li>
+          <li class="list-group-item"><i class="fa fa-info-circle" aria-hidden="true"> <b>Consigna:&nbsp;</b></i>{{ preg.aplicacion}}</li>
+          <li class="list-group-item"><i class="fa fa-info-circle" aria-hidden="true"> <b>Modo de preguntar:&nbsp;</b></i>{{ preg.auxpregunta}}</li>
+          <li class="list-group-item"><i class="fa fa-info-circle" aria-hidden="true"> <b>Consejo:&nbsp;</b></i>{{ preg.consejo}}</li>
+          <li class="list-group-item active"><i class="fa fa-clock-o" aria-hidden="true"> <b>Tiempo:&nbsp;</b></i> </li>
+          <li class="list-group-item">
+            <p>horas:&nbsp;{{hora}}&nbsp;minutos:&nbsp;{{minuto}}&nbsp;segundos:&nbsp;{{segundo}}</p>
           </li>
-          <li>
-            <b>Consigna: </b> {{preg.aplicacion}}
-          </li>
-          <li>
-            <b>Modo de Preguntar: </b> {{preg.auxpregunta}}
-          </li>
-          <li>
-            <b>Consejo: </b> {{preg.consejo}}
+          <li class="list-group-item active"><i class="fa fa-check-circle-o" aria-hidden="true"> <b>Respuesta:&nbsp;</b></i></li>
+          <li class="list-group-item">
+            <fieldset class="form-group">
+              <div class="form-check form-check-inline">
+                <label class="form-check-label">
+                  <input type="radio" class="form-check-input" name="respuesta" formControlName="respuesta" id="respuesta" value="si" (change)="wait()">
+                  Si
+                </label>
+              </div>
+              <div class="form-check form-check-inline">
+                <label class="form-check-label">
+                  <input type="radio" class="form-check-input" name="respuesta" formControlName="respuesta" id="respuesta" value="no" (change)="wait()">
+                  No
+                </label>
+              </div>
+            </fieldset>
+            <div *ngIf="formRespuestaPregunta.controls.respuesta.errors && formRespuestaPregunta.controls.respuesta.touched">
+              <div *ngIf="formRespuestaPregunta.controls.respuesta.errors.required" class="alert alert-danger">
+                El campo es requerido
+              </div>
+            </div>
           </li>
         </ul>
-
-          <fieldset class="form-group">
-            <h5>Opciones</h5>
-            <div class="form-check">
-              <label class="form-check-label">
-                <input type="radio" class="form-check-input" name="respuesta" formControlName="respuesta" id="respuesta" value="si">
-                Si
-              </label>
-              <label class="form-check-label">
-                <input type="radio" class="form-check-input" name="respuesta" formControlName="respuesta" id="respuesta" value="no">
-                No
-              </label>
-            </div>
-          </fieldset>
-          <div *ngIf="formRespuestaPregunta.controls.respuesta.errors && formRespuestaPregunta.controls.respuesta.touched">
-            <div *ngIf="formRespuestaPregunta.controls.respuesta.errors.required" class="alert alert-danger">
-              El campo es requerido
-            </div>
-          </div>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="cancelarTest()">
           <i class="fa fa-times" aria-hidden="true"></i>
           <b>Cancelar Test</b>
+        </button>
+        <button type="button" class="btn btn-primary" (click)="start()">
+          <i class="fa fa-clock-o" aria-hidden="true"> <b>Iniciar/Reiniciar Tiempo</b></i>
         </button>
         <button type="button" class="btn btn-success" (click)="sigPregunta()" [disabled]="!formRespuestaPregunta.valid">
           <i class="fa fa-arrow-right" aria-hidden="true"> <b>Siguiente Pregunta</b></i>

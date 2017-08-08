@@ -53,7 +53,7 @@ export class WorkComponent implements OnInit {
     this.btncerrarregistroestudiante.nativeElement.click();
     this.appService.setEstudiante(this.estudiante);
     this.btnmostraralert.nativeElement.click();
-    this.mensaje = 'Estudiante Registrado';
+    this.mensaje = 'Persona Registrada';
   }
 
   limpiarRegistrarEstudiante() {

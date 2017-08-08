@@ -13,9 +13,9 @@ import { Estudiante } from '../../modelos/estudiante';
 })
 export class EstudianteComponent implements OnInit {
 
-  subEstudiantes: any;
-  subTests: any;
-  subPregunta: any;
+  private subEstudiantes: any;
+  private subTests: any;
+  private subPregunta: any;
 
   imageIqMedi: string;
 
@@ -37,6 +37,13 @@ export class EstudianteComponent implements OnInit {
   numero_pregunta: number;
   puntajetotal: number;
   puntajeerror: number;
+
+  // Cronometro run
+  hora: number;
+  minuto: number;
+  segundo: number;
+  decimi: number;
+  intTiempo: any;
 
   @ViewChild('btncerrardetalleestudiante') btncerrardetalleestudiante: ElementRef;
   @ViewChild('btnBorrarEstudiante') btnBorrarEstudiante: ElementRef;
@@ -163,7 +170,7 @@ export class EstudianteComponent implements OnInit {
 
   setDelEstudiante(estudiante: any) {
     this.detallesestudiante = estudiante;
-    this.mensaje = 'Borrar estudiante ' + this.detallesestudiante.ci;
+    this.mensaje = 'Borrar Persona ' + this.detallesestudiante.ci;
     this.btnBorrarEstudiante.nativeElement.click();
   }
 
@@ -200,6 +207,7 @@ export class EstudianteComponent implements OnInit {
 
   sigPregunta() {
     this.numero_pregunta = this.numero_pregunta + 1;
+    this.stop();
 
     if (this.subPregunta) {
       this.subPregunta.unsubscribe();
@@ -229,5 +237,51 @@ export class EstudianteComponent implements OnInit {
     this.puntajeerror = 0;
     this.subPregunta.unsubscribe();
     this.pregunta = null;
+    this.stop();
+  }
+
+  // Cronometro funciones
+  start() {
+    this.segundo = 0;
+    this.minuto = 0;
+    this.hora = 0;
+    this.decimi = 0;
+    this.crearComponenteRespuestaPregunta();
+
+    clearInterval(this.intTiempo);
+    this.intTiempo = setInterval(() => {
+
+      this.decimi += 1;
+
+      if (this.decimi === 10) {
+        this.decimi = 0;
+        this.segundo += 1;
+        if (this.segundo === 60) {
+          this.segundo = 0;
+          this.minuto += 1;
+
+          if (this.minuto === 60) {
+            this.minuto = 0;
+            this.hora += 1;
+            if (this.hora === 24) {
+              this.hora = 0;
+            }
+          }
+        }
+      }
+    }, 100);
+  }
+
+  wait() {
+    clearInterval(this.intTiempo);
+    this.intTiempo = null;
+  }
+
+  stop() {
+    clearInterval(this.intTiempo);
+    this.intTiempo = null;
+    this.segundo = 0;
+    this.minuto = 0;
+    this.hora = 0;
   }
 }
