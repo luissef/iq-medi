@@ -1,13 +1,13 @@
 <form [formGroup]="formBuscarFiltro">
   <div class="input-group">
     <span class="input-group-btn">
-      <button class="btn btn-success" type="button" (click)="buscar()">
+      <button class="btn btn-outline-success btn-sm" type="button" (click)="buscar()">
         <i class="fa fa-refresh" aria-hidden="true"> <b>Recargar</b></i>
       </button>
     </span>
     <input type="text" class="form-control" id="buscar" placeholder="CI/Nombres/Apellidos" formControlName="buscar">
     <div class="input-group-btn">
-      <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+      <button type="button" class="btn btn-outline-success btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
         <i class="fa fa-search" aria-hidden="true"> <b>Buscar por</b></i>
       </button>
       <div class="dropdown-menu dropdown-menu-right">
