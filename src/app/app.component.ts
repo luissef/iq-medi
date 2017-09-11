@@ -28,6 +28,8 @@ export class AppComponent {
   @ViewChild('btnmostraralert') btnmostraralert: ElementRef;
   @ViewChild('btncerrarlogin') btncerrarlogin: ElementRef;
   @ViewChild('btnmenuprincipal') btnmenuprincipal: ElementRef;
+  @ViewChild('btnmostrarloading') btnmostrarloading: ElementRef;
+  @ViewChild('btncerrarloading') btncerrarloading: ElementRef;
 
   constructor(
     private router: Router,
@@ -62,6 +64,7 @@ export class AppComponent {
   }
 
   login() {
+    this.btnmostrarloading.nativeElement.click();
     this.abfauth.auth.signInWithEmailAndPassword(this.formLogin.value.email, this.formLogin.value.contrasenia)
       .then((user) => {
         this.usuario = new Usuario(
@@ -112,14 +115,17 @@ export class AppComponent {
   }
 
   logout() {
-    this.btnmenuprincipal.nativeElement.click();
+    this.btnmostrarloading.nativeElement.click();
     this.authService.logout();
     this.abfauth.auth.signOut();
+    this.btnmenuprincipal.nativeElement.click();
     const link = ['/home/'];
+    this.cerrarloading();
     this.router.navigate(link);
   }
 
   registrar() {
+    this.btnmostrarloading.nativeElement.click();
     this.abfauth.auth.createUserWithEmailAndPassword(
       this.formRegistrar.value.email,
       this.formRegistrar.value.contrasenia)
@@ -132,6 +138,7 @@ export class AppComponent {
         this.appservice.setUsuario(this.usuario);
         this.authService.login(this.usuario);
         this.btncerrarregistrar.nativeElement.click();
+        this.btnmenuprincipal.nativeElement.click();
         const link = ['/work/'];
         this.router.navigate(link);
       }
@@ -146,10 +153,12 @@ export class AppComponent {
 
   limpiarLogin() {
     this.formLogin.reset();
+    this.cerrarloading();
   }
 
   limpiarRegistrar() {
     this.formRegistrar.reset();
+    this.cerrarloading();
   }
 
   mensajeError(mensaje: string) {
@@ -162,5 +171,9 @@ export class AppComponent {
     }else {
       this.alerta = mensaje;
     }
+  }
+
+  cerrarloading() {
+    setTimeout(() => this.btncerrarloading.nativeElement.click(), 500);
   }
 }

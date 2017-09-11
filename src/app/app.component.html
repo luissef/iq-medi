@@ -199,6 +199,56 @@
   </div>
 </div>
 
+<button type="button" class="btn btn-primary" data-toggle="modal" hidden data-target="#loadingModal" #btnmostrarloading></button>
+
+<div class="modal fade" id="loadingModal" tabindex="-1" role="dialog" aria-labelledby="loadingModalLabel" aria-hidden="true">
+    <div class="modal-dialog " role="document">
+      <div class="modal-content">
+        <div class="card card-inverse card-primary text-xs-center">
+            <div class="card-block">
+              <div class="modal-header">
+                <h5 class="modal-title" id="loadingModalLabel">
+                  <img [src]="imageIqMedi" style="width: 50px">
+                  <font color="white">Mensaje</font>
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" hidden aria-label="Close" #btncerrarloading>
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                <style>
+                  .loader {
+                    border: 35px solid #f3f3f3;
+                    border-radius: 50%;
+                    border-top: 35px solid #3498db;
+                    width: 240px;
+                    height: 240px;
+                    -webkit-animation: spin 5s linear infinite;
+                    animation: spin 7s linear infinite;
+                    margin: 0 auto;
+                  }
+
+                  @-webkit-keyframes spin {
+                    0% { -webkit-transform: rotate(0deg); }
+                    100% { -webkit-transform: rotate(360deg); }
+                  }
+
+                  @keyframes spin {
+                    0% { transform: rotate(0deg); }
+                    100% { transform: rotate(360deg); }
+                  }
+                </style>
+                <div class="loader"></div>
+              </div>
+              <div class="modal-footer">
+                <font color="white">Cargando...</font>
+              </div>
+            </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
 <div id="cuerpo">
   <router-outlet ></router-outlet>
   <div class="card card-inverse card-primary mb-3 text-center">

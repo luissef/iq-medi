@@ -199,7 +199,8 @@
         </button>
       </div>
       <div class="modal-body">
-        <b>Tests Disponibles: </b><table>
+        <b>Tests Disponibles: </b>
+        <table>
           <tr>
             <td *ngFor="let test of tests">
               <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#testModal" (click)="setTestEstudiante(test)">
@@ -221,20 +222,39 @@
 </div>
 
 <div class="modal fade" id="testModal" tabindex="-1" data-keyboard="false" data-backdrop="static" role="dialog" aria-labelledby="testModalLabel" aria-hidden="true">
+  <form [formGroup]="formDatosTest" class="form-inline">
   <div class="modal-dialog modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title" id="testModalLabel">Evaluando con Test&nbsp;{{test?test.nombre:null}}</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="limpiarTest()">
+        <button type="button" class="close" data-dismiss="modal" #btnCerrarEvaluacionTest aria-label="Close" (click)="limpiarTest()">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
       <div class="modal-body">
-        <button type="button" class="btn btn-success" data-toggle="modal" data-target="#preguntaModal" (click)="sigPregunta()">
-          <i class="fa fa-play" aria-hidden="true"> <b>Iniciar Evaluación</b></i>
-        </button>
+        <div class="input-group">
+          <div class="input-group-addon"><i class="fa fa-file-text" aria-hidden="true"> <b>Fecha de Nacimiento</b></i></div>
+          <input type="text" class="form-control" id="inlineFormInputGroup" placeholder="Fecha de Nacimiento" formControlName="fechanacimiento" readonly>
+        </div>
+        <div class="input-group">
+          <div class="input-group-addon"><i class="fa fa-file-text" aria-hidden="true"> <b>Fecha de Test</b></i></div>
+          <input type="text" class="form-control" id="inlineFormInputGroup" placeholder="Fecha de Test" formControlName="fechatest" readonly>
+        </div>
+        <div class="input-group">
+          <div class="input-group-addon"><i class="fa fa-file-text" aria-hidden="true"> <b>Edad en Meses</b></i></div>
+          <input type="text" class="form-control" id="inlineFormInputGroup" placeholder="Edad en Meses" formControlName="edadmeses" readonly>
+        </div>
+        <div class="card" style="height:200px;overflow-y: scroll;">
+          <div class="card-block">
+            <h6 class="card-title">Material para la Aplicación</h6>
+            <p *ngFor="let mate of material">{{mate.item}}</p>
+          </div>
+        </div>
       </div>
       <div class="modal-footer">
+        <button type="button" *ngIf="ismayor()" class="btn btn-success" data-toggle="modal" data-target="#preguntaModal" (click)="sigPregunta()">
+          <i class="fa fa-play" aria-hidden="true"> <b>Iniciar Evaluación</b></i>
+        </button>
         <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="limpiarTest()">
           <i class="fa fa-times" aria-hidden="true"></i>
           <b>Cerrar</b>
@@ -242,6 +262,7 @@
       </div>
     </div>
   </div>
+  </form>
 </div>
 
 <div class="modal fade" id="preguntaModal" tabindex="-1" data-keyboard="false" data-backdrop="static" role="dialog" aria-labelledby="preguntaModalLabel" aria-hidden="true">
@@ -255,37 +276,58 @@
         </button>
       </div>
       <div class="modal-body">
-        <h5>Pregunta {{numero_pregunta}}</h5>
+        <h6>Pregunta
+          <select class="custom-select" id="inlineFormCustomSelect" id="nropregunta" formControlName="nropregunta" (change)="irPregunta()">
+            <option *ngFor="let nro of nropreguntas" value="{{nro.nropre}}"
+            [attr.selected]="nro.nropre==numero_pregunta ? true : null">{{nro.nropre}}</option>
+          </select>
+        </h6>
+        <div class="dropdown">
+          <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <i class="fa fa-list-alt" aria-hidden="true"> <b>Escoger Sub-Test</b></i>
+          </button>
+          <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
+            <h6 class="dropdown-header">Sub-Tests</h6>
+            <button class="dropdown-item" type="button">Action</button>
+          </div>
+        </div>
 
         <ul class="list-group" *ngFor="let preg of pregunta">
           <li class="list-group-item active"><i class="fa fa-question-circle-o" aria-hidden="true"> <b>Preguntar:&nbsp;</b></i>{{preg.pregunta}}</li>
-          <li class="list-group-item"><i class="fa fa-info-circle" aria-hidden="true"> <b>Consigna:&nbsp;</b></i>{{ preg.aplicacion}}</li>
-          <li class="list-group-item"><i class="fa fa-info-circle" aria-hidden="true"> <b>Modo de preguntar:&nbsp;</b></i>{{ preg.auxpregunta}}</li>
-          <li class="list-group-item"><i class="fa fa-info-circle" aria-hidden="true"> <b>Consejo:&nbsp;</b></i>{{ preg.consejo}}</li>
+          <li class="list-group-item list-group-item-action"><i class="fa fa-info-circle" aria-hidden="true"> <b>Consigna:&nbsp;</b></i>{{ preg.aplicacion}}</li>
+          <li class="list-group-item list-group-item-action"><i class="fa fa-info-circle" aria-hidden="true"> <b>Modo de preguntar:&nbsp;</b></i>{{ preg.auxpregunta}}</li>
+          <li class="list-group-item list-group-item-action"><i class="fa fa-info-circle" aria-hidden="true"> <b>Consejo:&nbsp;</b></i>{{ preg.consejo}}</li>
           <li class="list-group-item active"><i class="fa fa-clock-o" aria-hidden="true"> <b>Tiempo:&nbsp;</b></i> </li>
-          <li class="list-group-item">
+          <li class="list-group-item list-group-item-action">
             <p>horas:&nbsp;{{hora}}&nbsp;minutos:&nbsp;{{minuto}}&nbsp;segundos:&nbsp;{{segundo}}</p>
           </li>
-          <li class="list-group-item active"><i class="fa fa-check-circle-o" aria-hidden="true"> <b>Respuesta:&nbsp;</b></i></li>
+          <li class="list-group-item active">
+            <i class="fa fa-check-circle-o" aria-hidden="true"> <b>Puntaje:&nbsp;</b></i>
+          </li>
           <li class="list-group-item">
-            <fieldset class="form-group">
-              <div class="form-check form-check-inline">
-                <label class="form-check-label">
-                  <input type="radio" class="form-check-input" name="respuesta" formControlName="respuesta" id="respuesta" value="si" (change)="wait()">
-                  Si
-                </label>
-              </div>
-              <div class="form-check form-check-inline">
-                <label class="form-check-label">
-                  <input type="radio" class="form-check-input" name="respuesta" formControlName="respuesta" id="respuesta" value="no" (change)="wait()">
-                  No
-                </label>
-              </div>
-            </fieldset>
+            <ul class="list-group" style="border: 0 none" *ngFor="let resp of respuesta" >
+              <li class="list-group-item" style="border: 0 none">
+                <fieldset class="form-group">
+                  <div class="form-check form-check-inline">
+                    <label class="form-check-label">
+                      <input type="radio" class="form-check-input" name="respuesta" formControlName="respuesta" id="respuesta" value="{{resp.puntaje}}" (change)="wait()">
+                      {{resp.puntaje}}
+                    </label>
+                  </div>
+                </fieldset>
+              </li>
+            </ul>
             <div *ngIf="formRespuestaPregunta.controls.respuesta.errors && formRespuestaPregunta.controls.respuesta.touched">
               <div *ngIf="formRespuestaPregunta.controls.respuesta.errors.required" class="alert alert-danger">
                 El campo es requerido
               </div>
+            </div>
+          </li>
+          <li class="list-group-item">
+            <label for="tipopregunta"><i class="fa fa-question-circle-o" aria-hidden="true"> <b>Tipo Pregunta</b></i></label>
+            <br>
+            <div class="input-group">
+              <input readonly type="text" class="form-control form-control-success" id="tipopregunta" placeholder="Tipo Pregunta" formControlName="tipopregunta" [(ngModel)]="preg.tipo_pregunta" value="{{preg.tipo_pregunta}}">
             </div>
           </li>
         </ul>

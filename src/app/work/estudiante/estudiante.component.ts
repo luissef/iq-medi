@@ -6,6 +6,8 @@ import { AppService } from '../../app.service';
 import { AuthService } from '../../home/auth.service';
 
 import { Estudiante } from '../../modelos/estudiante';
+import { Puntajecuestionario } from '../../modelos/puntajecuestionario';
+import { Cuestionarioevaluado } from '../../modelos/cuestionarioevaluado';
 
 @Component({
   selector: 'app-estudiante',
@@ -15,7 +17,13 @@ export class EstudianteComponent implements OnInit {
 
   private subEstudiantes: any;
   private subTests: any;
+  private subTipoSubTests: any;
   private subPregunta: any;
+  private subRespuesta: any;
+  private subMaterial: any;
+
+  private resultadopregunta: Cuestionarioevaluado[] = [];
+  private resultadocuestionario: Puntajecuestionario[] = [];
 
   imageIqMedi: string;
 
@@ -24,18 +32,23 @@ export class EstudianteComponent implements OnInit {
   formDetalleEstudiante: FormGroup;
   formBuscarFiltro: FormGroup;
   formRespuestaPregunta: FormGroup;
+  formDatosTest: FormGroup;
 
   estudiantes: any[];
   tests: any[];
+  tipoSubTests: any[];
   pregunta: any[];
+  respuesta: any[];
   detallesestudiante: any;
   test: any;
+  material: any[];
   estudiante: Estudiante;
+  nropreguntas: any[] = [];
 
   // Cuestionario run
+  edadminima: number;
   numeropreguntas: number;
   numero_pregunta: number;
-  puntajetotal: number;
   puntajeerror: number;
 
   // Cronometro run
@@ -53,12 +66,14 @@ export class EstudianteComponent implements OnInit {
     private fbDetalleEstudiante: FormBuilder,
     private fbBuscarFiltro: FormBuilder,
     private fbRespuestaPregunta: FormBuilder,
+    private fbDatosTest: FormBuilder,
     private appService: AppService,
     private authService: AuthService
   ) {
     this.crearComponenteDetalleEstuadiante();
     this.crearComponenteBuscar();
     this.crearComponenteRespuestaPregunta();
+    this.crearComponenteDatosTest();
     this.imageIqMedi = '/assets/resources/iq-medi.png';
   }
 
@@ -89,14 +104,45 @@ export class EstudianteComponent implements OnInit {
 
   crearComponenteRespuestaPregunta() {
     this.formRespuestaPregunta = this.fbRespuestaPregunta.group({
-      respuesta: ['', Validators.required]
+      tipopregunta: '',
+      respuesta: ['', Validators.required],
+      nropregunta: this.numero_pregunta
+    });
+  }
+
+  crearComponenteDatosTest() {
+    this.formDatosTest = this.fbDatosTest.group({
+      fechanacimiento: '',
+      fechatest: '',
+      edadmeses: ''
     });
   }
 
   // tslint:disable-next-line:use-life-cycle-interface
   ngOnDestroy() {
-    this.subEstudiantes.unsubscribe();
-    this.subTests.unsubscribe();
+    if (this.subEstudiantes) {
+      this.subEstudiantes.unsubscribe();
+    }
+
+    if (this.subTests) {
+      this.subTests.unsubscribe();
+    }
+
+    if (this.subTipoSubTests) {
+      this.subTipoSubTests.unsubscribe();
+    }
+
+    if (this.subPregunta) {
+      this.subPregunta.unsubscribe();
+    }
+
+    if (this.subRespuesta) {
+      this.subRespuesta.unsubscribe();
+    }
+
+    if (this.subMaterial) {
+      this.subMaterial.unsubscribe();
+    }
   }
 
   buscar() {
@@ -155,7 +201,22 @@ export class EstudianteComponent implements OnInit {
   }
 
   limpiarTest() {
+    this.resultadocuestionario = [];
+    this.resultadopregunta = [];
+    this.edadminima = 0;
+    this.nropreguntas = [];
+    this.numero_pregunta = 0;
+    this.puntajeerror = 0;
     this.test = null;
+
+    if (this.subMaterial) {
+      this.subMaterial.unsubscribe();
+      this.material = null;
+    }
+  }
+
+  limpiarsubTest() {
+
   }
 
   setUpdEstudiante(estudiante: any) {
@@ -180,10 +241,52 @@ export class EstudianteComponent implements OnInit {
 
   setTestEstudiante(test: any) {
     this.test = test;
+
     this.numeropreguntas = test.numeropreguntas;
+    this.edadminima = test.edadminima;
+
+    if (this.numeropreguntas > 0) {
+      for (let i = 0; i < this.numeropreguntas; i++) {
+        this.nropreguntas.push({'nropre': i + 1});
+      }
+    }
+
     this.numero_pregunta = 0;
-    this.puntajetotal = 0;
     this.puntajeerror = 0;
+
+    // tslint:disable-next-line:prefer-const
+    let fechanacimiento = new Date(this.detallesestudiante.fecha_nacimiento.replace('-', '/').replace('-', '/'));
+    // tslint:disable-next-line:prefer-const
+    let fechatest = new Date();
+
+    // tslint:disable-next-line:prefer-const
+    let meses = (fechatest.getFullYear() - fechanacimiento.getFullYear()) * 12;
+
+    meses -= fechanacimiento.getMonth() + 1;
+    meses += fechatest.getMonth() + 1;
+
+    this.formDatosTest = this.fbDatosTest.group({
+      // tslint:disable-next-line:max-line-length
+      fechanacimiento: fechanacimiento.getDate() + '/' + (fechanacimiento.getMonth() + 1) + '/' + fechanacimiento.getFullYear(),
+      fechatest: fechatest.getDate() + '/' + (fechatest.getMonth() + 1) + '/' + fechatest.getFullYear(),
+      edadmeses: meses
+    });
+
+    if (this.subMaterial) {
+      this.subMaterial.unsubscribe();
+      this.material = null;
+    }
+
+    this.subMaterial = this.appService.getTestMateriales(this.test)
+    .subscribe(material => this.material = material);
+  }
+
+  ismayor() {
+    if (this.formDatosTest.value.edadmeses >= this.edadminima) {
+      return true;
+    }else {
+      return false;
+    }
   }
 
   updateEstudiante() {
@@ -205,37 +308,70 @@ export class EstudianteComponent implements OnInit {
     this.btnCerrarEliminarEstudianta.nativeElement.click();
   }
 
+  irPregunta() {
+    console.log("aqui");
+  }
+
   sigPregunta() {
+
+
+
+    if (this.numero_pregunta > 0) {
+      // tslint:disable-next-line:prefer-const
+      let ingresar = true;
+
+      for (let i = 0; i < this.resultadopregunta.length; i++) {
+        if (this.resultadopregunta[i].numeropregunta === this.numero_pregunta) {
+          this.resultadopregunta[i].puntaje = this.formRespuestaPregunta.value.respuesta;
+          ingresar = false;
+        }
+      }
+
+      if (ingresar) {
+        this.resultadopregunta.push(new Cuestionarioevaluado(
+          this.numero_pregunta,
+          this.formRespuestaPregunta.value.tipopregunta,
+          (((this.hora * 60) * 60) + (this.minuto * 60) + (this.segundo)),
+          this.formRespuestaPregunta.value.respuesta));
+      }
+
+      console.log(this.resultadopregunta);
+    }
+
     this.numero_pregunta = this.numero_pregunta + 1;
     this.stop();
 
     if (this.subPregunta) {
       this.subPregunta.unsubscribe();
+      this.subRespuesta.unsubscribe();
     }
 
     if (this.numero_pregunta < this.numeropreguntas) {
       this.subPregunta = this.appService.getPregunta(this.test, this.numero_pregunta)
       .subscribe(pregunta => this.pregunta = pregunta);
-      console.log(this.formRespuestaPregunta.value.respuesta);
-      if (this.formRespuestaPregunta.value.respuesta) {
-        if (this.formRespuestaPregunta.value.respuesta === 'si') {
-          this.puntajetotal = this.puntajetotal + 1;
-          console.log(this.puntajetotal.toString());
-        }else if ((this.formRespuestaPregunta.value.respuesta === 'no')) {
-          this.puntajeerror = this.puntajeerror + 1;
-          console.log(this.puntajeerror.toString());
-        }
 
-      }
+      this.subRespuesta = this.appService.getPreguntaRespuesta(this.test, this.numero_pregunta)
+      .subscribe(respuesta => this.respuesta = respuesta);
+
       this.crearComponenteRespuestaPregunta();
     }
   }
 
   cancelarTest() {
+    this.resultadocuestionario = [];
+    this.resultadopregunta = [];
+    this.nropreguntas = [];
     this.numero_pregunta = 0;
-    this.puntajetotal = 0;
     this.puntajeerror = 0;
-    this.subPregunta.unsubscribe();
+
+    if (this.subPregunta) {
+      this.subPregunta.unsubscribe();
+    }
+
+    if (this.subRespuesta) {
+      this.subRespuesta.unsubscribe();
+    }
+
     this.pregunta = null;
     this.stop();
   }
@@ -246,7 +382,21 @@ export class EstudianteComponent implements OnInit {
     this.minuto = 0;
     this.hora = 0;
     this.decimi = 0;
-    this.crearComponenteRespuestaPregunta();
+
+    if (this.subPregunta) {
+      this.subPregunta.unsubscribe();
+      this.subRespuesta.unsubscribe();
+    }
+
+    if (this.numero_pregunta < this.numeropreguntas) {
+      this.subPregunta = this.appService.getPregunta(this.test, this.numero_pregunta)
+      .subscribe(pregunta => this.pregunta = pregunta);
+
+      this.subRespuesta = this.appService.getPreguntaRespuesta(this.test, this.numero_pregunta)
+      .subscribe(respuesta => this.respuesta = respuesta);
+
+      this.crearComponenteRespuestaPregunta();
+    }
 
     clearInterval(this.intTiempo);
     this.intTiempo = setInterval(() => {

@@ -17,7 +17,10 @@ export class AppService {
   usuario: Usuario;
   estudiantes: FirebaseListObservable<any[]>;
   tests: FirebaseListObservable<any[]>;
+  subteststest: FirebaseListObservable<any[]>;
   pregunta: FirebaseListObservable<any[]>;
+  respuesta: FirebaseListObservable<any[]>;
+  material: FirebaseListObservable<any[]>;
 
   constructor(
     private df: AngularFireDatabase,
@@ -68,6 +71,11 @@ export class AppService {
     return this.tests;
   }
 
+  getTestMateriales(test: any) {
+    this.material = this.df.list('test/' + test.$key + '/material') as FirebaseListObservable<any[]>;
+    return this.material;
+  }
+
   getPregunta(test: any, numero_pregunta: number) {
     this.pregunta = this.df.list('test/' + test.$key + '/pregunta', {
       query: {
@@ -76,6 +84,16 @@ export class AppService {
       }
     }) as FirebaseListObservable<any[]>;
     return this.pregunta;
+  }
+
+  getPreguntaRespuesta(test: any, numero_pregunta: number) {
+    this.respuesta = this.df.list('test/' + test.$key + '/respuesta', {
+      query: {
+        orderByChild: 'numero_pregunta',
+        equalTo: numero_pregunta
+      }
+    }) as FirebaseListObservable<any[]>;
+    return this.respuesta;
   }
 
   getEstudiantesFiltroCi(usuario: Usuario, ci: number) {
@@ -124,6 +142,14 @@ export class AppService {
       nombre: 'WISC III',
       isactive: usuario.isactive
     });*/
+
+    // tslint:disable-next-line:comment-format
+    // tslint:disable-next-line:prefer-const
+    let auxCabecera = this.df.database.ref('test/-KqMrJZ-UEASUXSbu-n8');
+
+    // tslint:disable-next-line:prefer-const
+    // tslint:disable-next-line:comment-format
+    //let auxCabecera = this.df.database.ref('test/-KqMrQPAJJ2H5Q1Pz01v')
   }
 
   updateEstudiante(estudiante: Estudiante) {

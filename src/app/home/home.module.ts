@@ -3,6 +3,8 @@ import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 
+import { Authexitguard } from './authexit.guard';
+
 import { HomeComponent } from './home.component';
 import { HomeRoutingModule } from './home.router-module';
 
@@ -19,7 +21,7 @@ import { HomeRoutingModule } from './home.router-module';
   exports: [
     HomeComponent
   ],
-  providers: []
+  providers: [Authexitguard]
 })
 
 export class HomeModule { }
