@@ -17,7 +17,7 @@ export class AppService {
   usuario: Usuario;
   estudiantes: FirebaseListObservable<any[]>;
   tests: FirebaseListObservable<any[]>;
-  subteststest: FirebaseListObservable<any[]>;
+  subtests: FirebaseListObservable<any[]>;
   pregunta: FirebaseListObservable<any[]>;
   respuesta: FirebaseListObservable<any[]>;
   material: FirebaseListObservable<any[]>;
@@ -74,6 +74,15 @@ export class AppService {
   getTestMateriales(test: any) {
     this.material = this.df.list('test/' + test.$key + '/material') as FirebaseListObservable<any[]>;
     return this.material;
+  }
+
+  getSubTest(test: any) {
+    this.subtests = this.df.list('test/' + test.$key + '/subtest', {
+      query: {
+        orderByChild: 'tipo'
+      }
+    }) as FirebaseListObservable<any[]>;
+    return this.subtests;
   }
 
   getPregunta(test: any, numero_pregunta: number) {
@@ -145,11 +154,11 @@ export class AppService {
 
     // tslint:disable-next-line:comment-format
     // tslint:disable-next-line:prefer-const
-    let auxCabecera = this.df.database.ref('test/-KqMrJZ-UEASUXSbu-n8');
+    // let auxCabecera = this.df.database.ref('test/-KqMrJZ-UEASUXSbu-n8');
 
     // tslint:disable-next-line:prefer-const
     // tslint:disable-next-line:comment-format
-    //let auxCabecera = this.df.database.ref('test/-KqMrQPAJJ2H5Q1Pz01v')
+    const auxCabecera = this.df.database.ref('test/-KqMrQPAJJ2H5Q1Pz01v')
   }
 
   updateEstudiante(estudiante: Estudiante) {

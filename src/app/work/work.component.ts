@@ -20,6 +20,8 @@ export class WorkComponent implements OnInit {
 
   @ViewChild('btncerrarregistrarestudiante') btncerrarregistroestudiante: ElementRef;
   @ViewChild('btnmostraralertregest') btnmostraralert: ElementRef;
+  @ViewChild('btnmostrarloadingwork') btnmostrarloadingwork: ElementRef;
+  @ViewChild('btncerrarloadingwork') btncerrarloadingwork: ElementRef;
 
   constructor(
     private fbRegistrarEstudiante: FormBuilder,
@@ -40,6 +42,7 @@ export class WorkComponent implements OnInit {
   }
 
   registrarEstudiante() {
+    this.btnmostrarloadingwork.nativeElement.click();
     this.estudiante = new Estudiante(
       null,
       this.authService.usuario.id,
@@ -58,9 +61,14 @@ export class WorkComponent implements OnInit {
 
   limpiarRegistrarEstudiante() {
     this.formRegistrarEstudiante.reset();
+    this.cerrarloading();
   }
 
   ngOnInit() {
+  }
+
+  cerrarloading() {
+    setTimeout(() => this.btncerrarloadingwork.nativeElement.click(), 500);
   }
 
 }

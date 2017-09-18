@@ -193,6 +193,7 @@
   <div class="modal-dialog modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header">
+        <img [src]="imageIqMedi" style="width: 50px">
         <h5 class="modal-title" id="historialTestModalLabel">Evaluaciones</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="limpiardetalleEstudiante()">
           <span aria-hidden="true">&times;</span>
@@ -203,10 +204,11 @@
         <table>
           <tr>
             <td *ngFor="let test of tests">
-              <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#testModal" (click)="setTestEstudiante(test)">
+              <button type="button" class="btn btn-primary btn-block" data-toggle="modal" data-target="#testModal" (click)="setTestEstudiante(test)">
                 <i class="fa fa-list-alt" aria-hidden="true"></i>
                 <b>{{test.nombre}}</b>
               </button>
+              <hr>
             </td>
           </tr>
         </table>
@@ -226,6 +228,7 @@
   <div class="modal-dialog modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header">
+        <img [src]="imageIqMedi" style="width: 50px">
         <h5 class="modal-title" id="testModalLabel">Evaluando con Test&nbsp;{{test?test.nombre:null}}</h5>
         <button type="button" class="close" data-dismiss="modal" #btnCerrarEvaluacionTest aria-label="Close" (click)="limpiarTest()">
           <span aria-hidden="true">&times;</span>
@@ -270,28 +273,35 @@
   <div class="modal-dialog modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header">
+        <img [src]="imageIqMedi" style="width: 50px">
         <h5 class="modal-title" id="preguntaModalLabel">Evaluando con Test&nbsp;{{test?test.nombre:null}}</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="cancelarTest()">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
       <div class="modal-body">
-        <h6>Pregunta
-          <select class="custom-select" id="inlineFormCustomSelect" id="nropregunta" formControlName="nropregunta" (change)="irPregunta()">
-            <option *ngFor="let nro of nropreguntas" value="{{nro.nropre}}"
-            [attr.selected]="nro.nropre==numero_pregunta ? true : null">{{nro.nropre}}</option>
-          </select>
+          <h6><i class="fa fa-question-circle-o" aria-hidden="true"></i>&nbsp;Pregunta&nbsp;
+            <button type="button" class="btn btn-outline-primary" (click)="antes()" [disabled]="(numero_pregunta==1 || numero_pregunta==0) ? true : false">
+              <i class="fa fa-arrow-left" aria-hidden="true"></i>
+            </button>
+            <select class="custom-select" id="inlineFormCustomSelect" id="nropregunta" formControlName="nropregunta" (change)="selPregunta()">
+              <option *ngFor="let nro of nropreguntas" value="{{nro.nropre}}"
+              [disabled]="nro.nropre==0 ? true : false" [selected]="nro.nropre==numero_pregunta ? true : false">{{nro.nropre!=0 ? nro.nropre: ''}}</option>
+            </select>
+            <button type="button" class="btn btn-outline-primary" (click)="siguiente()" [disabled]="(numero_pregunta==numeropreguntas || numero_pregunta==0) ? true : false">
+              <i class="fa fa-arrow-right" aria-hidden="true"></i>
+            </button>
         </h6>
         <div class="dropdown">
-          <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            <i class="fa fa-list-alt" aria-hidden="true"> <b>Escoger Sub-Test</b></i>
+          <button class="btn btn-primary btn-block dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <i class="fa fa-list-alt" aria-hidden="true"> <b>Opcional - Escoger Sub-Test</b></i>
           </button>
           <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
             <h6 class="dropdown-header">Sub-Tests</h6>
-            <button class="dropdown-item" type="button">Action</button>
+            <button *ngFor="let subT of tipoSubTests"  class="dropdown-item" type="button" (click)="preguntaSub(subT.pregunta)" >{{subT.test}}</button>
           </div>
         </div>
-
+        <hr>
         <ul class="list-group" *ngFor="let preg of pregunta">
           <li class="list-group-item active"><i class="fa fa-question-circle-o" aria-hidden="true"> <b>Preguntar:&nbsp;</b></i>{{preg.pregunta}}</li>
           <li class="list-group-item list-group-item-action"><i class="fa fa-info-circle" aria-hidden="true"> <b>Consigna:&nbsp;</b></i>{{ preg.aplicacion}}</li>
@@ -304,47 +314,118 @@
           <li class="list-group-item active">
             <i class="fa fa-check-circle-o" aria-hidden="true"> <b>Puntaje:&nbsp;</b></i>
           </li>
-          <li class="list-group-item">
-            <ul class="list-group" style="border: 0 none" *ngFor="let resp of respuesta" >
-              <li class="list-group-item" style="border: 0 none">
-                <fieldset class="form-group">
-                  <div class="form-check form-check-inline">
-                    <label class="form-check-label">
-                      <input type="radio" class="form-check-input" name="respuesta" formControlName="respuesta" id="respuesta" value="{{resp.puntaje}}" (change)="wait()">
-                      {{resp.puntaje}}
-                    </label>
-                  </div>
-                </fieldset>
-              </li>
-            </ul>
-            <div *ngIf="formRespuestaPregunta.controls.respuesta.errors && formRespuestaPregunta.controls.respuesta.touched">
-              <div *ngIf="formRespuestaPregunta.controls.respuesta.errors.required" class="alert alert-danger">
-                El campo es requerido
-              </div>
+          <select class="form-control" id="respuesta" id="respuesta" formControlName="respuesta" (change)="wait()">
+            <option value="" selected disabled>Selecciones el Puntaje</option>
+            <option *ngFor="let resp of respuesta" value="{{resp.puntaje}}">{{resp.etipuntaje}}</option>
+          </select>
+          <div *ngIf="formRespuestaPregunta.controls.respuesta.errors && formRespuestaPregunta.controls.respuesta.touched">
+            <div *ngIf="formRespuestaPregunta.controls.respuesta.errors.required" class="alert alert-dselectedanger">
+              El campo es requerido
             </div>
-          </li>
-          <li class="list-group-item">
-            <label for="tipopregunta"><i class="fa fa-question-circle-o" aria-hidden="true"> <b>Tipo Pregunta</b></i></label>
-            <br>
-            <div class="input-group">
-              <input readonly type="text" class="form-control form-control-success" id="tipopregunta" placeholder="Tipo Pregunta" formControlName="tipopregunta" [(ngModel)]="preg.tipo_pregunta" value="{{preg.tipo_pregunta}}">
-            </div>
-          </li>
+          </div>
+          <input readonly type="text" hidden class="form-control form-control-success" id="tipopregunta" placeholder="Tipo Pregunta" formControlName="tipopregunta" [(ngModel)]="preg.tipo_pregunta" value="{{preg.tipo_pregunta}}">
+          <input readonly type="text" hidden class="form-control form-control-success" id="errores" placeholder="" formControlName="errores" [(ngModel)]="preg.errores" value="{{preg.errores}}">
+          <input readonly type="text" hidden class="form-control form-control-success" id="siguiente" placeholder="" formControlName="siguiente" [(ngModel)]="preg.siguiente" value="{{preg.siguiente}}">
         </ul>
+        <div style="width: 100%;margin: 0 auto;">
+          <button type="button" *ngIf="!(calificar || numero_pregunta==0)" class="btn btn-success btn-block" (click)="start()">
+            <i class="fa fa-clock-o" aria-hidden="true"> <b>Iniciar Tiempo</b></i>
+          </button>
+        </div>
+        <h5 *ngIf="(calificar && numero_pregunta==0)">Historial de Respuestas</h5>
+        <div *ngIf="(calificar && numero_pregunta==0)" style="height:300px;overflow-y: scroll;">
+            <table class="table table-bordered table-sm table-hover">
+                <thead>
+                  <tr>
+                    <th>
+                      # de Pregunta
+                    </th>
+                    <th>
+                      Tiempo
+                    </th>
+                    <th>
+                      Tiempo
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let resultPr of resultadopregunta">
+                    <td>{{resultPr.numeropregunta}}</td>
+                    <td>{{resultPr.puntaje}}</td>
+                    <td>{{resultPr.tiempo}}</td>
+                  </tr>
+                </tbody>
+            </table>
+          </div>
+        <hr>
+        <div style="width: 100%;margin: 0 auto;">
+          <button type="button" class="btn btn-success btn-block" *ngIf="(calificar && numero_pregunta==0)" (click)="calificarTest()">
+            <i class="fa fa-arrow-right" aria-hidden="true"> <b>Calificar Test</b></i>
+          </button>
+        </div>
+        <div style="width: 100%;margin: 0 auto;">
+          <button type="button" class="btn btn-success btn-block" *ngIf="!(calificar || numero_pregunta==0)" (click)="sigPregunta()" [disabled]="!formRespuestaPregunta.valid">
+            <i class="fa fa-arrow-right" aria-hidden="true"> <b>Guardar y Seguir Test</b></i>
+          </button>
+        </div>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="cancelarTest()">
-          <i class="fa fa-times" aria-hidden="true"></i>
-          <b>Cancelar</b>
-        </button>
-        <button type="button" class="btn btn-primary" (click)="start()">
-          <i class="fa fa-clock-o" aria-hidden="true"> <b>Iniciar Tiempo</b></i>
-        </button>
-        <button type="button" class="btn btn-success" (click)="sigPregunta()" [disabled]="!formRespuestaPregunta.valid">
-          <i class="fa fa-arrow-right" aria-hidden="true"> <b>Siguiente</b></i>
-        </button>
+            <i class="fa fa-times" aria-hidden="true"></i>
+            <b>Cancelar</b>
+          </button>
       </div>
     </div>
   </div>
   </form>
 </div>
+
+<button type="button" class="btn btn-primary" data-toggle="modal" hidden data-target="#loadingModalEst" #btnmostrarloadingest></button>
+
+<div class="modal fade" id="loadingModalEst" tabindex="-1" data-keyboard="false" data-backdrop="static" role="dialog" aria-labelledby="loadingModalEstLabel" aria-hidden="true">
+    <div class="modal-dialog " role="document">
+      <div class="modal-content">
+        <div class="card card-inverse card-primary text-xs-center">
+            <div class="card-block">
+              <div class="modal-header">
+                <h5 class="modal-title" id="loadingModalEstLabel">
+                  <img [src]="imageIqMedi" style="width: 50px">
+                  <font color="white">Mensaje</font>
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" hidden aria-label="Close" #btncerrarloadingest>
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                <style>
+                  .loader {
+                    border: 35px solid #f3f3f3;
+                    border-radius: 50%;
+                    border-top: 35px solid #3498db;
+                    width: 240px;
+                    height: 240px;
+                    -webkit-animation: spin 5s linear infinite;
+                    animation: spin 7s linear infinite;
+                    margin: 0 auto;
+                  }
+
+                  @-webkit-keyframes spin {
+                    0% { -webkit-transform: rotate(0deg); }
+                    100% { -webkit-transform: rotate(360deg); }
+                  }
+
+                  @keyframes spin {
+                    0% { transform: rotate(0deg); }
+                    100% { transform: rotate(360deg); }
+                  }
+                </style>
+                <div class="loader"></div>
+              </div>
+              <div class="modal-footer">
+                <font color="white">Cargando...</font>
+              </div>
+            </div>
+        </div>
+      </div>
+    </div>
+  </div>
