@@ -7,6 +7,12 @@ import { AppService } from '../app.service';
 
 import { Estudiante } from '../modelos/estudiante';
 
+/**
+ *
+ * @export
+ * @class WorkComponent
+ * @implements {OnInit}
+ */
 @Component({
   selector: 'app-work',
   templateUrl: './work.component.html'
@@ -23,6 +29,13 @@ export class WorkComponent implements OnInit {
   @ViewChild('btnmostrarloadingwork') btnmostrarloadingwork: ElementRef;
   @ViewChild('btncerrarloadingwork') btncerrarloadingwork: ElementRef;
 
+  /**
+   * Creates an instance of WorkComponent.
+   * @param {FormBuilder} fbRegistrarEstudiante
+   * @param {AuthService} authService
+   * @param {AppService} appService
+   * @memberof WorkComponent
+   */
   constructor(
     private fbRegistrarEstudiante: FormBuilder,
     private authService: AuthService,
@@ -32,6 +45,10 @@ export class WorkComponent implements OnInit {
     this.imageIqMedi = '/assets/resources/iq-medi.png';
   }
 
+  /**
+   *
+   * @memberof WorkComponent
+   */
   crearComponenteRegistrarEstuadiante() {
     this.formRegistrarEstudiante = this.fbRegistrarEstudiante.group({
       ci: ['', Validators.required],
@@ -41,6 +58,10 @@ export class WorkComponent implements OnInit {
     })
   }
 
+  /**
+   *
+   * @memberof WorkComponent
+   */
   registrarEstudiante() {
     this.btnmostrarloadingwork.nativeElement.click();
     this.estudiante = new Estudiante(
@@ -59,14 +80,26 @@ export class WorkComponent implements OnInit {
     this.mensaje = 'Persona Registrada';
   }
 
+  /**
+   *
+   * @memberof WorkComponent
+   */
   limpiarRegistrarEstudiante() {
     this.formRegistrarEstudiante.reset();
     this.cerrarloading();
   }
 
+  /**
+   *
+   * @memberof WorkComponent
+   */
   ngOnInit() {
   }
 
+  /**
+   *
+   * @memberof WorkComponent
+   */
   cerrarloading() {
     setTimeout(() => this.btncerrarloadingwork.nativeElement.click(), 500);
   }

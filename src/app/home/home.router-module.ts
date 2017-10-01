@@ -10,6 +10,11 @@ const homeRoutes: Routes = [
   { path: 'home', component: HomeComponent, canActivate: [Authexitguard] }
 ]
 
+/**
+ *
+ * @export
+ * @class HomeRoutingModule
+ */
 @NgModule({
   imports: [
     RouterModule.forChild(homeRoutes)

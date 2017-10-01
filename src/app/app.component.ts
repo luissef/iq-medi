@@ -11,6 +11,10 @@ import { AuthService } from './home/auth.service';
 
 import { Usuario } from './modelos/usuario';
 
+/**
+ * @export
+ * @class AppComponent
+ */
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -31,6 +35,16 @@ export class AppComponent {
   @ViewChild('btnmostrarloading') btnmostrarloading: ElementRef;
   @ViewChild('btncerrarloading') btncerrarloading: ElementRef;
 
+  /**
+   * Creates an instance of AppComponent.
+   * @param {Router} router
+   * @param {FormBuilder} fblogin
+   * @param {FormBuilder} fbregistrar
+   * @param {AngularFireAuth} abfauth
+   * @param {AppService} appservice
+   * @param {AuthService} authService
+   * @memberof AppComponent
+   */
   constructor(
     private router: Router,
     private fblogin: FormBuilder,
@@ -44,6 +58,9 @@ export class AppComponent {
     this.imageIqMedi = '/assets/resources/iq-medi.png';
   }
 
+  /**
+   * @memberof AppComponent
+   */
   crearComponenteLogin() {
     this.formLogin = this.fblogin.group({
       email: ['', Validators.required],
@@ -53,6 +70,10 @@ export class AppComponent {
     })
   }
 
+  /**
+   *
+   * @memberof AppComponent
+   */
   crearComponenteRegistrar() {
     this.formRegistrar = this.fbregistrar.group({
       email: ['', Validators.required],
@@ -63,6 +84,10 @@ export class AppComponent {
     })
   }
 
+  /**
+   *
+   * @memberof AppComponent
+   */
   login() {
     this.btnmostrarloading.nativeElement.click();
     this.abfauth.auth.signInWithEmailAndPassword(this.formLogin.value.email, this.formLogin.value.contrasenia)
@@ -114,6 +139,10 @@ export class AppComponent {
     );
   }
 
+  /**
+   *
+   * @memberof AppComponent
+   */
   logout() {
     this.btnmostrarloading.nativeElement.click();
     this.authService.logout();
@@ -124,6 +153,10 @@ export class AppComponent {
     this.router.navigate(link);
   }
 
+  /**
+   *
+   * @memberof AppComponent
+   */
   registrar() {
     this.btnmostrarloading.nativeElement.click();
     this.abfauth.auth.createUserWithEmailAndPassword(
@@ -151,16 +184,29 @@ export class AppComponent {
     );
   }
 
+  /**
+   *
+   * @memberof AppComponent
+   */
   limpiarLogin() {
     this.formLogin.reset();
     this.cerrarloading();
   }
 
+  /**
+   *
+   * @memberof AppComponent
+   */
   limpiarRegistrar() {
     this.formRegistrar.reset();
     this.cerrarloading();
   }
 
+  /**
+   *
+   * @param {string} mensaje
+   * @memberof AppComponent
+   */
   mensajeError(mensaje: string) {
     this.alerta = '';
 
@@ -173,6 +219,10 @@ export class AppComponent {
     }
   }
 
+  /**
+   *
+   * @memberof AppComponent
+   */
   cerrarloading() {
     setTimeout(() => this.btncerrarloading.nativeElement.click(), 500);
   }

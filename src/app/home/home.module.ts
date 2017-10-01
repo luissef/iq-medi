@@ -8,6 +8,11 @@ import { Authexitguard } from './authexit.guard';
 import { HomeComponent } from './home.component';
 import { HomeRoutingModule } from './home.router-module';
 
+/**
+ *
+ * @export
+ * @class HomeModule
+ */
 @NgModule({
   declarations: [
     HomeComponent

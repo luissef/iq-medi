@@ -9,10 +9,17 @@ import { Estudiante } from '../../modelos/estudiante';
 import { Puntajecuestionario } from '../../modelos/puntajecuestionario';
 import { Cuestionarioevaluado } from '../../modelos/cuestionarioevaluado';
 
+/**
+ *
+ * @export
+ * @class EstudianteComponent
+ * @implements {OnInit}
+ */
 @Component({
   selector: 'app-estudiante',
   templateUrl: './estudiante.component.html'
 })
+
 export class EstudianteComponent implements OnInit {
 
   private subEstudiantes: any;
@@ -66,6 +73,16 @@ export class EstudianteComponent implements OnInit {
   @ViewChild('btnmostrarloadingest') btnmostrarloadingest: ElementRef;
   @ViewChild('btncerrarloadingest') btncerrarloadingest: ElementRef;
 
+  /**
+   * Creates an instance of EstudianteComponent.
+   * @param {FormBuilder} fbDetalleEstudiante
+   * @param {FormBuilder} fbBuscarFiltro
+   * @param {FormBuilder} fbRespuestaPregunta
+   * @param {FormBuilder} fbDatosTest
+   * @param {AppService} appService
+   * @param {AuthService} authService
+   * @memberof EstudianteComponent
+   */
   constructor(
     private fbDetalleEstudiante: FormBuilder,
     private fbBuscarFiltro: FormBuilder,
@@ -81,6 +98,10 @@ export class EstudianteComponent implements OnInit {
     this.imageIqMedi = '/assets/resources/iq-medi.png';
   }
 
+  /**
+   *
+   * @memberof EstudianteComponent
+   */
   ngOnInit() {
     this.btnmostrarloadingest.nativeElement.click();
     if (this.authService.isLoggedIn) {
@@ -95,6 +116,10 @@ export class EstudianteComponent implements OnInit {
     }
   }
 
+  /**
+   *
+   * @memberof EstudianteComponent
+   */
   crearComponenteDetalleEstuadiante() {
     this.formDetalleEstudiante = this.fbDetalleEstudiante.group({
       ci: ['', Validators.required],
@@ -104,12 +129,21 @@ export class EstudianteComponent implements OnInit {
     });
   }
 
+  /**
+   *
+   * @memberof EstudianteComponent
+   */
   crearComponenteBuscar() {
     this.formBuscarFiltro = this.fbBuscarFiltro.group({
       buscar: ''
     });
   }
 
+  /**
+   *
+   * @param {String} respu
+   * @memberof EstudianteComponent
+   */
   crearComponenteRespuestaPregunta(respu: String) {
     this.formRespuestaPregunta = this.fbRespuestaPregunta.group({
       tipopregunta: '',
@@ -120,6 +154,10 @@ export class EstudianteComponent implements OnInit {
     });
   }
 
+  /**
+   *
+   * @memberof EstudianteComponent
+   */
   crearComponenteDatosTest() {
     this.formDatosTest = this.fbDatosTest.group({
       fechanacimiento: '',
@@ -128,6 +166,10 @@ export class EstudianteComponent implements OnInit {
     });
   }
 
+  /**
+   *
+   * @memberof EstudianteComponent
+   */
   // tslint:disable-next-line:use-life-cycle-interface
   ngOnDestroy() {
     if (this.subEstudiantes) {
@@ -161,6 +203,10 @@ export class EstudianteComponent implements OnInit {
     }
   }
 
+  /**
+   *
+   * @memberof EstudianteComponent
+   */
   buscar() {
     this.btnmostrarloadingest.nativeElement.click();
     if (this.authService.isLoggedIn) {
@@ -175,6 +221,10 @@ export class EstudianteComponent implements OnInit {
     }
   }
 
+  /**
+   *
+   * @memberof EstudianteComponent
+   */
   buscarporci() {
     this.btnmostrarloadingest.nativeElement.click();
     let auxCi = this.formBuscarFiltro.value.buscar;
@@ -202,6 +252,10 @@ export class EstudianteComponent implements OnInit {
     }
   }
 
+  /**
+   *
+   * @memberof EstudianteComponent
+   */
   buscarpornombres() {
     this.btnmostrarloadingest.nativeElement.click();
     if (this.formBuscarFiltro.value.buscar) {
@@ -219,6 +273,10 @@ export class EstudianteComponent implements OnInit {
     }
   }
 
+  /**
+   *
+   * @memberof EstudianteComponent
+   */
   buscarporapellidos() {
     this.btnmostrarloadingest.nativeElement.click();
     if (this.formBuscarFiltro.value.buscar) {
@@ -236,12 +294,20 @@ export class EstudianteComponent implements OnInit {
     }
   }
 
+  /**
+   *
+   * @memberof EstudianteComponent
+   */
   limpiardetalleEstudiante() {
     this.detallesestudiante = null;
     this.estudiante = null;
     this.crearComponenteDetalleEstuadiante();
   }
 
+  /**
+   *
+   * @memberof EstudianteComponent
+   */
   limpiarTest() {
     this.resultadocuestionario = [];
     this.resultadopregunta = [];
@@ -257,6 +323,11 @@ export class EstudianteComponent implements OnInit {
     }
   }
 
+  /**
+   *
+   * @param {*} estudiante
+   * @memberof EstudianteComponent
+   */
   setUpdEstudiante(estudiante: any) {
     this.btnmostrarloadingest.nativeElement.click();
     this.detallesestudiante = estudiante;
@@ -269,6 +340,11 @@ export class EstudianteComponent implements OnInit {
     this.cerrarloading();
   }
 
+  /**
+   *
+   * @param {*} estudiante
+   * @memberof EstudianteComponent
+   */
   setDelEstudiante(estudiante: any) {
     this.btnmostrarloadingest.nativeElement.click();
     this.detallesestudiante = estudiante;
@@ -277,12 +353,22 @@ export class EstudianteComponent implements OnInit {
     this.btnBorrarEstudiante.nativeElement.click();
   }
 
+  /**
+   *
+   * @param {*} estudiante
+   * @memberof EstudianteComponent
+   */
   setEvalEstudiante(estudiante: any) {
     this.btnmostrarloadingest.nativeElement.click();
     this.detallesestudiante = estudiante;
     this.cerrarloading();
   }
 
+  /**
+   *
+   * @param {*} test
+   * @memberof EstudianteComponent
+   */
   setTestEstudiante(test: any) {
     this.btnmostrarloadingest.nativeElement.click();
     this.test = test;
@@ -329,6 +415,11 @@ export class EstudianteComponent implements OnInit {
     this.cerrarloading();
   }
 
+  /**
+   *
+   * @returns
+   * @memberof EstudianteComponent
+   */
   ismayor() {
     if (this.formDatosTest.value.edadmeses >= this.edadminima) {
       return true;
@@ -337,6 +428,11 @@ export class EstudianteComponent implements OnInit {
     }
   }
 
+  /**
+   *
+   * @returns
+   * @memberof EstudianteComponent
+   */
   isRespuesta() {
     // tslint:disable-next-line:prefer-const
     let auxPuntaje = '';
@@ -350,6 +446,10 @@ export class EstudianteComponent implements OnInit {
     return auxPuntaje;
   }
 
+  /**
+   *
+   * @memberof EstudianteComponent
+   */
   updateEstudiante() {
     this.btnmostrarloadingest.nativeElement.click();
     this.estudiante = new Estudiante(
@@ -366,6 +466,10 @@ export class EstudianteComponent implements OnInit {
     this.cerrarloading();
   }
 
+  /**
+   *
+   * @memberof EstudianteComponent
+   */
   deleteEstudiante() {
     this.btnmostrarloadingest.nativeElement.click();
     this.appService.deleteEstudiante(this.detallesestudiante.$key);
@@ -373,29 +477,51 @@ export class EstudianteComponent implements OnInit {
     this.cerrarloading();
   }
 
+  /**
+   *
+   * @memberof EstudianteComponent
+   */
   selPregunta() {
     // tslint:disable-next-line:radix
     this.numero_pregunta = parseInt(this.formRespuestaPregunta.value.nropregunta);
     this.irPregunta();
   }
 
+  /**
+   *
+   * @memberof EstudianteComponent
+   */
   antes() {
     // tslint:disable-next-line:radix
     this.numero_pregunta = parseInt(this.formRespuestaPregunta.value.nropregunta) - 1;
     this.irPregunta();
   }
 
+  /**
+   *
+   * @memberof EstudianteComponent
+   */
   siguiente() {
     // tslint:disable-next-line:radix
     this.numero_pregunta = parseInt(this.formRespuestaPregunta.value.nropregunta) + 1;
     this.irPregunta();
   }
 
+  /**
+   *
+   * @param {number} numero
+   * @memberof EstudianteComponent
+   */
+
   preguntaSub(numero: number) {
     this.numero_pregunta = numero;
     this.irPregunta();
   }
 
+  /**
+   *
+   * @memberof EstudianteComponent
+   */
   irPregunta() {
     this.stop();
 
@@ -431,6 +557,10 @@ export class EstudianteComponent implements OnInit {
     }
   }
 
+  /**
+   *
+   * @memberof EstudianteComponent
+   */
   sigPregunta() {
     if (this.numero_pregunta > 0 && this.numero_pregunta <= this.numeropreguntas) {
       // tslint:disable-next-line:prefer-const
@@ -489,10 +619,18 @@ export class EstudianteComponent implements OnInit {
     this.irPregunta();
   }
 
+  /**
+   *
+   * @memberof EstudianteComponent
+   */
   calificarTest() {
    console.log('Calificar');
   }
 
+  /**
+   *
+   * @memberof EstudianteComponent
+   */
   cancelarTest() {
     this.btnmostrarloadingest.nativeElement.click();
     this.resultadocuestionario = [];
@@ -516,7 +654,10 @@ export class EstudianteComponent implements OnInit {
     this.cerrarloading();
   }
 
-  // Cronometro funciones
+  /**
+   *
+   * @memberof EstudianteComponent
+   */
   start() {
     this.segundo = 0;
     this.minuto = 0;
@@ -559,11 +700,19 @@ export class EstudianteComponent implements OnInit {
     }, 100);
   }
 
+  /**
+   *
+   * @memberof EstudianteComponent
+   */
   wait() {
     clearInterval(this.intTiempo);
     this.intTiempo = null;
   }
 
+  /**
+   *
+   * @memberof EstudianteComponent
+   */
   stop() {
     clearInterval(this.intTiempo);
     this.intTiempo = null;
@@ -572,6 +721,10 @@ export class EstudianteComponent implements OnInit {
     this.hora = 0;
   }
 
+  /**
+   *
+   * @memberof EstudianteComponent
+   */
   cerrarloading() {
     setTimeout(() => this.btncerrarloadingest.nativeElement.click(), 500);
   }

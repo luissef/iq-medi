@@ -4,11 +4,16 @@ import { RouterModule, Routes } from '@angular/router';
 import { HomeModule } from './home/home.module';
 import { WorkModule } from './work/work.module';
 
-const appRoutes: Routes = []
+const APP_ROUTES: Routes = []
 
+/**
+ *
+ * @export
+ * @class AppRoutingModule
+ */
 @NgModule({
   imports: [
-    RouterModule.forRoot(appRoutes)
+    RouterModule.forRoot(APP_ROUTES)
   ],
   exports: [
     RouterModule,

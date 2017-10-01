@@ -11,6 +11,11 @@ import { Estudiante } from './modelos/estudiante';
 
 import * as firebase from 'firebase';
 
+/**
+ *
+ * @export
+ * @class AppService
+ */
 @Injectable()
 export class AppService {
   mensaje: string;
@@ -27,6 +32,11 @@ export class AppService {
     private abfauth: AngularFireAuth,
     private authService: AuthService) { }
 
+  /**
+   *
+   * @param {Usuario} usuario
+   * @memberof AppService
+   */
   setUsuario(usuario: Usuario) {
     this.df.database.ref('usuario/' + usuario.id).set({
       username: usuario.usuario,
@@ -35,6 +45,11 @@ export class AppService {
     });
   }
 
+  /**
+   *
+   * @param {Estudiante} estudiante
+   * @memberof AppService
+   */
   setEstudiante(estudiante: Estudiante) {
     this.df.database.ref('estudiante_usuario/' + estudiante.usuario).child('estudiante').push({
       ci: estudiante.ci,
@@ -45,6 +60,12 @@ export class AppService {
     });
   }
 
+  /**
+   *
+   * @param {Usuario} usuario
+   * @returns
+   * @memberof AppService
+   */
   getUsuario (usuario: Usuario) {
     const resultado = this.df.database.ref('usuario').orderByChild('email').equalTo(usuario.email).once('value')
       .then(function(snapshot) {
@@ -61,21 +82,45 @@ export class AppService {
     return resultado;
   }
 
+  /**
+   *
+   * @param {Usuario} usuario
+   * @returns
+   * @memberof AppService
+   */
   getEstudiantes(usuario: Usuario) {
     this.estudiantes = this.df.list('estudiante_usuario/' + usuario.id + '/estudiante') as FirebaseListObservable<any[]>;
     return this.estudiantes;
   }
 
+  /**
+   *
+   * @param {Estudiante} estudiante
+   * @returns
+   * @memberof AppService
+   */
   getTest(estudiante: Estudiante) {
     this.tests = this.df.list('test') as FirebaseListObservable<any[]>;
     return this.tests;
   }
 
+  /**
+   *
+   * @param {*} test
+   * @returns
+   * @memberof AppService
+   */
   getTestMateriales(test: any) {
     this.material = this.df.list('test/' + test.$key + '/material') as FirebaseListObservable<any[]>;
     return this.material;
   }
 
+  /**
+   *
+   * @param {*} test
+   * @returns
+   * @memberof AppService
+   */
   getSubTest(test: any) {
     this.subtests = this.df.list('test/' + test.$key + '/subtest', {
       query: {
@@ -85,6 +130,13 @@ export class AppService {
     return this.subtests;
   }
 
+  /**
+   *
+   * @param {*} test
+   * @param {number} numero_pregunta
+   * @returns
+   * @memberof AppService
+   */
   getPregunta(test: any, numero_pregunta: number) {
     this.pregunta = this.df.list('test/' + test.$key + '/pregunta', {
       query: {
@@ -95,6 +147,13 @@ export class AppService {
     return this.pregunta;
   }
 
+  /**
+   *
+   * @param {*} test
+   * @param {number} numero_pregunta
+   * @returns
+   * @memberof AppService
+   */
   getPreguntaRespuesta(test: any, numero_pregunta: number) {
     this.respuesta = this.df.list('test/' + test.$key + '/respuesta', {
       query: {
@@ -105,6 +164,13 @@ export class AppService {
     return this.respuesta;
   }
 
+  /**
+   *
+   * @param {Usuario} usuario
+   * @param {number} ci
+   * @returns
+   * @memberof AppService
+   */
   getEstudiantesFiltroCi(usuario: Usuario, ci: number) {
     this.estudiantes = this.df.list('estudiante_usuario/' + usuario.id + '/estudiante', {
       query: {
@@ -116,6 +182,13 @@ export class AppService {
     return this.estudiantes;
   }
 
+  /**
+   *
+   * @param {Usuario} usuario
+   * @param {string} nombres
+   * @returns
+   * @memberof AppService
+   */
   getEstudiantesFiltroNombres(usuario: Usuario, nombres: string) {
     this.estudiantes = this.df.list('estudiante_usuario/' + usuario.id + '/estudiante', {
       query: {
@@ -128,6 +201,13 @@ export class AppService {
     return this.estudiantes;
   }
 
+  /**
+   *
+   * @param {Usuario} usuario
+   * @param {string} apellidos
+   * @returns
+   * @memberof AppService
+   */
   getEstudiantesFiltroApellidos(usuario: Usuario, apellidos: string) {
     this.estudiantes = this.df.list('estudiante_usuario/' + usuario.id + '/estudiante', {
       query: {
@@ -140,6 +220,11 @@ export class AppService {
     return this.estudiantes;
   }
 
+  /**
+   *
+   * @param {Usuario} usuario
+   * @memberof AppService
+   */
   pushChildUltimoAcceso(usuario: Usuario) {
     // tslint:disable-next-line:prefer-const
     /*let auxFecha = new Date();
@@ -161,6 +246,11 @@ export class AppService {
     const auxCabecera = this.df.database.ref('test/-KqMrQPAJJ2H5Q1Pz01v')
   }
 
+  /**
+   *
+   * @param {Estudiante} estudiante
+   * @memberof AppService
+   */
   updateEstudiante(estudiante: Estudiante) {
     this.estudiantes.update(estudiante.id, {
       ci: estudiante.ci,
@@ -171,6 +261,11 @@ export class AppService {
     });
   }
 
+  /**
+   *
+   * @param {string} key
+   * @memberof AppService
+   */
   deleteEstudiante(key: string) {
     this.estudiantes.remove(key);
   }

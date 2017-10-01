@@ -9,6 +9,11 @@ import { Authguard } from '../home/auth.guard';
 import { EstudianteComponent } from './estudiante/estudiante.component';
 import { SaludoComponent } from './saludo/saludo.component';
 
+/**
+ *
+ * @export
+ * @class WorkModule
+ */
 @NgModule({
   declarations: [
     WorkComponent,

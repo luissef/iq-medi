@@ -11,11 +11,13 @@ import { WorkModule } from './work/work.module';
 import { AuthService } from './home/auth.service';
 import { AppService } from './app.service';
 
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { AngularFireModule } from 'angularfire2';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { AngularFireDatabaseModule } from 'angularfire2/database';
+
+import { APP_BASE_HREF } from '@angular/common';
 
 export const firebaseConfig = {
   apiKey: 'AIzaSyDz6Z7GWHd3qtjH19l_q3DR63daZrIihIY',
@@ -25,6 +27,11 @@ export const firebaseConfig = {
   messagingSenderId: '303493590025'
 }
 
+/**
+ *
+ * @export
+ * @class AppModule
+ */
 @NgModule({
   declarations: [
     AppComponent
@@ -34,11 +41,12 @@ export const firebaseConfig = {
     AppRoutingModule,
     HomeModule,
     WorkModule,
+    FormsModule,
     ReactiveFormsModule,
     AngularFireDatabaseModule,
     AngularFireModule.initializeApp(firebaseConfig)
   ],
-  providers: [AngularFireAuth, AuthService, AppService],
+  providers: [AngularFireAuth, AuthService, AppService, { provide: APP_BASE_HREF, useValue: '/' }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

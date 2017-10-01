@@ -19,6 +19,11 @@ const homeRoutes: Routes = [
   ]}
 ]
 
+/**
+ *
+ * @export
+ * @class WorkRoutingModule
+ */
 @NgModule({
   imports: [
     RouterModule.forChild(homeRoutes)
