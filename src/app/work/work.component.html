@@ -1,10 +1,10 @@
 <ul class="nav nav-tabs">
   <li class="nav-item dropdown">
-    <a class="nav-link dropdown-toggle active" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false"><i class="fa fa-user" aria-hidden="true"> <b>Persona</b></i></a>
+    <a class="nav-link dropdown-toggle active" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false"><i class="fa fa-user" aria-hidden="true">&nbsp;<b>Persona</b></i></a>
     <div class="dropdown-menu">
-      <a class="dropdown-item" href="#" data-toggle="modal" data-target="#registrarEstudianteModel"><i class="fa fa-user-plus" aria-hidden="true"> <b>Registrar Persona</b></i></a>
+      <a class="dropdown-item" href="#" data-toggle="modal" data-target="#registrarEstudianteModel"><i class="fa fa-user-plus" aria-hidden="true">&nbsp;<b>Registrar Persona</b></i></a>
       <div class="dropdown-divider"></div>
-      <a class="dropdown-item" href="#" routerLink="persona" routerLinkActive="active"><i class="fa fa-users" aria-hidden="true"> <b>Personas</b></i><span class="sr-only">(current)</span></a>
+      <a class="dropdown-item" href="#" routerLink="persona" routerLinkActive="active"><i class="fa fa-users" aria-hidden="true">&nbsp;<b>Personas</b></i><span class="sr-only">(current)</span></a>
     </div>
   </li>
 </ul>
@@ -30,7 +30,7 @@
               </div>
               <br>
               <div class="input-group">
-              <div class="input-group-addon"><i class="fa fa-file-text" aria-hidden="true"> <b>Cédula de Identificación</b></i></div>
+              <div class="input-group-addon"><i class="fa fa-file-text" aria-hidden="true">&nbsp;<b>Cédula de Identificación</b></i></div>
                 <input type="number" class="form-control" id="ci" placeholder="Cédula de Identificación" formControlName="ci">
               </div>
               <div *ngIf="formRegistrarEstudiante.controls.ci.errors && formRegistrarEstudiante.controls.ci.touched">
@@ -40,7 +40,7 @@
               </div>
               <br>
               <div class="input-group">
-              <div class="input-group-addon"><i class="fa fa-file-text" aria-hidden="true"> <b>Nombres</b></i></div>
+              <div class="input-group-addon"><i class="fa fa-file-text" aria-hidden="true">&nbsp;<b>Nombres</b></i></div>
                 <input type="text" class="form-control" id="nombres" placeholder="Nombres" formControlName="nombres">
               </div>
               <div *ngIf="formRegistrarEstudiante.controls.nombres.errors && formRegistrarEstudiante.controls.nombres.touched">
@@ -50,7 +50,7 @@
               </div>
               <br>
               <div class="input-group">
-              <div class="input-group-addon"><i class="fa fa-file-text" aria-hidden="true"> <b>Apellidos</b></i></div>
+              <div class="input-group-addon"><i class="fa fa-file-text" aria-hidden="true">&nbsp;<b>Apellidos</b></i></div>
                 <input type="text" class="form-control" id="apellidos" placeholder="Apellidos" formControlName="apellidos">
               </div>
               <div *ngIf="formRegistrarEstudiante.controls.apellidos.errors && formRegistrarEstudiante.controls.apellidos.touched">
@@ -60,7 +60,7 @@
               </div>
               <br>
               <div class="input-group">
-              <div class="input-group-addon"><i class="fa fa-calendar" aria-hidden="true"> <b>Fecha de Nacimiento</b></i></div>
+              <div class="input-group-addon"><i class="fa fa-calendar" aria-hidden="true">&nbsp;<b>Fecha de Nacimiento</b></i></div>
                 <input type="date" class="form-control" id="fechanacimiento" placeholder="Fecha de Nacimiento" formControlName="fechanacimiento">
               </div>
               <div *ngIf="formRegistrarEstudiante.controls.fechanacimiento.errors && formRegistrarEstudiante.controls.fechanacimiento.touched">

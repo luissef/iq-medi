@@ -2,25 +2,25 @@
   <div class="input-group">
     <span class="input-group-btn">
       <button class="btn btn-outline-success btn-sm" type="button" (click)="buscar()">
-        <i class="fa fa-refresh" aria-hidden="true"> <b>Recargar</b></i>
+        <i class="fa fa-refresh" aria-hidden="true">&nbsp;<b>Recargar</b></i>
       </button>
     </span>
     <input type="text" class="form-control" id="buscar" placeholder="CI/Nombres/Apellidos" formControlName="buscar">
     <div class="input-group-btn">
       <button type="button" class="btn btn-outline-success btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-        <i class="fa fa-search" aria-hidden="true"> <b>Buscar por</b></i>
+        <i class="fa fa-search" aria-hidden="true">&nbsp;<b>Buscar por</b></i>
       </button>
       <div class="dropdown-menu dropdown-menu-right">
         <a class="dropdown-item" (click)="buscarporci()">
-          <i class="fa fa-file-text" aria-hidden="true"> <b>Cédula de Identificación</b></i>
+          <i class="fa fa-file-text" aria-hidden="true">&nbsp;<b>Cédula de Identificación</b></i>
         </a>
         <div role="separator" class="dropdown-divider"></div>
         <a class="dropdown-item" (click)="buscarpornombres()">
-          <i class="fa fa-file-text" aria-hidden="true"> <b>Nombres</b></i>
+          <i class="fa fa-file-text" aria-hidden="true">&nbsp;<b>Nombres</b></i>
         </a>
         <div role="separator" class="dropdown-divider"></div>
         <a class="dropdown-item" (click)="buscarporapellidos()">
-          <i class="fa fa-file-text" aria-hidden="true"> <b>Apellidos</b></i>
+          <i class="fa fa-file-text" aria-hidden="true">&nbsp;<b>Apellidos</b></i>
         </a>
       </div>
     </div>
@@ -40,7 +40,16 @@
             Apellidos
           </th>
           <th>
-            Evaluar el Coeficiente Intelectual
+            Edad Mental (Meses)
+          </th>
+          <th>
+            CI Evaluado
+           </th>
+          <th>
+            Nivel de ACG
+          </th>
+          <th>
+            Evaluar el CI
           </th>
           <th>
             Actualizar
@@ -55,25 +64,32 @@
           <td>{{estudiante.ci}}</td>
           <td>{{estudiante.nombres}}</td>
           <td>{{estudiante.apellidos}}</td>
+          <td>{{estudiante.edadmental}}</td>
+          <td>{{estudiante.cicalculado}}</td>
+          <td>{{estudiante.nivelcognitivo}}</td>
           <td>
             <button type="button" class="btn btn-outline-success btn-sm" data-toggle="modal" data-target="#historialTestModal" (click)="setEvalEstudiante(estudiante)">
-              <i class="fa fa-list-ol" aria-hidden="true"> <b>Evaluar</b></i>
+              <i class="fa fa-list-ol" aria-hidden="true">&nbsp;<b>Evaluar</b></i>
             </button>
           </td>
           <td>
             <button type="button" class="btn btn-outline-success btn-sm" data-toggle="modal" data-target="#detalleEstudianteModel" (click)="setUpdEstudiante(estudiante)">
-              <i class="fa fa-pencil-square-o" aria-hidden="true"> <b>Actualizar</b></i>
+              <i class="fa fa-pencil-square-o" aria-hidden="true">&nbsp;<b>Actualizar</b></i>
             </button>
           </td>
           <td>
             <button type="button" class="btn btn-outline-warning btn-sm" (click)="setDelEstudiante(estudiante)">
-              <i class="fa fa-trash-o" aria-hidden="true"> <b>Eliminar</b></i>
+              <i class="fa fa-trash-o" aria-hidden="true">&nbsp;<b>Eliminar</b></i>
             </button>
           </td>
         </tr>
       </tbody>
   </table>
 </div>
+<hr>
+<i class="fa fa-info-circle" aria-hidden="true">&nbsp;(CI - Coeficiente Intelectual)</i>
+<br>
+<i class="fa fa-info-circle" aria-hidden="true">&nbsp;(ACG - Aptitud Cognitiva General)</i>
 
 <div class="modal fade" id="detalleEstudianteModel" tabindex="-1" data-keyboard="false" data-backdrop="static" role="dialog" aria-labelledby="detalleEstudianteModelLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
@@ -96,7 +112,7 @@
               </div>
               <br>
               <div class="input-group">
-              <div class="input-group-addon"><i class="fa fa-file-text" aria-hidden="true"> <b>Cédula de Identificación</b></i></div>
+              <div class="input-group-addon"><i class="fa fa-file-text" aria-hidden="true">&nbsp;<b>Cédula de Identificación</b></i></div>
                 <input type="number" class="form-control" id="ci" placeholder="Cédula de Identificación" formControlName="ci">
               </div>
               <div *ngIf="formDetalleEstudiante.controls.ci.errors && formDetalleEstudiante.controls.ci.touched">
@@ -106,7 +122,7 @@
               </div>
               <br>
               <div class="input-group">
-              <div class="input-group-addon"><i class="fa fa-file-text" aria-hidden="true"> <b>Nombres</b></i></div>
+              <div class="input-group-addon"><i class="fa fa-file-text" aria-hidden="true">&nbsp;<b>Nombres</b></i></div>
                 <input type="text" class="form-control" id="nombres" placeholder="Nombres" formControlName="nombres">
               </div>
               <div *ngIf="formDetalleEstudiante.controls.nombres.errors && formDetalleEstudiante.controls.nombres.touched">
@@ -116,7 +132,7 @@
               </div>
               <br>
               <div class="input-group">
-              <div class="input-group-addon"><i class="fa fa-file-text" aria-hidden="true"> <b>Apellidos</b></i></div>
+              <div class="input-group-addon"><i class="fa fa-file-text" aria-hidden="true">&nbsp;<b>Apellidos</b></i></div>
                 <input type="text" class="form-control" id="apellidos" placeholder="Apellidos" formControlName="apellidos">
               </div>
               <div *ngIf="formDetalleEstudiante.controls.apellidos.errors && formDetalleEstudiante.controls.apellidos.touched">
@@ -126,7 +142,7 @@
               </div>
               <br>
               <div class="input-group">
-              <div class="input-group-addon"><i class="fa fa-calendar" aria-hidden="true"> <b>Fecha de Nacimiento</b></i></div>
+              <div class="input-group-addon"><i class="fa fa-calendar" aria-hidden="true">&nbsp;<b>Fecha de Nacimiento</b></i></div>
                 <input type="date" class="form-control" id="fechanacimiento" placeholder="Fecha de Nacimiento" formControlName="fechanacimiento">
               </div>
               <div *ngIf="formDetalleEstudiante.controls.fechanacimiento.errors && formDetalleEstudiante.controls.fechanacimiento.touched">
@@ -208,7 +224,6 @@
                 <i class="fa fa-list-alt" aria-hidden="true"></i>
                 <b>{{test.nombre}}</b>
               </button>
-              <hr>
             </td>
           </tr>
         </table>
@@ -236,15 +251,15 @@
       </div>
       <div class="modal-body">
         <div class="input-group">
-          <div class="input-group-addon"><i class="fa fa-file-text" aria-hidden="true"> <b>Fecha de Nacimiento</b></i></div>
+          <div class="input-group-addon"><i class="fa fa-file-text" aria-hidden="true">&nbsp;<b>Fecha de Nacimiento</b></i></div>
           <input type="text" class="form-control" id="inlineFormInputGroup" placeholder="Fecha de Nacimiento" formControlName="fechanacimiento" readonly>
         </div>
         <div class="input-group">
-          <div class="input-group-addon"><i class="fa fa-file-text" aria-hidden="true"> <b>Fecha de Test</b></i></div>
+          <div class="input-group-addon"><i class="fa fa-file-text" aria-hidden="true">&nbsp;<b>Fecha de Test</b></i></div>
           <input type="text" class="form-control" id="inlineFormInputGroup" placeholder="Fecha de Test" formControlName="fechatest" readonly>
         </div>
         <div class="input-group">
-          <div class="input-group-addon"><i class="fa fa-file-text" aria-hidden="true"> <b>Edad en Meses</b></i></div>
+          <div class="input-group-addon"><i class="fa fa-file-text" aria-hidden="true">&nbsp;<b>Edad en Meses</b></i></div>
           <input type="text" class="form-control" id="inlineFormInputGroup" placeholder="Edad en Meses" formControlName="edadmeses" readonly>
         </div>
         <div class="card" style="height:200px;overflow-y: scroll;">
@@ -253,10 +268,15 @@
             <p *ngFor="let mate of material">{{mate.item}}</p>
           </div>
         </div>
+        <div *ngIf="!ismayor()" class="card card-outline-warning">
+            <div class="card-block">
+              <p><i class="fa fa-info-circle" aria-hidden="true"></i>&nbsp;La edad real de la persona está fuera del rango de edades permitidos para este test ( {{(edadminima/12) + ' años'}}  {{edadmaxima===0? ' o mayor':(' a ' + (edadmaxima/12) + ' años')}}).</p>
+            </div>
+          </div>
       </div>
       <div class="modal-footer">
         <button type="button" *ngIf="ismayor()" class="btn btn-success" data-toggle="modal" data-target="#preguntaModal" (click)="sigPregunta()">
-          <i class="fa fa-play" aria-hidden="true"> <b>Iniciar Evaluación</b></i>
+          <i class="fa fa-play" aria-hidden="true">&nbsp;<b>Iniciar Evaluación</b></i>
         </button>
         <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="limpiarTest()">
           <i class="fa fa-times" aria-hidden="true"></i>
@@ -280,39 +300,47 @@
         </button>
       </div>
       <div class="modal-body">
-          <h6><i class="fa fa-question-circle-o" aria-hidden="true"></i>&nbsp;Pregunta&nbsp;
-            <button type="button" class="btn btn-outline-primary" (click)="antes()" [disabled]="(numero_pregunta==1 || numero_pregunta==0) ? true : false">
-              <i class="fa fa-arrow-left" aria-hidden="true"></i>
-            </button>
-            <select class="custom-select" id="inlineFormCustomSelect" id="nropregunta" formControlName="nropregunta" (change)="selPregunta()">
-              <option *ngFor="let nro of nropreguntas" value="{{nro.nropre}}"
-              [disabled]="nro.nropre==0 ? true : false" [selected]="nro.nropre==numero_pregunta ? true : false">{{nro.nropre!=0 ? nro.nropre: ''}}</option>
-            </select>
-            <button type="button" class="btn btn-outline-primary" (click)="siguiente()" [disabled]="(numero_pregunta==numeropreguntas || numero_pregunta==0) ? true : false">
-              <i class="fa fa-arrow-right" aria-hidden="true"></i>
-            </button>
-        </h6>
-        <div class="dropdown">
-          <button class="btn btn-primary btn-block dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            <i class="fa fa-list-alt" aria-hidden="true"> <b>Opcional - Escoger Sub-Test</b></i>
+        <h6 *ngIf="!resutadofinal"><i class="fa fa-question-circle-o" aria-hidden="true"></i>&nbsp;Pregunta&nbsp;{{numero_pregunta!==0?numero_pregunta:''}}&nbsp;</h6>
+        <hr *ngIf="!resutadofinal">
+        <div *ngIf="((testcompleto || preguntaopcional) && !resutadofinal) ? true : false">
+          <h6><i class="fa fa-bars" aria-hidden="true"></i>&nbsp;Menú de Navegación del Cuestionario&nbsp;</h6>
+          <button type="button" class="btn btn-outline-primary" (click)="antes()" [disabled]="(numero_pregunta==1 || numero_pregunta==0) ? true : false">
+            <i class="fa fa-arrow-left" aria-hidden="true"></i>
           </button>
-          <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
-            <h6 class="dropdown-header">Sub-Tests</h6>
-            <button *ngFor="let subT of tipoSubTests"  class="dropdown-item" type="button" (click)="preguntaSub(subT.pregunta)" >{{subT.test}}</button>
+          <select class="custom-select" id="inlineFormCustomSelect" id="nropregunta" formControlName="nropregunta" (change)="selPregunta()">
+            <option *ngFor="let nro of nropreguntas" value="{{nro.nropre}}"
+            [disabled]="(nro.nropre==0) ? true : false" [selected]="nro.nropre==numero_pregunta ? true : false">{{nro.nropre!=0 ? nro.nropre: ''}}</option>
+          </select>
+          <button type="button" class="btn btn-outline-primary" (click)="siguiente()" [disabled]="(numero_pregunta==numeropreguntas || numero_pregunta==0) ? true : false">
+            <i class="fa fa-arrow-right" aria-hidden="true"></i>
+          </button>
+          <button type="button" class="btn btn-outline-primary" (click)="irresumen()" [disabled]="(numero_pregunta==0) ? true : false">
+            <i class="fa fa-list-alt" aria-hidden="true">&nbsp;Ir a resumen de resultados</i>
+          </button>
+          <hr>
+          <div class="dropdown">
+            <button class="btn btn-primary btn-block dropdown-toggle" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <i class="fa fa-list-alt" aria-hidden="true"><b>&nbsp;Opcional - Escoger Sub-Test</b></i>
+            </button>
+            <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
+              <h6 class="dropdown-header">Sub-Tests</h6>
+              <button *ngFor="let subT of tipoSubTests"  class="dropdown-item" type="button" (click)="preguntaSub(subT.pregunta)" >{{subT.test}}</button>
+            </div>
           </div>
+          <hr>
         </div>
-        <hr>
         <ul class="list-group" *ngFor="let preg of pregunta">
-          <li class="list-group-item active"><i class="fa fa-question-circle-o" aria-hidden="true"> <b>Preguntar:&nbsp;</b></i>{{preg.pregunta}}</li>
-          <li class="list-group-item list-group-item-action"><i class="fa fa-info-circle" aria-hidden="true"> <b>Consigna:&nbsp;</b></i>{{ preg.aplicacion}}</li>
-          <li class="list-group-item list-group-item-action"><i class="fa fa-info-circle" aria-hidden="true"> <b>Modo de preguntar:&nbsp;</b></i>{{ preg.auxpregunta}}</li>
-          <li class="list-group-item list-group-item-action"><i class="fa fa-info-circle" aria-hidden="true"> <b>Consejo:&nbsp;</b></i>{{ preg.consejo}}</li>
-          <li class="list-group-item active"><i class="fa fa-clock-o" aria-hidden="true"> <b>Tiempo:&nbsp;</b></i> </li>
+          <li class="list-group-item list-group-item-warning" *ngIf="preg.opcional ? true : false"><i class="fa fa-info-circle" aria-hidden="true">&nbsp;<b>Pregunta Opcional&nbsp;</b></i>Puede ir directamente al resumen de resultados para calificar el test.</li>
+          <li class="list-group-item active"><i class="fa fa-question-circle-o" aria-hidden="true">&nbsp;<b>Preguntar:&nbsp;</b></i>{{preg.pregunta}}</li>
+          <li class="list-group-item list-group-item-action"><i class="fa fa-info-circle" aria-hidden="true">&nbsp;<b>Consigna:&nbsp;</b></i>{{ preg.aplicacion}}</li>
+          <li class="list-group-item list-group-item-action"><i class="fa fa-info-circle" aria-hidden="true">&nbsp;<b>Modo de preguntar:&nbsp;</b></i>{{ preg.auxpregunta}}</li>
+          <li class="list-group-item list-group-item-action"><i class="fa fa-info-circle" aria-hidden="true">&nbsp;<b>Consejo:&nbsp;</b></i>{{ preg.consejo}}</li>
+          <li class="list-group-item active"><i class="fa fa-clock-o" aria-hidden="true">&nbsp;<b>Tiempo:&nbsp;</b></i> </li>
           <li class="list-group-item list-group-item-action">
             <p>horas:&nbsp;{{hora}}&nbsp;minutos:&nbsp;{{minuto}}&nbsp;segundos:&nbsp;{{segundo}}</p>
           </li>
           <li class="list-group-item active">
-            <i class="fa fa-check-circle-o" aria-hidden="true"> <b>Puntaje:&nbsp;</b></i>
+            <i class="fa fa-check-circle-o" aria-hidden="true">&nbsp;<b>Puntaje:&nbsp;</b></i>
           </li>
           <select class="form-control" id="respuesta" id="respuesta" formControlName="respuesta" (change)="wait()">
             <option value="" selected disabled>Selecciones el Puntaje</option>
@@ -326,14 +354,17 @@
           <input readonly type="text" hidden class="form-control form-control-success" id="tipopregunta" placeholder="Tipo Pregunta" formControlName="tipopregunta" [(ngModel)]="preg.tipo_pregunta" value="{{preg.tipo_pregunta}}">
           <input readonly type="text" hidden class="form-control form-control-success" id="errores" placeholder="" formControlName="errores" [(ngModel)]="preg.errores" value="{{preg.errores}}">
           <input readonly type="text" hidden class="form-control form-control-success" id="siguiente" placeholder="" formControlName="siguiente" [(ngModel)]="preg.siguiente" value="{{preg.siguiente}}">
+          <input readonly type="text" hidden class="form-control form-control-success" id="categoria" placeholder="" formControlName="categoria" [(ngModel)]="preg.categoria" value="{{preg.categoria}}">
+          <input readonly type="text" hidden class="form-control form-control-success" id="opcional" placeholder="" formControlName="opcional" [(ngModel)]="preg.opcional" value="{{preg.opcional}}">
+          <input readonly type="text" hidden class="form-control form-control-success" id="sigopcional" placeholder="" formControlName="sigopcional" [(ngModel)]="preg.sigopcional" value="{{preg.sigopcional}}">
         </ul>
         <div style="width: 100%;margin: 0 auto;">
           <button type="button" *ngIf="!(calificar || numero_pregunta==0)" class="btn btn-success btn-block" (click)="start()">
-            <i class="fa fa-clock-o" aria-hidden="true"> <b>Iniciar Tiempo</b></i>
+            <i class="fa fa-clock-o" aria-hidden="true">&nbsp;<b>Iniciar Tiempo</b></i>
           </button>
         </div>
-        <h5 *ngIf="(calificar && numero_pregunta==0)">Historial de Respuestas</h5>
-        <div *ngIf="(calificar && numero_pregunta==0)" style="height:300px;overflow-y: scroll;">
+        <h5 *ngIf="((calificar && numero_pregunta==0) && !resutadofinal)">Historial de Respuestas</h5>
+        <div *ngIf="((calificar && numero_pregunta==0) && !resutadofinal)" style="height:300px;overflow-y: scroll;">
             <table class="table table-bordered table-sm table-hover">
                 <thead>
                   <tr>
@@ -341,10 +372,10 @@
                       # de Pregunta
                     </th>
                     <th>
-                      Tiempo
+                      Puntaje
                     </th>
                     <th>
-                      Tiempo
+                      Tiempo (Segundos)
                     </th>
                   </tr>
                 </thead>
@@ -357,22 +388,81 @@
                 </tbody>
             </table>
           </div>
+          <div>
+            <h5 *ngIf="resutadofinal">Resultados Tabulados</h5>
+            <hr *ngIf="resutadofinal">
+            <h6 *ngIf="resutadofinal">Resultados Tabulados por Categoría</h6>
+            <div *ngIf="resutadofinal" style="height:250px;overflow-y: scroll;">
+                <table class="table table-bordered table-sm table-hover">
+                    <thead>
+                      <tr>
+                        <th>
+                          Categoria de pregunta
+                        </th>
+                        <th>
+                          Puntaje
+                        </th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr *ngFor="let resultCat of resultadoCategoria">
+                        <td>{{resultCat.categoria === 0? 'Normal': resultCat.categoria}}</td>
+                        <td>{{resultCat.puntaje}}</td>
+                      </tr>
+                    </tbody>
+                </table>
+              </div>
+              <hr *ngIf="resutadofinal">
+              <h6 *ngIf="resutadofinal">Resultados Generales</h6>
+              <div *ngIf="resutadofinal" style="height:80px;overflow-y: scroll;">
+                <table class="table table-bordered table-sm table-hover">
+                  <thead>
+                    <tr>
+                      <th>
+                        Fecha Test
+                      </th>
+                      <th>
+                        Edad Mental
+                      </th>
+                      <th>
+                        Puntaje Total
+                      </th>
+                      <th>
+                        CI
+                      </th>
+                      <th>
+                        Nivel de ACG
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let testCalf of testCalificado">
+                      <td>{{testCalf.fecha}}</td>
+                      <td>{{testCalf.edadmental}}</td>
+                      <td>{{testCalf.puntajetotal}}</td>
+                      <td>{{testCalf.ci}}</td>
+                      <td>{{testCalf.nivelcognitivo}}</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+          </div>
         <hr>
-        <div style="width: 100%;margin: 0 auto;">
+        <div style="width: 100%;margin: 0 auto;" *ngIf="!resutadofinal">
           <button type="button" class="btn btn-success btn-block" *ngIf="(calificar && numero_pregunta==0)" (click)="calificarTest()">
-            <i class="fa fa-arrow-right" aria-hidden="true"> <b>Calificar Test</b></i>
+            <i class="fa fa-arrow-right" aria-hidden="true">&nbsp;<b>Calificar Test</b></i>
           </button>
         </div>
         <div style="width: 100%;margin: 0 auto;">
-          <button type="button" class="btn btn-success btn-block" *ngIf="!(calificar || numero_pregunta==0)" (click)="sigPregunta()" [disabled]="!formRespuestaPregunta.valid">
-            <i class="fa fa-arrow-right" aria-hidden="true"> <b>Guardar y Seguir Test</b></i>
+          <button type="button" #btnguardarrespuesta class="btn btn-success btn-block" *ngIf="!(calificar || numero_pregunta==0)" (click)="sigPregunta()" [disabled]="!formRespuestaPregunta.valid">
+            <i class="fa fa-arrow-right" aria-hidden="true">&nbsp;<b>Guardar y Seguir Test</b></i>
           </button>
         </div>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="cancelarTest()">
             <i class="fa fa-times" aria-hidden="true"></i>
-            <b>Cancelar</b>
+            <b>{{!resutadofinal? 'Cancelar' : 'Salir'}}</b>
           </button>
       </div>
     </div>
@@ -429,3 +519,8 @@
       </div>
     </div>
   </div>
+<script>
+  $(function () {
+    $('[data-toggle="popover"]').popover()
+  })
+</script>

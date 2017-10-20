@@ -8,6 +8,8 @@ import { AngularFireAuth } from 'angularfire2/auth';
 
 import { Usuario } from './modelos/usuario';
 import { Estudiante } from './modelos/estudiante';
+import { Cuestionarioevaluado } from './modelos/cuestionarioevaluado';
+import { Puntajecuestionario } from './modelos/puntajecuestionario';
 
 import * as firebase from 'firebase';
 
@@ -26,6 +28,8 @@ export class AppService {
   pregunta: FirebaseListObservable<any[]>;
   respuesta: FirebaseListObservable<any[]>;
   material: FirebaseListObservable<any[]>;
+  puntajeCategoria: FirebaseListObservable<any[]>;
+  testCalificado: FirebaseListObservable<any[]>;
 
   constructor(
     private df: AngularFireDatabase,
@@ -77,7 +81,7 @@ export class AppService {
         );
         return usuario;
       }
-    )
+    );
 
     return resultado;
   }
@@ -164,6 +168,27 @@ export class AppService {
     return this.respuesta;
   }
 
+  getResultadoCategoria(usuario: Usuario, estudiante: any, testid: String) {
+    this.puntajeCategoria = this.df.list('estudiante_usuario/'
+      + usuario.id + '/estudiante/'
+      + estudiante.$key + '/testevaluado/'
+      + testid + '/puntajecategoria') as FirebaseListObservable<any[]>;
+
+    return this.puntajeCategoria;
+  }
+
+  getTestCalificado(usuario: Usuario, estudiante: any, testid: String) {
+    this.testCalificado = this.df.list('estudiante_usuario/'
+      + usuario.id + '/estudiante/'
+      + estudiante.$key + '/testevaluado', {
+        query: {
+          limitToLast: 1
+        }
+      }) as FirebaseListObservable<any[]>;
+
+    return this.testCalificado;
+  }
+
   /**
    *
    * @param {Usuario} usuario
@@ -237,13 +262,13 @@ export class AppService {
       isactive: usuario.isactive
     });*/
 
-    // tslint:disable-next-line:comment-format
     // tslint:disable-next-line:prefer-const
-    // let auxCabecera = this.df.database.ref('test/-KqMrJZ-UEASUXSbu-n8');
+    // tslint:disable-next-line:comment-format
+    //let auxCabecera = this.df.database.ref('test/-KqMrJZ-UEASUXSbu-n8');
 
     // tslint:disable-next-line:prefer-const
     // tslint:disable-next-line:comment-format
-    const auxCabecera = this.df.database.ref('test/-KqMrQPAJJ2H5Q1Pz01v')
+    //let auxCabecera = this.df.database.ref('test/-KqMrQPAJJ2H5Q1Pz01v');
   }
 
   /**
@@ -268,5 +293,156 @@ export class AppService {
    */
   deleteEstudiante(key: string) {
     this.estudiantes.remove(key);
+  }
+
+  calificarTestZazzo (
+    mr: number,
+    puntaje: number,
+    resultadopregunta: Cuestionarioevaluado[],
+    resultadocuest: Puntajecuestionario[],
+    resultadocuestcat: Puntajecuestionario[],
+    test: any,
+    estudiante: any,
+    usuario: Usuario,
+    fecha: String
+  ) {
+    // tslint:disable-next-line:prefer-const
+    let auxdf = this.df;
+    let cicalculado = 0;
+    let idrest = '';
+
+    const resultado = this.df.database.ref('test/' + test.$key + '/escala').orderByChild('puntos').equalTo(puntaje).once('value')
+      .then(function(snapshot) {
+
+        snapshot.forEach(function (childSnapshot) {
+            const auxvalue = childSnapshot.val();
+
+            cicalculado = Math.floor((auxvalue.meses / mr) * 100);
+
+            auxdf.database.ref('estudiante_usuario/' + usuario.id + '/estudiante/' + estudiante.$key)
+              .child('edadmental')
+              .set(auxvalue.meses);
+
+            auxdf.database.ref('estudiante_usuario/' + usuario.id + '/estudiante/' + estudiante.$key)
+              .child('cicalculado')
+              .set(cicalculado);
+
+            // tslint:disable-next-line:prefer-const
+            let tsest = auxdf.database.ref('estudiante_usuario/' + usuario.id + '/estudiante/' + estudiante.$key)
+              .child('testevaluado').push({
+                fecha: fecha,
+                puntajetotal: puntaje
+              }
+            );
+
+            tsest.child('edadmental').set(auxvalue.meses);
+            tsest.child('ci').set(cicalculado);
+
+            for (let k = 0; k < resultadopregunta.length; k++) {
+              tsest.child('respuestas').push({
+                numero_pregunta: resultadopregunta[k].numeropregunta,
+                puntaje: resultadopregunta[k].puntaje,
+                tiempo: resultadopregunta[k].tiempo
+              });
+            }
+
+            for (let k = 0; k < resultadocuest.length; k++) {
+              tsest.child('puntajetipopregunta').push({
+                tipopregunta: resultadocuest[k].tipopregunta,
+                puntaje: resultadocuest[k].puntaje,
+              });
+            }
+
+            for (let k = 0; k < resultadocuestcat.length; k++) {
+              tsest.child('puntajecategoria').push({
+                categoria: resultadocuestcat[k].categoria,
+                puntaje: resultadocuestcat[k].puntaje
+              });
+            }
+
+            auxdf.database.ref('nivelcoeficiente').orderByChild('ci').endAt(cicalculado).once('value')
+              .then(function(auxsnapshot) {
+                auxsnapshot.forEach(function (auxchildSnapshot) {
+                  const auxvaluechild = auxchildSnapshot.val();
+
+                  auxdf.database.ref('estudiante_usuario/' + usuario.id + '/estudiante/' + estudiante.$key)
+                    .child('nivelcognitivo')
+                    .set(auxvaluechild.estado);
+
+                    tsest.child('nivelcognitivo').set(auxvaluechild.estado);
+                }
+                );
+              }
+            );
+            idrest = tsest.key;
+          }
+        );
+
+        return idrest;
+      }
+    );
+
+    if (puntaje < 9) {
+      auxdf.database.ref('estudiante_usuario/' + usuario.id + '/estudiante/' + estudiante.$key)
+      .child('cicalculado')
+      .set(cicalculado);
+
+      // tslint:disable-next-line:prefer-const
+      let tsest = this.df.database.ref('estudiante_usuario/' + usuario.id + '/estudiante/' + estudiante.$key)
+        .child('testevaluado').push({
+          fecha: fecha,
+          puntajetotal: puntaje
+        }
+      );
+
+      tsest.child('ci').set(0);
+
+      for (let k = 0; k < resultadopregunta.length; k++) {
+        tsest.child('respuestas').push({
+          numero_pregunta: resultadopregunta[k].numeropregunta,
+          puntaje: resultadopregunta[k].puntaje,
+          tiempo: resultadopregunta[k].tiempo
+        });
+      }
+
+      for (let k = 0; k < resultadocuest.length; k++) {
+        tsest.child('puntajetipopregunta').push({
+          tipopregunta: resultadocuest[k].tipopregunta,
+          puntaje: resultadocuest[k].puntaje,
+        });
+      }
+
+      for (let k = 0; k < resultadocuestcat.length; k++) {
+        tsest.child('puntajecategoria').push({
+          categoria: resultadocuestcat[k].categoria,
+          puntaje: resultadocuestcat[k].puntaje
+        });
+      }
+
+      idrest = tsest.key;
+
+      this.df.database.ref('nivelcoeficiente').orderByChild('ci').endAt(cicalculado).once('value')
+        .then(function(auxsnapshot) {
+          auxsnapshot.forEach(function (auxchildSnapshot) {
+            const auxvaluechild = auxchildSnapshot.val();
+
+            auxdf.database.ref('estudiante_usuario/' + usuario.id + '/estudiante/' + estudiante.$key)
+              .child('nivelcognitivo')
+              .set(auxvaluechild.estado);
+
+            auxdf.database.ref('estudiante_usuario/' + usuario.id + '/estudiante/' + estudiante.$key)
+              .child('edadmental')
+              .set(null);
+
+            tsest.child('nivelcognitivo').set(auxvaluechild.estado);
+
+            return idrest;
+          }
+        );
+      }
+      );
+    }
+
+    return resultado;
   }
 }

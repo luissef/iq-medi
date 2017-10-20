@@ -36,7 +36,7 @@
             <b>{{authService.usuario.usuario}}</b>
           </button>
           <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-            <a class="dropdown-item" (click)="logout()"><i class="fa fa-sign-out" aria-hidden="true"> <b>Salir</b></i></a>
+            <a class="dropdown-item" (click)="logout()"><i class="fa fa-sign-out" aria-hidden="true">&nbsp;<b>Salir</b></i></a>
           </div>
         </li>
       </ul>
@@ -63,7 +63,7 @@
           </div>
           <br>
           <div class="input-group">
-          <div class="input-group-addon"><i class="fa fa-envelope" aria-hidden="true"> <b>Email</b></i></div>
+          <div class="input-group-addon"><i class="fa fa-envelope" aria-hidden="true">&nbsp;<b>Email</b></i></div>
             <input type="email" class="form-control" id="email" placeholder="Email" formControlName="email">
           </div>
           <div *ngIf="formLogin.controls.email.errors && formLogin.controls.email.touched">
@@ -73,7 +73,7 @@
           </div>
           <br>
           <div class="input-group">
-          <div class="input-group-addon"><i class="fa fa-key" aria-hidden="true"> <b>Contraseña</b></i></div>
+          <div class="input-group-addon"><i class="fa fa-key" aria-hidden="true">&nbsp;<b>Contraseña</b></i></div>
             <input type="password" class="form-control" id="contrasenia" placeholder="Contraseña" formControlName="contrasenia">
           </div>
           <div *ngIf="formLogin.controls.contrasenia.errors && formLogin.controls.contrasenia.touched">
@@ -119,7 +119,7 @@
           </div>
           <br>
           <div class="input-group">
-          <div class="input-group-addon"><i class="fa fa-user" aria-hidden="true"> <b>Usuario</b></i></div>
+          <div class="input-group-addon"><i class="fa fa-user" aria-hidden="true">&nbsp;<b>Usuario</b></i></div>
             <input type="text" class="form-control" id="usuario" placeholder="Usuario" formControlName="usuario">
           </div>
           <div *ngIf="formRegistrar.controls.usuario.errors && formRegistrar.controls.usuario.touched">
@@ -129,7 +129,7 @@
           </div>
           <br>
           <div class="input-group">
-          <div class="input-group-addon"><i class="fa fa-envelope" aria-hidden="true"> <b>Email</b></i></div>
+          <div class="input-group-addon"><i class="fa fa-envelope" aria-hidden="true">&nbsp;<b>Email</b></i></div>
             <input type="email" class="form-control" id="email" placeholder="Email" formControlName="email">
           </div>
           <div *ngIf="formRegistrar.controls.email.errors && formRegistrar.controls.email.touched">
@@ -139,7 +139,7 @@
           </div>
           <br>
           <div class="input-group">
-          <div class="input-group-addon"><i class="fa fa-key" aria-hidden="true"> <b>Contraseña</b></i></div>
+          <div class="input-group-addon"><i class="fa fa-key" aria-hidden="true">&nbsp;<b>Contraseña</b></i></div>
             <input type="password" class="form-control" id="contrasenia" placeholder="Contraseña" formControlName="contrasenia">
           </div>
           <div *ngIf="formRegistrar.controls.contrasenia.errors && formRegistrar.controls.contrasenia.touched">

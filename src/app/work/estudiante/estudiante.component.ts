@@ -28,9 +28,12 @@ export class EstudianteComponent implements OnInit {
   private subPregunta: any;
   private subRespuesta: any;
   private subMaterial: any;
+  private subResultadoCategoria: any;
+  private subTestCalificado: any;
 
   private resultadopregunta: Cuestionarioevaluado[] = [];
-  private resultadocuestionario: Puntajecuestionario[] = [];
+  private resultadocuest: Puntajecuestionario[] = [];
+  private resultadocuestcat: Puntajecuestionario[] = [];
 
   imageIqMedi: string;
 
@@ -51,9 +54,12 @@ export class EstudianteComponent implements OnInit {
   material: any[];
   estudiante: Estudiante;
   nropreguntas: any[] = [];
+  resultadoCategoria: any[];
+  testCalificado: any[];
 
   // Cuestionario run
   edadminima: number;
+  edadmaxima: number;
   numeropreguntas: number;
   numero_pregunta: number;
   puntajeerror: number;
@@ -66,12 +72,16 @@ export class EstudianteComponent implements OnInit {
   intTiempo: any;
 
   calificar: boolean;
+  testcompleto = false;
+  preguntaopcional = false;
+  resutadofinal = false;
 
   @ViewChild('btncerrardetalleestudiante') btncerrardetalleestudiante: ElementRef;
   @ViewChild('btnBorrarEstudiante') btnBorrarEstudiante: ElementRef;
   @ViewChild('btnCerrarEliminarEstudianta') btnCerrarEliminarEstudianta: ElementRef;
   @ViewChild('btnmostrarloadingest') btnmostrarloadingest: ElementRef;
   @ViewChild('btncerrarloadingest') btncerrarloadingest: ElementRef;
+  @ViewChild('btnguardarrespuesta') btnguardarrespuesta: ElementRef;
 
   /**
    * Creates an instance of EstudianteComponent.
@@ -150,7 +160,10 @@ export class EstudianteComponent implements OnInit {
       respuesta: [ respu, Validators.required],
       nropregunta: this.numero_pregunta,
       errores: '',
-      siguiente: ''
+      siguiente: '',
+      categoria: '',
+      opcional: false,
+      sigopcional: false
     });
   }
 
@@ -200,6 +213,11 @@ export class EstudianteComponent implements OnInit {
     if (this.subMaterial) {
       this.subMaterial.unsubscribe();
       this.material = null;
+    }
+
+    if (this.subResultadoCategoria) {
+      this.subResultadoCategoria.unsubscribe();
+      this.resultadoCategoria = null;
     }
   }
 
@@ -301,6 +319,12 @@ export class EstudianteComponent implements OnInit {
   limpiardetalleEstudiante() {
     this.detallesestudiante = null;
     this.estudiante = null;
+
+    if (this.subMaterial) {
+      this.subMaterial.unsubscribe();
+      this.material = null;
+    }
+
     this.crearComponenteDetalleEstuadiante();
   }
 
@@ -309,13 +333,35 @@ export class EstudianteComponent implements OnInit {
    * @memberof EstudianteComponent
    */
   limpiarTest() {
-    this.resultadocuestionario = [];
+    this.resultadocuest = [];
+    this.resultadocuestcat = [];
     this.resultadopregunta = [];
     this.edadminima = 0;
+    this.edadmaxima = 0;
     this.nropreguntas = [];
     this.numero_pregunta = 0;
     this.puntajeerror = 0;
     this.test = null;
+
+    if (this.subResultadoCategoria) {
+      this.subResultadoCategoria.unsubscribe();
+      this.resultadoCategoria = null;
+    }
+
+    if (this.subPregunta) {
+      this.subPregunta.unsubscribe();
+      this.pregunta = null;
+    }
+
+    if (this.subRespuesta) {
+      this.subRespuesta.unsubscribe();
+      this.respuesta = null;
+    }
+
+    if (this.subTipoSubTests) {
+      this.subTipoSubTests.unsubscribe();
+      this.tipoSubTests = null;
+    }
 
     if (this.subMaterial) {
       this.subMaterial.unsubscribe();
@@ -375,6 +421,7 @@ export class EstudianteComponent implements OnInit {
 
     this.numeropreguntas = test.numeropreguntas;
     this.edadminima = test.edadminima;
+    this.edadmaxima = test.edadmaxima;
 
     if (this.numeropreguntas > 0) {
       this.nropreguntas.push({'nropre': 0});
@@ -386,6 +433,8 @@ export class EstudianteComponent implements OnInit {
     this.numero_pregunta = 0;
     this.puntajeerror = 0;
     this.calificar =  false;
+    this.testcompleto = false;
+    this.preguntaopcional = false;
 
     // tslint:disable-next-line:prefer-const
     let fechanacimiento = new Date(this.detallesestudiante.fecha_nacimiento.replace('-', '/').replace('-', '/'));
@@ -421,9 +470,19 @@ export class EstudianteComponent implements OnInit {
    * @memberof EstudianteComponent
    */
   ismayor() {
-    if (this.formDatosTest.value.edadmeses >= this.edadminima) {
-      return true;
-    }else {
+    if (this.edadmaxima === 0) {
+      if (this.formDatosTest.value.edadmeses >= this.edadminima ) {
+        return true;
+      }else {
+        return false;
+      }
+    } else if (this.formDatosTest.value.edadmeses <= this.edadmaxima) {
+      if (this.formDatosTest.value.edadmeses >= this.edadminima ) {
+        return true;
+      }else {
+        return false;
+      }
+    } else {
       return false;
     }
   }
@@ -586,7 +645,10 @@ export class EstudianteComponent implements OnInit {
           this.formRespuestaPregunta.value.tipopregunta,
           (((this.hora * 60) * 60) + (this.minuto * 60) + (this.segundo)),
           // tslint:disable-next-line:radix
-          parseInt(this.formRespuestaPregunta.value.respuesta)
+          parseInt(this.formRespuestaPregunta.value.respuesta),
+          // tslint:disable-next-line:radix
+          parseInt(this.formRespuestaPregunta.value.categoria),
+          this.formRespuestaPregunta.value.opcional
         ));
       }
 
@@ -599,9 +661,48 @@ export class EstudianteComponent implements OnInit {
       }
 
       // tslint:disable-next-line:radix
-      if (parseInt(this.formRespuestaPregunta.value.errores) === auxerrores) {
+      if (parseInt(this.formRespuestaPregunta.value.errores) <= auxerrores) {
+
+        // tslint:disable-next-line:radix
+        let auxCom = parseInt(this.formRespuestaPregunta.value.siguiente);
+        if (auxCom === 0) {
+          auxCom = this.numeropreguntas + 1;
+        }
+
+        for (let i = (this.numero_pregunta + 1); i < auxCom; i++) {
+          // tslint:disable-next-line:prefer-const
+          let auxingresar = true;
+
+          for (let j = 0; j < this.resultadopregunta.length; j++) {
+            if (this.resultadopregunta[j].numeropregunta === i) {
+              ingresar = false;
+            }
+          }
+
+          if (auxingresar) {
+            this.numero_pregunta = i;
+            this.resultadopregunta.push(new Cuestionarioevaluado(
+              i,
+              this.formRespuestaPregunta.value.tipopregunta,
+              0,
+              // tslint:disable-next-line:radix
+              0,
+              // tslint:disable-next-line:radix
+              parseInt(this.formRespuestaPregunta.value.categoria),
+              this.formRespuestaPregunta.value.opcional
+            ));
+          }
+        }
+
         // tslint:disable-next-line:radix
         this.numero_pregunta = parseInt(this.formRespuestaPregunta.value.siguiente) - 1;
+      }
+
+      if (this.formRespuestaPregunta.value.sigopcional) {
+        // tslint:disable-next-line:radix
+        if ((this.numero_pregunta + 1) ===  parseInt(this.formRespuestaPregunta.value.siguiente)) {
+          this.preguntaopcional = true;
+        }
       }
     }
 
@@ -609,6 +710,7 @@ export class EstudianteComponent implements OnInit {
 
     if (this.numero_pregunta === 0 || this.numero_pregunta > this.numeropreguntas) {
       this.calificar =  true;
+      this.testcompleto = true;
       this.numero_pregunta = 0;
     }
 
@@ -616,6 +718,20 @@ export class EstudianteComponent implements OnInit {
       return a.numeropregunta - b.numeropregunta;
     });
 
+    if (this.numero_pregunta === 0) {
+      this.irresumen();
+    } else {
+      this.irPregunta();
+    }
+  }
+
+  /**
+   *
+   * @memberof EstudianteComponent
+   */
+  irresumen() {
+    this.calificar =  true;
+    this.numero_pregunta = 0;
     this.irPregunta();
   }
 
@@ -624,7 +740,103 @@ export class EstudianteComponent implements OnInit {
    * @memberof EstudianteComponent
    */
   calificarTest() {
-   console.log('Calificar');
+    for (let i = 0; i < this.resultadopregunta.length; i++) {
+      // tslint:disable-next-line:prefer-const
+      let auxIngresar = true;
+
+      for (let j = 0; j < this.resultadocuest.length; j++) {
+        if (this.resultadocuest[j].tipopregunta === this.resultadopregunta[i].tipopregunta) {
+          auxIngresar = false;
+          this.resultadocuest[j].puntaje = this.resultadocuest[j].puntaje + this.resultadopregunta[i].puntaje;
+        }
+      }
+
+      if (auxIngresar) {
+        this.resultadocuest.push(new Puntajecuestionario(
+          this.resultadopregunta[i].tipopregunta,
+          this.resultadopregunta[i].puntaje,
+          this.resultadopregunta[i].categoria,
+          this.resultadopregunta[i].opcional));
+      }
+    }
+
+    // tslint:disable-next-line:prefer-const
+    let auxTotalPuntaje = 0;
+
+    for (let i = 0; i < this.resultadocuest.length; i++) {
+      // tslint:disable-next-line:prefer-const
+      let auxIngresar = true;
+
+      for (let j = 0; j < this.resultadocuestcat.length; j++) {
+        if (this.resultadocuestcat[j].categoria === this.resultadocuest[i].categoria) {
+          auxIngresar = false;
+
+          if (!this.resultadocuest[i].opcional) {
+            if (this.resultadocuest[i].puntaje > 0) {
+              this.resultadocuestcat[j].puntaje = this.resultadocuestcat[j].puntaje + this.resultadocuest[i].puntaje;
+            } else {
+              for (let k = i + 1; k < this.resultadocuest.length; k++) {
+                if (this.resultadocuest[k].opcional && this.resultadocuestcat[i].categoria === this.resultadocuest[k].categoria) {
+                  this.resultadocuest[k].opcional = false;
+                  break;
+                }
+              }
+            }
+          }
+        }
+      }
+
+      if (auxIngresar) {
+        this.resultadocuestcat.push(new Puntajecuestionario(
+          'General',
+          this.resultadocuest[i].puntaje,
+          this.resultadocuest[i].categoria,
+          false));
+
+        if (!this.resultadocuest[i].opcional) {
+          if (this.resultadocuest[i].puntaje === 0) {
+            for (let k = i + 1; k < this.resultadocuest.length; k++) {
+              if (this.resultadocuest[k].opcional && this.resultadocuestcat[i].categoria === this.resultadocuest[k].categoria) {
+                this.resultadocuest[k].opcional = false;
+                break;
+              }
+            }
+          }
+        }
+      }
+    }
+
+    for (let i = 0; i < this.resultadocuestcat.length; i++) {
+      auxTotalPuntaje = auxTotalPuntaje + this.resultadocuestcat[i].puntaje;
+    }
+
+    if (this.test.$key === '-KqMrJZ-UEASUXSbu-n8') {
+      // tslint:disable-next-line:prefer-const
+      let auxidtest = '';
+
+      this.appService.calificarTestZazzo(
+        this.formDatosTest.value.edadmeses,
+        auxTotalPuntaje,
+        this.resultadopregunta,
+        this.resultadocuest,
+        this.resultadocuestcat,
+        this.test,
+        this.detallesestudiante,
+        this.authService.usuario,
+        this.formDatosTest.value.fechatest
+      ).then(idTest => {
+        auxidtest = idTest;
+      });
+
+      setTimeout(() => {
+        this.subTestCalificado = this.appService.getTestCalificado(this.authService.usuario, this.detallesestudiante, auxidtest)
+        .subscribe(testCalificado => this.testCalificado = testCalificado);
+
+        this.subResultadoCategoria = this.appService.getResultadoCategoria(this.authService.usuario, this.detallesestudiante, auxidtest)
+        .subscribe(puntajeCategoria => this.resultadoCategoria = puntajeCategoria);
+        this.resutadofinal = true;
+      }, 500);
+    }
   }
 
   /**
@@ -632,12 +844,22 @@ export class EstudianteComponent implements OnInit {
    * @memberof EstudianteComponent
    */
   cancelarTest() {
+    this.crearComponenteRespuestaPregunta('');
     this.btnmostrarloadingest.nativeElement.click();
-    this.resultadocuestionario = [];
+    this.resultadocuest = [];
+    this.resultadocuestcat = [];
     this.resultadopregunta = [];
     this.numero_pregunta = 0;
     this.puntajeerror = 0;
     this.calificar = false;
+    this.testcompleto = false;
+    this.preguntaopcional = false;
+    this.resutadofinal = false;
+
+    if (this.subResultadoCategoria) {
+      this.subResultadoCategoria.unsubscribe();
+      this.resultadoCategoria = null;
+    }
 
     if (this.subPregunta) {
       this.subPregunta.unsubscribe();
@@ -647,6 +869,11 @@ export class EstudianteComponent implements OnInit {
     if (this.subRespuesta) {
       this.subRespuesta.unsubscribe();
       this.respuesta = null;
+    }
+
+    if (this.subTipoSubTests) {
+      this.subTipoSubTests.unsubscribe();
+      this.tipoSubTests = null;
     }
 
     this.pregunta = null;
@@ -670,8 +897,14 @@ export class EstudianteComponent implements OnInit {
     }
 
     if (this.numero_pregunta <= this.numeropreguntas) {
+      this.subPregunta = this.appService.getPregunta(this.test, this.numero_pregunta)
+      .subscribe(pregunta => this.pregunta = pregunta);
+
       this.subRespuesta = this.appService.getPreguntaRespuesta(this.test, this.numero_pregunta)
       .subscribe(respuesta => this.respuesta = respuesta);
+
+      this.subTipoSubTests = this.appService.getSubTest(this.test)
+      .subscribe(subtests => this.tipoSubTests = subtests);
 
       this.crearComponenteRespuestaPregunta('');
     }
@@ -707,6 +940,7 @@ export class EstudianteComponent implements OnInit {
   wait() {
     clearInterval(this.intTiempo);
     this.intTiempo = null;
+    this.btnguardarrespuesta.nativeElement.focus();
   }
 
   /**
