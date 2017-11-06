@@ -175,6 +175,7 @@ export class EstudianteComponent implements OnInit {
     this.formDatosTest = this.fbDatosTest.group({
       fechanacimiento: '',
       fechatest: '',
+      edad: '',
       edadmeses: ''
     });
   }
@@ -451,6 +452,7 @@ export class EstudianteComponent implements OnInit {
       // tslint:disable-next-line:max-line-length
       fechanacimiento: fechanacimiento.getDate() + '/' + (fechanacimiento.getMonth() + 1) + '/' + fechanacimiento.getFullYear(),
       fechatest: fechatest.getDate() + '/' + (fechatest.getMonth() + 1) + '/' + fechatest.getFullYear(),
+      edad: this.mesesanios(meses),
       edadmeses: meses
     });
 
@@ -503,6 +505,21 @@ export class EstudianteComponent implements OnInit {
     }
 
     return auxPuntaje;
+  }
+
+  /**
+   *
+   * @param {number} meses
+   * @returns
+   * @memberof EstudianteComponent
+   */
+  mesesanios(meses: number) {
+    // tslint:disable-next-line:prefer-const
+    let anios = Math.floor(meses / 12);
+    // tslint:disable-next-line:prefer-const
+    let mes = meses % 12;
+
+    return (anios + ' Años, ' + mes + ' Meses');
   }
 
   /**
@@ -755,26 +772,67 @@ export class EstudianteComponent implements OnInit {
         this.resultadocuest.push(new Puntajecuestionario(
           this.resultadopregunta[i].tipopregunta,
           this.resultadopregunta[i].puntaje,
+          0,
           this.resultadopregunta[i].categoria,
           this.resultadopregunta[i].opcional));
       }
     }
 
-    // tslint:disable-next-line:prefer-const
-    let auxTotalPuntaje = 0;
-
     for (let i = 0; i < this.resultadocuest.length; i++) {
-      // tslint:disable-next-line:prefer-const
-      let auxIngresar = true;
+      if (this.test.$key === '-KqMrJZ-UEASUXSbu-n8') {
+        this.resultadocuest[i].puntosequivalentes = this.resultadocuest[i].puntaje;
+      }else if (this.test.$key === '-KqMrQPAJJ2H5Q1Pz01v') {
 
-      for (let j = 0; j < this.resultadocuestcat.length; j++) {
-        if (this.resultadocuestcat[j].categoria === this.resultadocuest[i].categoria) {
-          auxIngresar = false;
+        this.appService.getPuntosEquivalentes(
+          this.resultadocuest[i].tipopregunta,
+          this.formDatosTest.value.edadmeses,
+          this.resultadocuest[i].puntaje,
+          this.test
+        ).then(pequi => {
+          this.resultadocuest[i].puntosequivalentes = pequi;
+        });
+      }
+    }
+
+    setTimeout(() => {
+      // tslint:disable-next-line:prefer-const
+      let auxTotalPuntaje = 0;
+
+      for (let i = 0; i < this.resultadocuest.length; i++) {
+        // tslint:disable-next-line:prefer-const
+        let auxIngresar = true;
+
+        for (let j = 0; j < this.resultadocuestcat.length; j++) {
+          if (this.resultadocuestcat[j].categoria === this.resultadocuest[i].categoria) {
+            auxIngresar = false;
+
+            if (!this.resultadocuest[i].opcional) {
+              if (this.resultadocuest[i].puntosequivalentes > 0) {
+                this.resultadocuestcat[j].puntosequivalentes =
+                  this.resultadocuestcat[j].puntosequivalentes +
+                  this.resultadocuest[i].puntosequivalentes;
+              } else {
+                for (let k = i + 1; k < this.resultadocuest.length; k++) {
+                  if (this.resultadocuest[k].opcional && this.resultadocuestcat[i].categoria === this.resultadocuest[k].categoria) {
+                    this.resultadocuest[k].opcional = false;
+                    break;
+                  }
+                }
+              }
+            }
+          }
+        }
+
+        if (auxIngresar) {
+          this.resultadocuestcat.push(new Puntajecuestionario(
+            'General',
+            0,
+            this.resultadocuest[i].puntosequivalentes,
+            this.resultadocuest[i].categoria,
+            false));
 
           if (!this.resultadocuest[i].opcional) {
-            if (this.resultadocuest[i].puntaje > 0) {
-              this.resultadocuestcat[j].puntaje = this.resultadocuestcat[j].puntaje + this.resultadocuest[i].puntaje;
-            } else {
+            if (this.resultadocuest[i].puntosequivalentes === 0) {
               for (let k = i + 1; k < this.resultadocuest.length; k++) {
                 if (this.resultadocuest[k].opcional && this.resultadocuestcat[i].categoria === this.resultadocuest[k].categoria) {
                   this.resultadocuest[k].opcional = false;
@@ -786,57 +844,63 @@ export class EstudianteComponent implements OnInit {
         }
       }
 
-      if (auxIngresar) {
-        this.resultadocuestcat.push(new Puntajecuestionario(
-          'General',
-          this.resultadocuest[i].puntaje,
-          this.resultadocuest[i].categoria,
-          false));
 
-        if (!this.resultadocuest[i].opcional) {
-          if (this.resultadocuest[i].puntaje === 0) {
-            for (let k = i + 1; k < this.resultadocuest.length; k++) {
-              if (this.resultadocuest[k].opcional && this.resultadocuestcat[i].categoria === this.resultadocuest[k].categoria) {
-                this.resultadocuest[k].opcional = false;
-                break;
-              }
-            }
-          }
-        }
+      for (let i = 0; i < this.resultadocuestcat.length; i++) {
+        this.resultadocuestcat[i].puntaje = this.resultadocuestcat[i].puntosequivalentes;
+        auxTotalPuntaje = auxTotalPuntaje + this.resultadocuestcat[i].puntosequivalentes;
       }
-    }
 
-    for (let i = 0; i < this.resultadocuestcat.length; i++) {
-      auxTotalPuntaje = auxTotalPuntaje + this.resultadocuestcat[i].puntaje;
-    }
-
-    if (this.test.$key === '-KqMrJZ-UEASUXSbu-n8') {
       // tslint:disable-next-line:prefer-const
       let auxidtest = '';
 
-      this.appService.calificarTestZazzo(
-        this.formDatosTest.value.edadmeses,
-        auxTotalPuntaje,
-        this.resultadopregunta,
-        this.resultadocuest,
-        this.resultadocuestcat,
-        this.test,
-        this.detallesestudiante,
-        this.authService.usuario,
-        this.formDatosTest.value.fechatest
-      ).then(idTest => {
-        auxidtest = idTest;
-      });
+      if (this.test.$key === '-KqMrJZ-UEASUXSbu-n8') {
+        this.appService.calificarTestZazzo(
+          this.formDatosTest.value.edadmeses,
+          auxTotalPuntaje,
+          this.resultadopregunta,
+          this.resultadocuest,
+          this.resultadocuestcat,
+          this.test,
+          this.detallesestudiante,
+          this.authService.usuario,
+          this.formDatosTest.value.fechatest
+        ).then(idTest => {
+          auxidtest = idTest;
+        });
 
-      setTimeout(() => {
-        this.subTestCalificado = this.appService.getTestCalificado(this.authService.usuario, this.detallesestudiante, auxidtest)
-        .subscribe(testCalificado => this.testCalificado = testCalificado);
+        setTimeout(() => {
+          this.subTestCalificado = this.appService.getTestCalificado(this.authService.usuario, this.detallesestudiante, auxidtest)
+          .subscribe(testCalificado => this.testCalificado = testCalificado);
 
-        this.subResultadoCategoria = this.appService.getResultadoCategoria(this.authService.usuario, this.detallesestudiante, auxidtest)
-        .subscribe(puntajeCategoria => this.resultadoCategoria = puntajeCategoria);
-        this.resutadofinal = true;
-      }, 500);
-    }
+          this.subResultadoCategoria = this.appService.getResultadoCategoria(this.authService.usuario, this.detallesestudiante, auxidtest)
+          .subscribe(puntajeCategoria => this.resultadoCategoria = puntajeCategoria);
+          this.resutadofinal = true;
+        }, 500);
+      }else if (this.test.$key === '-KqMrQPAJJ2H5Q1Pz01v') {
+        this.appService.calificarTestWisc(
+          this.formDatosTest.value.edadmeses,
+          auxTotalPuntaje,
+          this.resultadopregunta,
+          this.resultadocuest,
+          this.resultadocuestcat,
+          this.test,
+          this.detallesestudiante,
+          this.authService.usuario,
+          this.formDatosTest.value.fechatest
+        ).then(idTest => {
+          auxidtest = idTest;
+        });
+
+        setTimeout(() => {
+          this.subTestCalificado = this.appService.getTestCalificado(this.authService.usuario, this.detallesestudiante, auxidtest)
+          .subscribe(testCalificado => this.testCalificado = testCalificado);
+
+          this.subResultadoCategoria = this.appService.getResultadoCategoria(this.authService.usuario, this.detallesestudiante, auxidtest)
+          .subscribe(puntajeCategoria => this.resultadoCategoria = puntajeCategoria);
+          this.resutadofinal = true;
+        }, 500);
+      }
+    }, 500);
   }
 
   /**

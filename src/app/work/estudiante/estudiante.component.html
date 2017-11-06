@@ -40,7 +40,7 @@
             Apellidos
           </th>
           <th>
-            Edad Mental (Meses)
+            Edad Mental
           </th>
           <th>
             CI Evaluado
@@ -64,7 +64,7 @@
           <td>{{estudiante.ci}}</td>
           <td>{{estudiante.nombres}}</td>
           <td>{{estudiante.apellidos}}</td>
-          <td>{{estudiante.edadmental}}</td>
+          <td>{{estudiante.edadmental? mesesanios(estudiante.edadmental) : ''}} </td>
           <td>{{estudiante.cicalculado}}</td>
           <td>{{estudiante.nivelcognitivo}}</td>
           <td>
@@ -259,6 +259,10 @@
           <input type="text" class="form-control" id="inlineFormInputGroup" placeholder="Fecha de Test" formControlName="fechatest" readonly>
         </div>
         <div class="input-group">
+          <div class="input-group-addon"><i class="fa fa-file-text" aria-hidden="true">&nbsp;<b>Edad</b></i></div>
+          <input type="text" class="form-control" id="inlineFormInputGroup" placeholder="Edad" formControlName="edad" readonly>
+        </div>
+        <div hidden class="input-group">
           <div class="input-group-addon"><i class="fa fa-file-text" aria-hidden="true">&nbsp;<b>Edad en Meses</b></i></div>
           <input type="text" class="form-control" id="inlineFormInputGroup" placeholder="Edad en Meses" formControlName="edadmeses" readonly>
         </div>
@@ -438,7 +442,7 @@
                   <tbody>
                     <tr *ngFor="let testCalf of testCalificado">
                       <td>{{testCalf.fecha}}</td>
-                      <td>{{testCalf.edadmental}}</td>
+                      <td>{{testCalf.edadmental? mesesanios(testCalf.edadmental) : 'El puntaje es muy bajo para calcular la edad mental'}}</td>
                       <td>{{testCalf.puntajetotal}}</td>
                       <td>{{testCalf.ci}}</td>
                       <td>{{testCalf.nivelcognitivo}}</td>
