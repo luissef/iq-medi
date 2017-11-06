@@ -54,6 +54,7 @@ export class WorkComponent implements OnInit {
       ci: ['', Validators.required],
       nombres: ['', Validators.required],
       apellidos: ['', Validators.required],
+      sexo: ['', Validators.required],
       fechanacimiento: ['', Validators.required]
     })
   }
@@ -70,6 +71,7 @@ export class WorkComponent implements OnInit {
       this.formRegistrarEstudiante.value.ci,
       this.formRegistrarEstudiante.value.nombres,
       this.formRegistrarEstudiante.value.apellidos,
+      this.formRegistrarEstudiante.value.sexo,
       this.formRegistrarEstudiante.value.fechanacimiento,
       true
     );

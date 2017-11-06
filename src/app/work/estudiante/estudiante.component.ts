@@ -24,6 +24,7 @@ export class EstudianteComponent implements OnInit {
 
   private subEstudiantes: any;
   private subTests: any;
+  private subTestEvaluado: any;
   private subTipoSubTests: any;
   private subPregunta: any;
   private subRespuesta: any;
@@ -36,6 +37,7 @@ export class EstudianteComponent implements OnInit {
   private resultadocuestcat: Puntajecuestionario[] = [];
 
   imageIqMedi: string;
+  idtestEvaluado: string;
 
   mensaje: string;
 
@@ -46,6 +48,7 @@ export class EstudianteComponent implements OnInit {
 
   estudiantes: any[];
   tests: any[];
+  testEvaluado: any[];
   tipoSubTests: any[];
   pregunta: any[];
   respuesta: any[];
@@ -118,7 +121,7 @@ export class EstudianteComponent implements OnInit {
       this.subEstudiantes = this.appService.getEstudiantes(this.authService.usuario)
       .subscribe(estudiantes => this.estudiantes = estudiantes);
 
-      this.subTests = this.appService.getTest(this.estudiante)
+      this.subTests = this.appService.getTest()
       .subscribe(tests => this.tests = tests);
       this.cerrarloading();
     }else {
@@ -135,6 +138,7 @@ export class EstudianteComponent implements OnInit {
       ci: ['', Validators.required],
       nombres: ['', Validators.required],
       apellidos: ['', Validators.required],
+      sexo: ['', Validators.required],
       fechanacimiento: ['', Validators.required]
     });
   }
@@ -196,6 +200,11 @@ export class EstudianteComponent implements OnInit {
       this.tests = null;
     }
 
+    if (this.subTestEvaluado) {
+      this.subTestEvaluado.unsubscribe();
+      this.testEvaluado = null;
+    }
+
     if (this.subTipoSubTests) {
       this.subTipoSubTests.unsubscribe();
       this.tipoSubTests = null;
@@ -252,7 +261,6 @@ export class EstudianteComponent implements OnInit {
       // tslint:disable-next-line:radix
       auxCi = parseInt(auxCi);
     } catch (error) {
-      console.log(error);
       auxCi = null;
     }
 
@@ -326,6 +334,11 @@ export class EstudianteComponent implements OnInit {
       this.material = null;
     }
 
+    if (this.subTestEvaluado) {
+      this.subTestEvaluado.unsubscribe();
+      this.testEvaluado = null;
+    }
+
     this.crearComponenteDetalleEstuadiante();
   }
 
@@ -382,6 +395,7 @@ export class EstudianteComponent implements OnInit {
       ci: [this.detallesestudiante.ci, Validators.required],
       nombres: [this.detallesestudiante.nombres, Validators.required],
       apellidos: [this.detallesestudiante.apellidos, Validators.required],
+      sexo: [this.detallesestudiante.sexo, Validators.required],
       fechanacimiento: [this.detallesestudiante.fecha_nacimiento, Validators.required]
     });
     this.cerrarloading();
@@ -408,6 +422,10 @@ export class EstudianteComponent implements OnInit {
   setEvalEstudiante(estudiante: any) {
     this.btnmostrarloadingest.nativeElement.click();
     this.detallesestudiante = estudiante;
+    this.subTestEvaluado = this.appService.getTestEvaluado(
+      this.authService.usuario,
+      this.detallesestudiante)
+    .subscribe(testevaluado => this.testEvaluado = testevaluado);
     this.cerrarloading();
   }
 
@@ -534,6 +552,7 @@ export class EstudianteComponent implements OnInit {
       this.formDetalleEstudiante.value.ci,
       this.formDetalleEstudiante.value.nombres,
       this.formDetalleEstudiante.value.apellidos,
+      this.formDetalleEstudiante.value.sexo,
       this.formDetalleEstudiante.value.fechanacimiento,
       true
     );
@@ -866,6 +885,7 @@ export class EstudianteComponent implements OnInit {
           this.formDatosTest.value.fechatest
         ).then(idTest => {
           auxidtest = idTest;
+          this.idtestEvaluado = auxidtest;
         });
 
         setTimeout(() => {
@@ -889,6 +909,7 @@ export class EstudianteComponent implements OnInit {
           this.formDatosTest.value.fechatest
         ).then(idTest => {
           auxidtest = idTest;
+          this.idtestEvaluado = auxidtest;
         });
 
         setTimeout(() => {
@@ -901,6 +922,17 @@ export class EstudianteComponent implements OnInit {
         }, 500);
       }
     }, 500);
+  }
+
+  /**
+   * @memberof EstudianteComponent
+   */
+  exportar() {
+    this.appService.export(this.authService.usuario, this.detallesestudiante, this.idtestEvaluado);
+  }
+
+  exportarResultado(testeval: any) {
+    this.appService.export(this.authService.usuario, this.detallesestudiante, testeval.$key);
   }
 
   /**
@@ -919,6 +951,7 @@ export class EstudianteComponent implements OnInit {
     this.testcompleto = false;
     this.preguntaopcional = false;
     this.resutadofinal = false;
+    this.idtestEvaluado = null;
 
     if (this.subResultadoCategoria) {
       this.subResultadoCategoria.unsubscribe();

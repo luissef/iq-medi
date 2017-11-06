@@ -60,6 +60,19 @@
               </div>
               <br>
               <div class="input-group">
+              <div class="input-group-addon"><i class="fa fa-file-text" aria-hidden="true">&nbsp;<b>Sexo</b></i></div>
+                <select class="form-control" id="sexo" placeholder="sexo" formControlName="sexo">
+                  <option>Masculino</option>
+                  <option>Femenino</option>
+                </select>
+              </div>
+              <div *ngIf="formRegistrarEstudiante.controls.sexo.errors && formRegistrarEstudiante.controls.sexo.touched">
+                <div *ngIf="formRegistrarEstudiante.controls.sexo.errors.required" class="alert alert-danger">
+                  El campo es requerido
+                </div>
+              </div>
+              <br>
+              <div class="input-group">
               <div class="input-group-addon"><i class="fa fa-calendar" aria-hidden="true">&nbsp;<b>Fecha de Nacimiento</b></i></div>
                 <input type="date" class="form-control" id="fechanacimiento" placeholder="Fecha de Nacimiento" formControlName="fechanacimiento">
               </div>

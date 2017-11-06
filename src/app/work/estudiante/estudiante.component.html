@@ -142,6 +142,19 @@
               </div>
               <br>
               <div class="input-group">
+              <div class="input-group-addon"><i class="fa fa-file-text" aria-hidden="true">&nbsp;<b>Sexo</b></i></div>
+                <select class="form-control" id="sexo" placeholder="sexo" formControlName="sexo">
+                  <option>Masculino</option>
+                  <option>Femenino</option>
+                </select>
+              </div>
+              <div *ngIf="formDetalleEstudiante.controls.sexo.errors && formDetalleEstudiante.controls.sexo.touched">
+                <div *ngIf="formDetalleEstudiante.controls.sexo.errors.required" class="alert alert-danger">
+                  El campo es requerido
+                </div>
+              </div>
+              <br>
+              <div class="input-group">
               <div class="input-group-addon"><i class="fa fa-calendar" aria-hidden="true">&nbsp;<b>Fecha de Nacimiento</b></i></div>
                 <input type="date" class="form-control" id="fechanacimiento" placeholder="Fecha de Nacimiento" formControlName="fechanacimiento">
               </div>
@@ -216,7 +229,8 @@
         </button>
       </div>
       <div class="modal-body">
-        <b>Tests Disponibles: </b>
+        <h6>Tests Disponibles: </h6>
+        <hr>
         <table>
           <tr>
             <td *ngFor="let test of tests">
@@ -227,6 +241,52 @@
             </td>
           </tr>
         </table>
+        <hr>
+        <h6>Historial de Tests Realizados</h6>
+        <div style="height:200px;overflow-y: scroll;">
+          <table class="table table-bordered table-sm table-hover">
+            <thead>
+              <tr>
+                <th>
+                  Tipo Test
+                </th>
+                <th>
+                  Fecha de Test
+                </th>
+                <th>
+                  CI
+                </th>
+                <th>
+                  Nivel ACG
+                </th>
+                <th>
+                  Edad Metal
+                </th>
+                <th>
+                  Exportar Resultados
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let resultTestEval of testEvaluado">
+                <td>{{resultTestEval.tipo_test==='-KqMrJZ-UEASUXSbu-n8'? 'Zazzo' : (resultTestEval.tipo_test==='-KqMrQPAJJ2H5Q1Pz01v'? 'WISC III': '')}}</td>
+                <td>{{resultTestEval.fecha}}</td>
+                <td>{{resultTestEval.ci}}</td>
+                <td>{{resultTestEval.nivelcognitivo}}</td>
+                <td>{{resultTestEval.edadmental? mesesanios(resultTestEval.edadmental) : 'El puntaje es muy bajo para calcular la edad mental'}}</td>
+                <td>
+                  <button type="button" class="btn btn-outline-primary" (click)="exportarResultado(resultTestEval)">
+                    <i class="fa fa-list-alt" aria-hidden="true">&nbsp;Exportar a Excel</i>
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <hr>
+        <i class="fa fa-info-circle" aria-hidden="true">&nbsp;(CI - Coeficiente Intelectual)</i>
+        <br>
+        <i class="fa fa-info-circle" aria-hidden="true">&nbsp;(ACG - Aptitud Cognitiva General)</i>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="limpiardetalleEstudiante()">
@@ -368,7 +428,7 @@
           </button>
         </div>
         <h5 *ngIf="((calificar && numero_pregunta==0) && !resutadofinal)">Historial de Respuestas</h5>
-        <div *ngIf="((calificar && numero_pregunta==0) && !resutadofinal)" style="height:300px;overflow-y: scroll;">
+        <div *ngIf="((calificar && numero_pregunta==0) && !resutadofinal)" style="height:200px;overflow-y: scroll;">
             <table class="table table-bordered table-sm table-hover">
                 <thead>
                   <tr>
@@ -401,7 +461,7 @@
                     <thead>
                       <tr>
                         <th>
-                          Categoria de pregunta
+                          Categoría de pregunta
                         </th>
                         <th>
                           Puntaje
@@ -410,7 +470,7 @@
                     </thead>
                     <tbody>
                       <tr *ngFor="let resultCat of resultadoCategoria">
-                        <td>{{resultCat.categoria === 0? 'Normal': resultCat.categoria}}</td>
+                        <td>{{resultCat.categoria === 0? 'Normal': (resultCat.categoria === 1? 'Puntaje de Escala Verbal': (resultCat.categoria === 2? 'Puntaje de Escala de Ejecución': ''))}}</td>
                         <td>{{resultCat.puntaje}}</td>
                       </tr>
                     </tbody>
@@ -450,6 +510,10 @@
                   </tbody>
                 </table>
               </div>
+              <hr *ngIf="resutadofinal">
+              <i *ngIf="resutadofinal" class="fa fa-info-circle" aria-hidden="true">&nbsp;(CI - Coeficiente Intelectual)</i>
+              <br *ngIf="resutadofinal">
+              <i *ngIf="resutadofinal" class="fa fa-info-circle" aria-hidden="true">&nbsp;(ACG - Aptitud Cognitiva General)</i>
           </div>
         <hr>
         <div style="width: 100%;margin: 0 auto;" *ngIf="!resutadofinal">
@@ -464,10 +528,13 @@
         </div>
       </div>
       <div class="modal-footer">
+        <button  *ngIf="resutadofinal" type="button" class="btn btn-outline-primary" (click)="exportar()">
+          <i class="fa fa-list-alt" aria-hidden="true">&nbsp;Exportar a Excel los Resultados</i>
+        </button>
         <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="cancelarTest()">
-            <i class="fa fa-times" aria-hidden="true"></i>
-            <b>{{!resutadofinal? 'Cancelar' : 'Salir'}}</b>
-          </button>
+          <i class="fa fa-times" aria-hidden="true"></i>
+          <b>{{!resutadofinal? 'Cancelar' : 'Salir'}}</b>
+        </button>
       </div>
     </div>
   </div>

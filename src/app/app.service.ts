@@ -12,6 +12,12 @@ import { Cuestionarioevaluado } from './modelos/cuestionarioevaluado';
 import { Puntajecuestionario } from './modelos/puntajecuestionario';
 
 import * as firebase from 'firebase';
+import * as FileSaver from 'file-saver';
+import * as XLSX from 'xlsx';
+import * as XLSXStyle from 'xlsx-style';
+
+const EXCEL_TYPE = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8';
+const EXCEL_EXTENSION = '.xlsx';
 
 /**
  *
@@ -24,6 +30,7 @@ export class AppService {
   usuario: Usuario;
   estudiantes: FirebaseListObservable<any[]>;
   tests: FirebaseListObservable<any[]>;
+  testevaluado: FirebaseListObservable<any[]>;
   subtests: FirebaseListObservable<any[]>;
   pregunta: FirebaseListObservable<any[]>;
   respuesta: FirebaseListObservable<any[]>;
@@ -59,6 +66,7 @@ export class AppService {
       ci: estudiante.ci,
       nombres: estudiante.nombres,
       apellidos: estudiante.apellidos,
+      sexo: estudiante.sexo,
       fecha_nacimiento: estudiante.fecha_nacimiento,
       isactive: estudiante.isactive
     });
@@ -103,7 +111,7 @@ export class AppService {
    * @returns
    * @memberof AppService
    */
-  getTest(estudiante: Estudiante) {
+  getTest() {
     this.tests = this.df.list('test') as FirebaseListObservable<any[]>;
     return this.tests;
   }
@@ -117,6 +125,13 @@ export class AppService {
   getTestMateriales(test: any) {
     this.material = this.df.list('test/' + test.$key + '/material') as FirebaseListObservable<any[]>;
     return this.material;
+  }
+
+  getTestEvaluado(usuario: Usuario, estudiante: any) {
+    this.testevaluado = this.df.list('estudiante_usuario/'
+      + usuario.id + '/estudiante/'
+      + estudiante.$key + '/testevaluado') as FirebaseListObservable<any[]>;
+    return this.testevaluado;
   }
 
   /**
@@ -317,6 +332,7 @@ export class AppService {
       nombres: estudiante.nombres,
       apellidos: estudiante.apellidos,
       fecha_nacimiento: estudiante.fecha_nacimiento,
+      sexo: estudiante.sexo,
       isactive: estudiante.isactive
     });
   }
@@ -386,7 +402,8 @@ export class AppService {
             let tsest = auxdf.database.ref('estudiante_usuario/' + usuario.id + '/estudiante/' + estudiante.$key)
               .child('testevaluado').push({
                 fecha: fecha,
-                puntajetotal: puntaje
+                puntajetotal: puntaje,
+                tipo_test: test.$key
               }
             );
 
@@ -450,7 +467,8 @@ export class AppService {
       let tsest = this.df.database.ref('estudiante_usuario/' + usuario.id + '/estudiante/' + estudiante.$key)
         .child('testevaluado').push({
           fecha: fecha,
-          puntajetotal: puntaje
+          puntajetotal: puntaje,
+          tipo_test: test.$key
         }
       );
 
@@ -563,7 +581,8 @@ export class AppService {
               let tsest = auxdf.database.ref('estudiante_usuario/' + usuario.id + '/estudiante/' + estudiante.$key)
                 .child('testevaluado').push({
                   fecha: fecha,
-                  puntajetotal: puntaje
+                  puntajetotal: puntaje,
+                  tipo_test: test.$key
                 }
               );
 
@@ -626,7 +645,8 @@ export class AppService {
       let tsest = this.df.database.ref('estudiante_usuario/' + usuario.id + '/estudiante/' + estudiante.$key)
         .child('testevaluado').push({
           fecha: fecha,
-          puntajetotal: puntaje
+          puntajetotal: puntaje,
+          tipo_test: test.$key
         }
       );
 
@@ -682,5 +702,251 @@ export class AppService {
     }
 
     return resultado;
+  }
+
+  /**
+   *
+   * @param {Usuario} usuario
+   * @param {*} estudiante
+   * @param {string} testeval
+   * @memberof AppService
+   */
+  public export(usuario: Usuario, estudiante: any, testeval: string): void {
+
+    // tslint:disable-next-line:prefer-const
+    let auxdf = this.df;
+    // tslint:disable-next-line:prefer-const
+    let auxcaberajson: any[];
+    // tslint:disable-next-line:prefer-const
+    let auxrespuestasjson: any[];
+    // tslint:disable-next-line:prefer-const
+    let auxrespuestastipojson: any[];
+    // tslint:disable-next-line:prefer-const
+    let auxrespuestascategoriajson: any[];
+    // tslint:disable-next-line:prefer-const
+    let auxResultadojson: any[];
+    // tslint:disable-next-line:prefer-const
+    let nombrecompleto;
+
+    this.df.database.ref('estudiante_usuario/'
+      + usuario.id + '/estudiante/'
+      + estudiante.$key + '/testevaluado/'
+      + testeval)
+      .once('value')
+      .then(function(auxsnapshot) {
+        // tslint:disable-next-line:prefer-const
+        let auxcaberajsonx: any[];
+        // tslint:disable-next-line:prefer-const
+        let auxrespuestasjsonx: any[] = [];
+        // tslint:disable-next-line:prefer-const
+        let auxrespuestastipojsonx: any[];
+        // tslint:disable-next-line:prefer-const
+        let auxrespuestascategoriajsonx: any[] = [];
+        // tslint:disable-next-line:prefer-const
+        let auxnombrecompleto;
+
+        auxdf.database.ref('estudiante_usuario/'
+        + usuario.id + '/estudiante/'
+        + estudiante.$key)
+        .once('value')
+        .then(function(auxchildsnapshot) {
+          // tslint:disable-next-line:prefer-const
+          auxcaberajsonx = [{
+            'Nombres': auxchildsnapshot.val().nombres,
+            'Apellidos': auxchildsnapshot.val().apellidos,
+            'Cédula de Identificación': auxchildsnapshot.val().ci,
+            'Fecha de Nacimiento': auxchildsnapshot.val().fecha_nacimiento,
+            'Sexo': auxchildsnapshot.val().sexo,
+            'Fecha Test': auxsnapshot.val().fecha}];
+          auxnombrecompleto = auxchildsnapshot.val().nombres + ' ' + auxchildsnapshot.val().apellidos;
+        });
+
+        auxdf.database.ref('estudiante_usuario/'
+        + usuario.id + '/estudiante/'
+        + estudiante.$key + '/testevaluado/'
+        + testeval + '/respuestas')
+        .once('value')
+        .then(function(auxchildrespsnapshot) {
+          auxchildrespsnapshot.forEach(function (element) {
+            auxrespuestasjsonx.push({
+              'Número de Pregunta': element.val().numero_pregunta,
+              'Tiempo (segundos)': element.val().tiempo,
+              'Puntaje': element.val().puntaje
+            });
+          });
+        });
+
+        if (auxsnapshot.val().tipo_test === '-KqMrQPAJJ2H5Q1Pz01v') {
+          auxrespuestastipojsonx = [];
+
+          auxdf.database.ref('estudiante_usuario/'
+          + usuario.id + '/estudiante/'
+          + estudiante.$key + '/testevaluado/'
+          + testeval + '/puntajetipopregunta')
+          .once('value')
+          .then(function(auxchildrespsnapshot) {
+            auxchildrespsnapshot.forEach(function (element) {
+              auxrespuestastipojsonx.push({
+                'Tipo de Pregunta': element.val().tipopregunta,
+                'Puntaje': element.val().puntaje,
+                'Puntaje Equivalente': element.val().puntosequivalentes
+              });
+            });
+          });
+        }
+
+        auxdf.database.ref('estudiante_usuario/'
+        + usuario.id + '/estudiante/'
+        + estudiante.$key + '/testevaluado/'
+        + testeval + '/puntajecategoria')
+        .once('value')
+        .then(function(auxchildrespsnapshot) {
+          auxchildrespsnapshot.forEach(function (element) {
+            auxrespuestascategoriajsonx.push({
+              'Categoría': element.val().categoria === 0 ? 'Normal' :
+                (element.val().categoria === 1 ? 'Puntaje de Escala Verbal' :
+                (element.val().categoria === 2 ? 'Puntaje de Escala de Ejecución' : '')),
+              'Puntaje': element.val().puntaje
+            });
+          });
+        });
+
+        // tslint:disable-next-line:prefer-const
+        let auxedad;
+
+        if (auxsnapshot.val().edadmental) {
+          // tslint:disable-next-line:prefer-const
+          let anios = Math.floor(auxsnapshot.val().edadmental / 12);
+          // tslint:disable-next-line:prefer-const
+          let mes = auxsnapshot.val().edadmental % 12;
+
+          auxedad = anios + ' Años, ' + mes + ' Meses';
+        } else {
+          auxedad = '0 Años';
+        }
+
+        // tslint:disable-next-line:prefer-const
+        let auxResultadojsonx: any[] = [{
+          'Coeficiente Intelectual': auxsnapshot.val().ci,
+          'Edad Mental': auxedad,
+          'Nivel de Aptitud Cognitiva General': auxsnapshot.val().nivelcognitivo
+        }];
+
+        setTimeout(() => {
+          auxcaberajson = auxcaberajsonx;
+          auxrespuestasjson = auxrespuestasjsonx;
+          auxrespuestastipojson = auxrespuestastipojsonx;
+          auxrespuestascategoriajson = auxrespuestascategoriajsonx;
+          auxResultadojson = auxResultadojsonx;
+          nombrecompleto = auxnombrecompleto;
+        }, 500);
+      }
+    );
+
+    setTimeout(() => {
+      this.exportAsExcelFile(
+        auxcaberajson,
+        auxrespuestasjson,
+        auxrespuestastipojson,
+        auxrespuestascategoriajson,
+        auxResultadojson,
+        nombrecompleto);
+    }, 550);
+  }
+
+  /**
+   *
+   * @param {any[]} resultadospresg
+   * @param {string} excelFileName
+   * @memberof AppService
+   */
+  private exportAsExcelFile(
+    datospersonales: any[],
+    datosrespuesta: any[],
+    datosrespuestatipo: any[],
+    datosrespuestacate: any[],
+    datosresultado: any[],
+    excelFileName: string): void {
+
+    const workbook: XLSX.WorkBook = XLSX.utils.book_new();
+
+    const worksheetpersonales: XLSX.WorkSheet = XLSX.utils.json_to_sheet(datospersonales);
+    this.wrapAndCenterCell(worksheetpersonales.A1);
+    this.wrapAndCenterCell(worksheetpersonales.B1);
+    this.wrapAndCenterCell(worksheetpersonales.C1);
+    this.wrapAndCenterCell(worksheetpersonales.D1);
+    this.wrapAndCenterCell(worksheetpersonales.E1);
+    this.wrapAndCenterCell(worksheetpersonales.F1);
+
+    const worksheetrespuesta: XLSX.WorkSheet = XLSX.utils.json_to_sheet(datosrespuesta);
+    this.wrapAndCenterCell(worksheetrespuesta.A1);
+    this.wrapAndCenterCell(worksheetrespuesta.B1);
+    this.wrapAndCenterCell(worksheetrespuesta.C1);
+
+    XLSX.utils.book_append_sheet(workbook, worksheetpersonales, 'Datos de la Persona');
+    XLSX.utils.book_append_sheet(workbook, worksheetrespuesta, 'Resumen de Respuestas');
+
+    if (datosrespuestatipo) {
+      const worksheetrespuestatipo: XLSX.WorkSheet = XLSX.utils.json_to_sheet(datosrespuestatipo);
+      this.wrapAndCenterCell(worksheetrespuestatipo.A1);
+      this.wrapAndCenterCell(worksheetrespuestatipo.B1);
+      this.wrapAndCenterCell(worksheetrespuestatipo.C1);
+
+      XLSX.utils.book_append_sheet(workbook, worksheetrespuestatipo, 'Resumen Puntaje Equivalente');
+    }
+
+    const worksheetrespuestacate: XLSX.WorkSheet = XLSX.utils.json_to_sheet(datosrespuestacate);
+    this.wrapAndCenterCell(worksheetrespuestacate.A1);
+    this.wrapAndCenterCell(worksheetrespuestacate.B1);
+
+    XLSX.utils.book_append_sheet(workbook, worksheetrespuestacate, 'Resumen Categoría');
+
+    const worksheetresultado: XLSX.WorkSheet = XLSX.utils.json_to_sheet(datosresultado);
+    this.wrapAndCenterCell(worksheetresultado.A1);
+    this.wrapAndCenterCell(worksheetresultado.B1);
+    this.wrapAndCenterCell(worksheetresultado.C1);
+
+    XLSX.utils.book_append_sheet(workbook, worksheetresultado, 'Resultado');
+
+    const excelBuffer: any = XLSXStyle.write(workbook, { bookType: 'xlsx', type: 'buffer' });
+    this.saveAsExcelFile(excelBuffer, excelFileName);
+  }
+
+  /**
+   *
+   * @private
+   * @param {XLSX.CellObject} cell
+   * @memberof AppService
+   */
+  private wrapAndCenterCell(cell: XLSX.CellObject) {
+    const wrapAndCenterCellStyle = {
+      alignment: { wrapText: true, vertical: 'center', horizontal: 'center' },
+      font: { bold: true } };
+    this.setCellStyle(cell, wrapAndCenterCellStyle);
+  }
+
+  /**
+   *
+   * @private
+   * @param {XLSX.CellObject} cell
+   * @param {{}} style
+   * @memberof AppService
+   */
+  private setCellStyle(cell: XLSX.CellObject, style: {}) {
+    cell.s = style;
+  }
+
+  /**
+   *
+   * @private
+   * @param {*} buffer
+   * @param {string} fileName
+   * @memberof AppService
+   */
+  private saveAsExcelFile(buffer: any, fileName: string): void {
+    const data: Blob = new Blob([buffer], {
+      type: EXCEL_TYPE
+    });
+    FileSaver.saveAs(data, fileName + ' export ' + new Date().getTime() + EXCEL_EXTENSION);
   }
 }

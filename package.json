@@ -9,9 +9,8 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "docs": "npm run typedoc -- --options typedoc.json --exclude '**/*.spec.ts' ./app/",
-    "typedoc": "typedoc",
     "docs": "node_modules/.bin/compodoc -p tsconfig.json -d docs",
+    "typedoc": "typedoc",
     "serve-docs": "node_modules/.bin/compodoc -s -d docs"
   },
   "private": true,
@@ -30,8 +29,11 @@
     "angularfire2": "^4.0.0-rc.1",
     "bootstrap": "^4.0.0-alpha.6",
     "core-js": "^2.4.1",
+    "file-saver": "^1.3.3",
     "firebase": "^4.1.3",
     "rxjs": "^5.1.0",
+    "xlsx": "^0.11.8",
+    "xlsx-style": "^0.8.13",
     "zone.js": "^0.8.4"
   },
   "devDependencies": {
