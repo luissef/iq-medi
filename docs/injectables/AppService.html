@@ -596,7 +596,7 @@
             
                             <tr>
                                 <td class="col-md-4">
-            <code>getTest(estudiante: <a href="../classes/Estudiante.html" >Estudiante</a>)</code>
+            <code>getTest()</code>
                                 </td>
                             </tr>
             
@@ -666,6 +666,30 @@
                                                 <p>* </p>
             
                                             </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <table class="table table-sm table-bordered">
+                        <tbody>
+                            <tr>
+                                <td class="col-md-4">
+                                    <b> getTestEvaluado</b>
+                                </td>
+                            </tr>
+            
+                            <tr>
+                                <td class="col-md-4">
+            <code>getTestEvaluado(usuario: <a href="../classes/Usuario.html" >Usuario</a>, estudiante: any)</code>
+                                </td>
+                            </tr>
+            
+                            <tr>
+                                <td class="col-md-4">
+                                        <div class="io-description">
+                                            <b>Returns: </b>    <code>void</code>
+            
+                                        </div>
                                 </td>
                             </tr>
                         </tbody>
@@ -805,6 +829,54 @@
                                                 <p>* </p>
             
                                             </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <table class="table table-sm table-bordered">
+                        <tbody>
+                            <tr>
+                                <td class="col-md-4">
+                                    <b> getResultadoCategoria</b>
+                                </td>
+                            </tr>
+            
+                            <tr>
+                                <td class="col-md-4">
+            <code>getResultadoCategoria(usuario: <a href="../classes/Usuario.html" >Usuario</a>, estudiante: any, testid: String)</code>
+                                </td>
+                            </tr>
+            
+                            <tr>
+                                <td class="col-md-4">
+                                        <div class="io-description">
+                                            <b>Returns: </b>    <code>void</code>
+            
+                                        </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <table class="table table-sm table-bordered">
+                        <tbody>
+                            <tr>
+                                <td class="col-md-4">
+                                    <b> getTestCalificado</b>
+                                </td>
+                            </tr>
+            
+                            <tr>
+                                <td class="col-md-4">
+            <code>getTestCalificado(usuario: <a href="../classes/Usuario.html" >Usuario</a>, estudiante: any, testid: String)</code>
+                                </td>
+                            </tr>
+            
+                            <tr>
+                                <td class="col-md-4">
+                                        <div class="io-description">
+                                            <b>Returns: </b>    <code>void</code>
+            
+                                        </div>
                                 </td>
                             </tr>
                         </tbody>
@@ -966,6 +1038,71 @@
                         <tbody>
                             <tr>
                                 <td class="col-md-4">
+                                    <b> getPuntosEquivalentes</b>
+                                </td>
+                            </tr>
+            
+                            <tr>
+                                <td class="col-md-4">
+            <code>getPuntosEquivalentes(tipo_pregunta: string, meses: number, puntaje: number, test: any)</code>
+                                </td>
+                            </tr>
+            
+                            <tr>
+                                <td class="col-md-4">
+                                        <div class="io-description">
+                                                <b>Parameters :</b>
+                                                <ul class="jsdoc-params">
+                                                        <li>
+                                                            <div>
+                                                                <b>tipo_pregunta</b>
+                                                            </div>
+                                                            <div>
+                                                                
+                                                            </div>
+                                                        </li>
+                                                        <li>
+                                                            <div>
+                                                                <b>meses</b>
+                                                            </div>
+                                                            <div>
+                                                                
+                                                            </div>
+                                                        </li>
+                                                        <li>
+                                                            <div>
+                                                                <b>puntaje</b>
+                                                            </div>
+                                                            <div>
+                                                                
+                                                            </div>
+                                                        </li>
+                                                        <li>
+                                                            <div>
+                                                                <b>test</b>
+                                                            </div>
+                                                            <div>
+                                                                
+                                                            </div>
+                                                        </li>
+                                                </ul>
+                                        </div>
+                                        <div class="io-description">
+                                            <b>Returns: </b>    <code>void</code>
+            
+                                        </div>
+                                            <div class="io-description">
+                                                <p>* </p>
+            
+                                            </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <table class="table table-sm table-bordered">
+                        <tbody>
+                            <tr>
+                                <td class="col-md-4">
                                     <b> pushChildUltimoAcceso</b>
                                 </td>
                             </tr>
@@ -1086,6 +1223,481 @@
                             </tr>
                         </tbody>
                     </table>
+                    <table class="table table-sm table-bordered">
+                        <tbody>
+                            <tr>
+                                <td class="col-md-4">
+                                    <b> calificarTestZazzo</b>
+                                </td>
+                            </tr>
+            
+                            <tr>
+                                <td class="col-md-4">
+            <code>calificarTestZazzo(mr: number, puntaje: number, resultadopregunta: <a href="../classes/Cuestionarioevaluado.html" >Cuestionarioevaluado[]</a>, resultadocuest: <a href="../classes/Puntajecuestionario.html" >Puntajecuestionario[]</a>, resultadocuestcat: <a href="../classes/Puntajecuestionario.html" >Puntajecuestionario[]</a>, test: any, estudiante: any, usuario: <a href="../classes/Usuario.html" >Usuario</a>, fecha: String)</code>
+                                </td>
+                            </tr>
+            
+                            <tr>
+                                <td class="col-md-4">
+                                        <div class="io-description">
+                                                <b>Parameters :</b>
+                                                <ul class="jsdoc-params">
+                                                        <li>
+                                                            <div>
+                                                                <b>mr</b>
+                                                            </div>
+                                                            <div>
+                                                                
+                                                            </div>
+                                                        </li>
+                                                        <li>
+                                                            <div>
+                                                                <b>puntaje</b>
+                                                            </div>
+                                                            <div>
+                                                                
+                                                            </div>
+                                                        </li>
+                                                        <li>
+                                                            <div>
+                                                                <b>resultadopregunta</b>
+                                                            </div>
+                                                            <div>
+                                                                
+                                                            </div>
+                                                        </li>
+                                                        <li>
+                                                            <div>
+                                                                <b>resultadocuest</b>
+                                                            </div>
+                                                            <div>
+                                                                
+                                                            </div>
+                                                        </li>
+                                                        <li>
+                                                            <div>
+                                                                <b>resultadocuestcat</b>
+                                                            </div>
+                                                            <div>
+                                                                
+                                                            </div>
+                                                        </li>
+                                                        <li>
+                                                            <div>
+                                                                <b>test</b>
+                                                            </div>
+                                                            <div>
+                                                                
+                                                            </div>
+                                                        </li>
+                                                        <li>
+                                                            <div>
+                                                                <b>estudiante</b>
+                                                            </div>
+                                                            <div>
+                                                                
+                                                            </div>
+                                                        </li>
+                                                        <li>
+                                                            <div>
+                                                                <b>usuario</b>
+                                                                    :     <code><a href="../classes/Usuario.html" target="_self" >Usuario</a></code>
+            
+                                                            </div>
+                                                            <div>
+                                                                
+                                                            </div>
+                                                        </li>
+                                                        <li>
+                                                            <div>
+                                                                <b>fecha</b>
+                                                                    :     <code>String</code>
+            
+                                                            </div>
+                                                            <div>
+                                                                
+                                                            </div>
+                                                        </li>
+                                                </ul>
+                                        </div>
+                                        <div class="io-description">
+                                            <b>Returns: </b>    <code>void</code>
+            
+                                        </div>
+                                            <div class="io-description">
+                                                <p>* </p>
+            
+                                            </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <table class="table table-sm table-bordered">
+                        <tbody>
+                            <tr>
+                                <td class="col-md-4">
+                                    <b> calificarTestWisc</b>
+                                </td>
+                            </tr>
+            
+                            <tr>
+                                <td class="col-md-4">
+            <code>calificarTestWisc(mr: number, puntaje: number, resultadopregunta: <a href="../classes/Cuestionarioevaluado.html" >Cuestionarioevaluado[]</a>, resultadocuest: <a href="../classes/Puntajecuestionario.html" >Puntajecuestionario[]</a>, resultadocuestcat: <a href="../classes/Puntajecuestionario.html" >Puntajecuestionario[]</a>, test: any, estudiante: any, usuario: <a href="../classes/Usuario.html" >Usuario</a>, fecha: String)</code>
+                                </td>
+                            </tr>
+            
+                            <tr>
+                                <td class="col-md-4">
+                                        <div class="io-description">
+                                                <b>Parameters :</b>
+                                                <ul class="jsdoc-params">
+                                                        <li>
+                                                            <div>
+                                                                <b>mr</b>
+                                                            </div>
+                                                            <div>
+                                                                
+                                                            </div>
+                                                        </li>
+                                                        <li>
+                                                            <div>
+                                                                <b>puntaje</b>
+                                                            </div>
+                                                            <div>
+                                                                
+                                                            </div>
+                                                        </li>
+                                                        <li>
+                                                            <div>
+                                                                <b>resultadopregunta</b>
+                                                            </div>
+                                                            <div>
+                                                                
+                                                            </div>
+                                                        </li>
+                                                        <li>
+                                                            <div>
+                                                                <b>resultadocuest</b>
+                                                            </div>
+                                                            <div>
+                                                                
+                                                            </div>
+                                                        </li>
+                                                        <li>
+                                                            <div>
+                                                                <b>resultadocuestcat</b>
+                                                            </div>
+                                                            <div>
+                                                                
+                                                            </div>
+                                                        </li>
+                                                        <li>
+                                                            <div>
+                                                                <b>test</b>
+                                                            </div>
+                                                            <div>
+                                                                
+                                                            </div>
+                                                        </li>
+                                                        <li>
+                                                            <div>
+                                                                <b>estudiante</b>
+                                                            </div>
+                                                            <div>
+                                                                
+                                                            </div>
+                                                        </li>
+                                                        <li>
+                                                            <div>
+                                                                <b>usuario</b>
+                                                                    :     <code><a href="../classes/Usuario.html" target="_self" >Usuario</a></code>
+            
+                                                            </div>
+                                                            <div>
+                                                                
+                                                            </div>
+                                                        </li>
+                                                        <li>
+                                                            <div>
+                                                                <b>fecha</b>
+                                                                    :     <code>String</code>
+            
+                                                            </div>
+                                                            <div>
+                                                                
+                                                            </div>
+                                                        </li>
+                                                </ul>
+                                        </div>
+                                        <div class="io-description">
+                                            <b>Returns: </b>    <code>void</code>
+            
+                                        </div>
+                                            <div class="io-description">
+                                                <p>* </p>
+            
+                                            </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <table class="table table-sm table-bordered">
+                        <tbody>
+                            <tr>
+                                <td class="col-md-4">
+                                    <b><span class="modifier">Public</span> export</b>
+                                </td>
+                            </tr>
+            
+                            <tr>
+                                <td class="col-md-4">
+                                        <span class="modifier-icon method fa fa-play circle">
+                                            <span class="fa fa-circle"></span>
+                                        </span>
+                                    <code>export(usuario: <a href="../classes/Usuario.html" >Usuario</a>, estudiante: any, testeval: string)</code>
+                                </td>
+                            </tr>
+            
+                            <tr>
+                                <td class="col-md-4">
+                                        <div class="io-description">
+                                                <b>Parameters :</b>
+                                                <ul class="jsdoc-params">
+                                                        <li>
+                                                            <div>
+                                                                <b>usuario</b>
+                                                                    :     <code><a href="../classes/Usuario.html" target="_self" >Usuario</a></code>
+            
+                                                            </div>
+                                                            <div>
+                                                                
+                                                            </div>
+                                                        </li>
+                                                        <li>
+                                                            <div>
+                                                                <b>estudiante</b>
+                                                            </div>
+                                                            <div>
+                                                                
+                                                            </div>
+                                                        </li>
+                                                        <li>
+                                                            <div>
+                                                                <b>testeval</b>
+                                                            </div>
+                                                            <div>
+                                                                
+                                                            </div>
+                                                        </li>
+                                                </ul>
+                                        </div>
+                                        <div class="io-description">
+                                            <b>Returns: </b>    <code>void</code>
+            
+                                        </div>
+                                            <div class="io-description">
+                                                
+                                            </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <table class="table table-sm table-bordered">
+                        <tbody>
+                            <tr>
+                                <td class="col-md-4">
+                                    <b><span class="modifier">Private</span> exportAsExcelFile</b>
+                                </td>
+                            </tr>
+            
+                            <tr>
+                                <td class="col-md-4">
+                                        <span class="modifier-icon method fa fa-play lock">
+                                            <span class="fa fa-lock"></span>
+                                        </span>
+                                    <code>exportAsExcelFile(datospersonales: any[], datosrespuesta: any[], datosrespuestatipo: any[], datosrespuestacate: any[], datosresultado: any[], excelFileName: string)</code>
+                                </td>
+                            </tr>
+            
+                            <tr>
+                                <td class="col-md-4">
+                                        <div class="io-description">
+                                                <b>Parameters :</b>
+                                                <ul class="jsdoc-params">
+                                                        <li>
+                                                            <div>
+                                                                <b>resultadospresg</b>
+                                                            </div>
+                                                            <div>
+                                                                
+                                                            </div>
+                                                        </li>
+                                                        <li>
+                                                            <div>
+                                                                <b>excelFileName</b>
+                                                            </div>
+                                                            <div>
+                                                                
+                                                            </div>
+                                                        </li>
+                                                </ul>
+                                        </div>
+                                        <div class="io-description">
+                                            <b>Returns: </b>    <code>void</code>
+            
+                                        </div>
+                                            <div class="io-description">
+                                                
+                                            </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <table class="table table-sm table-bordered">
+                        <tbody>
+                            <tr>
+                                <td class="col-md-4">
+                                    <b><span class="modifier">Private</span> wrapAndCenterCell</b>
+                                </td>
+                            </tr>
+            
+                            <tr>
+                                <td class="col-md-4">
+                                        <span class="modifier-icon method fa fa-play lock">
+                                            <span class="fa fa-lock"></span>
+                                        </span>
+                                    <code>wrapAndCenterCell(cell: any)</code>
+                                </td>
+                            </tr>
+            
+                            <tr>
+                                <td class="col-md-4">
+                                        <div class="io-description">
+                                                <b>Parameters :</b>
+                                                <ul class="jsdoc-params">
+                                                        <li>
+                                                            <div>
+                                                                <b>cell</b>
+                                                            </div>
+                                                            <div>
+                                                                
+                                                            </div>
+                                                        </li>
+                                                </ul>
+                                        </div>
+                                        <div class="io-description">
+                                            <b>Returns: </b>    <code>void</code>
+            
+                                        </div>
+                                            <div class="io-description">
+                                                
+                                            </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <table class="table table-sm table-bordered">
+                        <tbody>
+                            <tr>
+                                <td class="col-md-4">
+                                    <b><span class="modifier">Private</span> setCellStyle</b>
+                                </td>
+                            </tr>
+            
+                            <tr>
+                                <td class="col-md-4">
+                                        <span class="modifier-icon method fa fa-play lock">
+                                            <span class="fa fa-lock"></span>
+                                        </span>
+                                    <code>setCellStyle(cell: any, style: {})</code>
+                                </td>
+                            </tr>
+            
+                            <tr>
+                                <td class="col-md-4">
+                                        <div class="io-description">
+                                                <b>Parameters :</b>
+                                                <ul class="jsdoc-params">
+                                                        <li>
+                                                            <div>
+                                                                <b>cell</b>
+                                                            </div>
+                                                            <div>
+                                                                
+                                                            </div>
+                                                        </li>
+                                                        <li>
+                                                            <div>
+                                                                <b>style</b>
+                                                            </div>
+                                                            <div>
+                                                                
+                                                            </div>
+                                                        </li>
+                                                </ul>
+                                        </div>
+                                        <div class="io-description">
+                                            <b>Returns: </b>    <code>void</code>
+            
+                                        </div>
+                                            <div class="io-description">
+                                                
+                                            </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <table class="table table-sm table-bordered">
+                        <tbody>
+                            <tr>
+                                <td class="col-md-4">
+                                    <b><span class="modifier">Private</span> saveAsExcelFile</b>
+                                </td>
+                            </tr>
+            
+                            <tr>
+                                <td class="col-md-4">
+                                        <span class="modifier-icon method fa fa-play lock">
+                                            <span class="fa fa-lock"></span>
+                                        </span>
+                                    <code>saveAsExcelFile(buffer: any, fileName: string)</code>
+                                </td>
+                            </tr>
+            
+                            <tr>
+                                <td class="col-md-4">
+                                        <div class="io-description">
+                                                <b>Parameters :</b>
+                                                <ul class="jsdoc-params">
+                                                        <li>
+                                                            <div>
+                                                                <b>buffer</b>
+                                                            </div>
+                                                            <div>
+                                                                
+                                                            </div>
+                                                        </li>
+                                                        <li>
+                                                            <div>
+                                                                <b>fileName</b>
+                                                            </div>
+                                                            <div>
+                                                                
+                                                            </div>
+                                                        </li>
+                                                </ul>
+                                        </div>
+                                        <div class="io-description">
+                                            <b>Returns: </b>    <code>void</code>
+            
+                                        </div>
+                                            <div class="io-description">
+                                                
+                                            </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
             </section>
 
             <section>
@@ -1154,6 +1766,21 @@
                         <tbody>
                             <tr>
                                 <td class="col-md-4">
+                                    <b> puntajeCategoria</b>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="col-md-4">
+                                    <code>puntajeCategoria:     <code>FirebaseListObservable&lt;any[]&gt;</code>
+            </bcode>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <table class="table table-sm table-bordered">
+                        <tbody>
+                            <tr>
+                                <td class="col-md-4">
                                     <b> respuesta</b>
                                 </td>
                             </tr>
@@ -1175,6 +1802,36 @@
                             <tr>
                                 <td class="col-md-4">
                                     <code>subtests:     <code>FirebaseListObservable&lt;any[]&gt;</code>
+            </bcode>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <table class="table table-sm table-bordered">
+                        <tbody>
+                            <tr>
+                                <td class="col-md-4">
+                                    <b> testCalificado</b>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="col-md-4">
+                                    <code>testCalificado:     <code>FirebaseListObservable&lt;any[]&gt;</code>
+            </bcode>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <table class="table table-sm table-bordered">
+                        <tbody>
+                            <tr>
+                                <td class="col-md-4">
+                                    <b> testevaluado</b>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="col-md-4">
+                                    <code>testevaluado:     <code>FirebaseListObservable&lt;any[]&gt;</code>
             </bcode>
                                 </td>
                             </tr>
@@ -1223,8 +1880,16 @@ import { AngularFireAuth } from &#x27;angularfire2/auth&#x27;;
 
 import { Usuario } from &#x27;./modelos/usuario&#x27;;
 import { Estudiante } from &#x27;./modelos/estudiante&#x27;;
+import { Cuestionarioevaluado } from &#x27;./modelos/cuestionarioevaluado&#x27;;
+import { Puntajecuestionario } from &#x27;./modelos/puntajecuestionario&#x27;;
 
 import * as firebase from &#x27;firebase&#x27;;
+import * as FileSaver from &#x27;file-saver&#x27;;
+import * as XLSX from &#x27;xlsx&#x27;;
+import * as XLSXStyle from &#x27;xlsx-style&#x27;;
+
+const EXCEL_TYPE &#x3D; &#x27;application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset&#x3D;UTF-8&#x27;;
+const EXCEL_EXTENSION &#x3D; &#x27;.xlsx&#x27;;
 
 /**
  *
@@ -1237,10 +1902,13 @@ export class AppService {
   usuario: Usuario;
   estudiantes: FirebaseListObservable&lt;any[]&gt;;
   tests: FirebaseListObservable&lt;any[]&gt;;
+  testevaluado: FirebaseListObservable&lt;any[]&gt;;
   subtests: FirebaseListObservable&lt;any[]&gt;;
   pregunta: FirebaseListObservable&lt;any[]&gt;;
   respuesta: FirebaseListObservable&lt;any[]&gt;;
   material: FirebaseListObservable&lt;any[]&gt;;
+  puntajeCategoria: FirebaseListObservable&lt;any[]&gt;;
+  testCalificado: FirebaseListObservable&lt;any[]&gt;;
 
   constructor(
     private df: AngularFireDatabase,
@@ -1270,6 +1938,7 @@ export class AppService {
       ci: estudiante.ci,
       nombres: estudiante.nombres,
       apellidos: estudiante.apellidos,
+      sexo: estudiante.sexo,
       fecha_nacimiento: estudiante.fecha_nacimiento,
       isactive: estudiante.isactive
     });
@@ -1292,7 +1961,7 @@ export class AppService {
         );
         return usuario;
       }
-    )
+    );
 
     return resultado;
   }
@@ -1314,7 +1983,7 @@ export class AppService {
    * @returns
    * @memberof AppService
    */
-  getTest(estudiante: Estudiante) {
+  getTest() {
     this.tests &#x3D; this.df.list(&#x27;test&#x27;) as FirebaseListObservable&lt;any[]&gt;;
     return this.tests;
   }
@@ -1328,6 +1997,13 @@ export class AppService {
   getTestMateriales(test: any) {
     this.material &#x3D; this.df.list(&#x27;test/&#x27; + test.$key + &#x27;/material&#x27;) as FirebaseListObservable&lt;any[]&gt;;
     return this.material;
+  }
+
+  getTestEvaluado(usuario: Usuario, estudiante: any) {
+    this.testevaluado &#x3D; this.df.list(&#x27;estudiante_usuario/&#x27;
+      + usuario.id + &#x27;/estudiante/&#x27;
+      + estudiante.$key + &#x27;/testevaluado&#x27;) as FirebaseListObservable&lt;any[]&gt;;
+    return this.testevaluado;
   }
 
   /**
@@ -1377,6 +2053,27 @@ export class AppService {
       }
     }) as FirebaseListObservable&lt;any[]&gt;;
     return this.respuesta;
+  }
+
+  getResultadoCategoria(usuario: Usuario, estudiante: any, testid: String) {
+    this.puntajeCategoria &#x3D; this.df.list(&#x27;estudiante_usuario/&#x27;
+      + usuario.id + &#x27;/estudiante/&#x27;
+      + estudiante.$key + &#x27;/testevaluado/&#x27;
+      + testid + &#x27;/puntajecategoria&#x27;) as FirebaseListObservable&lt;any[]&gt;;
+
+    return this.puntajeCategoria;
+  }
+
+  getTestCalificado(usuario: Usuario, estudiante: any, testid: String) {
+    this.testCalificado &#x3D; this.df.list(&#x27;estudiante_usuario/&#x27;
+      + usuario.id + &#x27;/estudiante/&#x27;
+      + estudiante.$key + &#x27;/testevaluado&#x27;, {
+        query: {
+          limitToLast: 1
+        }
+      }) as FirebaseListObservable&lt;any[]&gt;;
+
+    return this.testCalificado;
   }
 
   /**
@@ -1437,6 +2134,41 @@ export class AppService {
 
   /**
    *
+   * @param {string} tipo_pregunta
+   * @param {number} meses
+   * @param {number} puntaje
+   * @param {*} test
+   * @returns
+   * @memberof AppService
+   */
+  getPuntosEquivalentes(tipo_pregunta: string, meses: number, puntaje: number, test: any) {
+    const resultado &#x3D; this.df.database.ref(&#x27;test/&#x27; +
+    test.$key + &#x27;/escala_equivalente/&#x27; + tipo_pregunta)
+      .orderByChild(&#x27;meses&#x27;)
+      .endAt(meses)
+      .once(&#x27;value&#x27;)
+      .then(function(snapshot) {
+
+        // tslint:disable-next-line:prefer-const
+        let pequi &#x3D; 0;
+
+        snapshot.forEach(function (childSnapshot) {
+          const auxvalue &#x3D; childSnapshot.val();
+            if (auxvalue.puntos &lt;&#x3D; puntaje) {
+              pequi &#x3D; auxvalue.puntosequivalentes;
+            }
+          }
+        );
+
+        return pequi;
+      }
+    );
+
+    return resultado;
+  }
+
+  /**
+   *
    * @param {Usuario} usuario
    * @memberof AppService
    */
@@ -1452,13 +2184,15 @@ export class AppService {
       isactive: usuario.isactive
     });*/
 
-    // tslint:disable-next-line:comment-format
     // tslint:disable-next-line:prefer-const
-    // let auxCabecera &#x3D; this.df.database.ref(&#x27;test/-KqMrJZ-UEASUXSbu-n8&#x27;);
+    // tslint:disable-next-line:comment-format
+    //let auxCabecera &#x3D; this.df.database.ref(&#x27;test/-KqMrJZ-UEASUXSbu-n8&#x27;);
 
     // tslint:disable-next-line:prefer-const
     // tslint:disable-next-line:comment-format
-    const auxCabecera &#x3D; this.df.database.ref(&#x27;test/-KqMrQPAJJ2H5Q1Pz01v&#x27;)
+    //let auxCabecera &#x3D; this.df.database.ref(&#x27;test/-KqMrQPAJJ2H5Q1Pz01v&#x27;);
+
+
   }
 
   /**
@@ -1472,6 +2206,7 @@ export class AppService {
       nombres: estudiante.nombres,
       apellidos: estudiante.apellidos,
       fecha_nacimiento: estudiante.fecha_nacimiento,
+      sexo: estudiante.sexo,
       isactive: estudiante.isactive
     });
   }
@@ -1483,6 +2218,610 @@ export class AppService {
    */
   deleteEstudiante(key: string) {
     this.estudiantes.remove(key);
+  }
+
+  /**
+   *
+   * @param {number} mr
+   * @param {number} puntaje
+   * @param {Cuestionarioevaluado[]} resultadopregunta
+   * @param {Puntajecuestionario[]} resultadocuest
+   * @param {Puntajecuestionario[]} resultadocuestcat
+   * @param {*} test
+   * @param {*} estudiante
+   * @param {Usuario} usuario
+   * @param {String} fecha
+   * @returns
+   * @memberof AppService
+   */
+  calificarTestZazzo (
+    mr: number,
+    puntaje: number,
+    resultadopregunta: Cuestionarioevaluado[],
+    resultadocuest: Puntajecuestionario[],
+    resultadocuestcat: Puntajecuestionario[],
+    test: any,
+    estudiante: any,
+    usuario: Usuario,
+    fecha: String
+  ) {
+    // tslint:disable-next-line:prefer-const
+    let auxdf &#x3D; this.df;
+    let cicalculado &#x3D; 0;
+    let idrest &#x3D; &#x27;&#x27;;
+
+    const resultado &#x3D; this.df.database.ref(&#x27;test/&#x27; +
+      test.$key +
+      &#x27;/escala&#x27;)
+      .orderByChild(&#x27;puntos&#x27;)
+      .limitToLast(1)
+      .equalTo(puntaje)
+      .once(&#x27;value&#x27;)
+      .then(function(snapshot) {
+
+        snapshot.forEach(function (childSnapshot) {
+            const auxvalue &#x3D; childSnapshot.val();
+
+            cicalculado &#x3D; Math.round((auxvalue.meses / mr) * 100);
+
+            auxdf.database.ref(&#x27;estudiante_usuario/&#x27; + usuario.id + &#x27;/estudiante/&#x27; + estudiante.$key)
+              .child(&#x27;edadmental&#x27;)
+              .set(auxvalue.meses);
+
+            auxdf.database.ref(&#x27;estudiante_usuario/&#x27; + usuario.id + &#x27;/estudiante/&#x27; + estudiante.$key)
+              .child(&#x27;cicalculado&#x27;)
+              .set(cicalculado);
+
+            // tslint:disable-next-line:prefer-const
+            let tsest &#x3D; auxdf.database.ref(&#x27;estudiante_usuario/&#x27; + usuario.id + &#x27;/estudiante/&#x27; + estudiante.$key)
+              .child(&#x27;testevaluado&#x27;).push({
+                fecha: fecha,
+                puntajetotal: puntaje,
+                tipo_test: test.$key
+              }
+            );
+
+            tsest.child(&#x27;edadmental&#x27;).set(auxvalue.meses);
+            tsest.child(&#x27;ci&#x27;).set(cicalculado);
+
+            for (let k &#x3D; 0; k &lt; resultadopregunta.length; k++) {
+              tsest.child(&#x27;respuestas&#x27;).push({
+                numero_pregunta: resultadopregunta[k].numeropregunta,
+                puntaje: resultadopregunta[k].puntaje,
+                tiempo: resultadopregunta[k].tiempo
+              });
+            }
+
+            for (let k &#x3D; 0; k &lt; resultadocuest.length; k++) {
+              tsest.child(&#x27;puntajetipopregunta&#x27;).push({
+                tipopregunta: resultadocuest[k].tipopregunta,
+                puntaje: resultadocuest[k].puntaje
+              });
+            }
+
+            for (let k &#x3D; 0; k &lt; resultadocuestcat.length; k++) {
+              tsest.child(&#x27;puntajecategoria&#x27;).push({
+                categoria: resultadocuestcat[k].categoria,
+                puntaje: resultadocuestcat[k].puntaje
+              });
+            }
+
+            auxdf.database.ref(&#x27;nivelcoeficiente&#x27;)
+              .orderByChild(&#x27;ci&#x27;)
+              .endAt(cicalculado)
+              .limitToLast(1)
+              .once(&#x27;value&#x27;)
+              .then(function(auxsnapshot) {
+                auxsnapshot.forEach(function (auxchildSnapshot) {
+                  const auxvaluechild &#x3D; auxchildSnapshot.val();
+
+                  auxdf.database.ref(&#x27;estudiante_usuario/&#x27; + usuario.id + &#x27;/estudiante/&#x27; + estudiante.$key)
+                    .child(&#x27;nivelcognitivo&#x27;)
+                    .set(auxvaluechild.estado);
+
+                    tsest.child(&#x27;nivelcognitivo&#x27;).set(auxvaluechild.estado);
+                }
+                );
+              }
+            );
+            idrest &#x3D; tsest.key;
+          }
+        );
+
+        return idrest;
+      }
+    );
+
+    if (puntaje &lt; 9) {
+      auxdf.database.ref(&#x27;estudiante_usuario/&#x27; + usuario.id + &#x27;/estudiante/&#x27; + estudiante.$key)
+      .child(&#x27;cicalculado&#x27;)
+      .set(cicalculado);
+
+      // tslint:disable-next-line:prefer-const
+      let tsest &#x3D; this.df.database.ref(&#x27;estudiante_usuario/&#x27; + usuario.id + &#x27;/estudiante/&#x27; + estudiante.$key)
+        .child(&#x27;testevaluado&#x27;).push({
+          fecha: fecha,
+          puntajetotal: puntaje,
+          tipo_test: test.$key
+        }
+      );
+
+      tsest.child(&#x27;ci&#x27;).set(0);
+
+      for (let k &#x3D; 0; k &lt; resultadopregunta.length; k++) {
+        tsest.child(&#x27;respuestas&#x27;).push({
+          numero_pregunta: resultadopregunta[k].numeropregunta,
+          puntaje: resultadopregunta[k].puntaje,
+          tiempo: resultadopregunta[k].tiempo
+        });
+      }
+
+      for (let k &#x3D; 0; k &lt; resultadocuest.length; k++) {
+        tsest.child(&#x27;puntajetipopregunta&#x27;).push({
+          tipopregunta: resultadocuest[k].tipopregunta,
+          puntaje: resultadocuest[k].puntaje,
+        });
+      }
+
+      for (let k &#x3D; 0; k &lt; resultadocuestcat.length; k++) {
+        tsest.child(&#x27;puntajecategoria&#x27;).push({
+          categoria: resultadocuestcat[k].categoria,
+          puntaje: resultadocuestcat[k].puntaje
+        });
+      }
+
+      idrest &#x3D; tsest.key;
+
+      this.df.database.ref(&#x27;nivelcoeficiente&#x27;)
+        .orderByChild(&#x27;ci&#x27;)
+        .endAt(cicalculado)
+        .once(&#x27;value&#x27;)
+        .then(function(auxsnapshot) {
+          auxsnapshot.forEach(function (auxchildSnapshot) {
+            const auxvaluechild &#x3D; auxchildSnapshot.val();
+
+            auxdf.database.ref(&#x27;estudiante_usuario/&#x27; + usuario.id + &#x27;/estudiante/&#x27; + estudiante.$key)
+              .child(&#x27;nivelcognitivo&#x27;)
+              .set(auxvaluechild.estado);
+
+            auxdf.database.ref(&#x27;estudiante_usuario/&#x27; + usuario.id + &#x27;/estudiante/&#x27; + estudiante.$key)
+              .child(&#x27;edadmental&#x27;)
+              .set(null);
+
+            tsest.child(&#x27;nivelcognitivo&#x27;).set(auxvaluechild.estado);
+
+            return idrest;
+          }
+        );
+      }
+      );
+    }
+
+    return resultado;
+  }
+
+  /**
+   *
+   * @param {number} mr
+   * @param {number} puntaje
+   * @param {Cuestionarioevaluado[]} resultadopregunta
+   * @param {Puntajecuestionario[]} resultadocuest
+   * @param {Puntajecuestionario[]} resultadocuestcat
+   * @param {*} test
+   * @param {*} estudiante
+   * @param {Usuario} usuario
+   * @param {String} fecha
+   * @returns
+   * @memberof AppService
+   */
+  calificarTestWisc (
+    mr: number,
+    puntaje: number,
+    resultadopregunta: Cuestionarioevaluado[],
+    resultadocuest: Puntajecuestionario[],
+    resultadocuestcat: Puntajecuestionario[],
+    test: any,
+    estudiante: any,
+    usuario: Usuario,
+    fecha: String
+  ) {
+    // tslint:disable-next-line:prefer-const
+    let auxdf &#x3D; this.df;
+    let edadmental &#x3D; 0;
+    let idrest &#x3D; &#x27;&#x27;;
+
+    const resultado &#x3D; this.df.database.ref(&#x27;test/&#x27;
+      + test.$key
+      + &#x27;/escala&#x27;)
+      .orderByChild(&#x27;puntos&#x27;)
+      .equalTo(puntaje)
+      .once(&#x27;value&#x27;)
+      .then(function(snapshot) {
+
+        snapshot.forEach(function (childSnapshot) {
+            const auxvalue &#x3D; childSnapshot.val();
+
+            edadmental &#x3D; Math.round((auxvalue.ci / 100) * mr);
+
+            auxdf.database.ref(&#x27;estudiante_usuario/&#x27; + usuario.id + &#x27;/estudiante/&#x27; + estudiante.$key)
+              .child(&#x27;edadmental&#x27;)
+              .set(edadmental);
+
+            auxdf.database.ref(&#x27;estudiante_usuario/&#x27; + usuario.id + &#x27;/estudiante/&#x27; + estudiante.$key)
+              .child(&#x27;cicalculado&#x27;)
+              .set(auxvalue.ci);
+
+              // tslint:disable-next-line:prefer-const
+              let tsest &#x3D; auxdf.database.ref(&#x27;estudiante_usuario/&#x27; + usuario.id + &#x27;/estudiante/&#x27; + estudiante.$key)
+                .child(&#x27;testevaluado&#x27;).push({
+                  fecha: fecha,
+                  puntajetotal: puntaje,
+                  tipo_test: test.$key
+                }
+              );
+
+              tsest.child(&#x27;edadmental&#x27;).set(edadmental);
+              tsest.child(&#x27;ci&#x27;).set(auxvalue.ci);
+
+              for (let k &#x3D; 0; k &lt; resultadopregunta.length; k++) {
+                tsest.child(&#x27;respuestas&#x27;).push({
+                  numero_pregunta: resultadopregunta[k].numeropregunta,
+                  puntaje: resultadopregunta[k].puntaje,
+                  tiempo: resultadopregunta[k].tiempo
+                });
+              }
+
+              for (let k &#x3D; 0; k &lt; resultadocuest.length; k++) {
+                tsest.child(&#x27;puntajetipopregunta&#x27;).push({
+                  tipopregunta: resultadocuest[k].tipopregunta,
+                  puntaje: resultadocuest[k].puntaje,
+                  puntosequivalentes: resultadocuest[k].puntosequivalentes
+                });
+              }
+
+              for (let k &#x3D; 0; k &lt; resultadocuestcat.length; k++) {
+                tsest.child(&#x27;puntajecategoria&#x27;).push({
+                  categoria: resultadocuestcat[k].categoria,
+                  puntaje: resultadocuestcat[k].puntaje
+                });
+              }
+
+              auxdf.database.ref(&#x27;nivelcoeficiente&#x27;)
+                .orderByChild(&#x27;ci&#x27;)
+                .endAt(auxvalue.ci)
+                .once(&#x27;value&#x27;)
+                .then(function(auxsnapshot) {
+                auxsnapshot.forEach(function (auxchildSnapshot) {
+                  const auxvaluechild &#x3D; auxchildSnapshot.val();
+
+                  auxdf.database.ref(&#x27;estudiante_usuario/&#x27; + usuario.id + &#x27;/estudiante/&#x27; + estudiante.$key)
+                    .child(&#x27;nivelcognitivo&#x27;)
+                    .set(auxvaluechild.estado);
+
+                    tsest.child(&#x27;nivelcognitivo&#x27;).set(auxvaluechild.estado);
+                }
+                );
+              }
+            );
+            idrest &#x3D; tsest.key;
+          }
+        );
+        return idrest;
+      }
+    );
+
+    if (puntaje &lt; 10) {
+      auxdf.database.ref(&#x27;estudiante_usuario/&#x27; + usuario.id + &#x27;/estudiante/&#x27; + estudiante.$key)
+      .child(&#x27;cicalculado&#x27;)
+      .set(puntaje);
+
+      // tslint:disable-next-line:prefer-const
+      let tsest &#x3D; this.df.database.ref(&#x27;estudiante_usuario/&#x27; + usuario.id + &#x27;/estudiante/&#x27; + estudiante.$key)
+        .child(&#x27;testevaluado&#x27;).push({
+          fecha: fecha,
+          puntajetotal: puntaje,
+          tipo_test: test.$key
+        }
+      );
+
+      tsest.child(&#x27;ci&#x27;).set(0);
+
+      for (let k &#x3D; 0; k &lt; resultadopregunta.length; k++) {
+        tsest.child(&#x27;respuestas&#x27;).push({
+          numero_pregunta: resultadopregunta[k].numeropregunta,
+          puntaje: resultadopregunta[k].puntaje,
+          tiempo: resultadopregunta[k].tiempo
+        });
+      }
+
+      for (let k &#x3D; 0; k &lt; resultadocuest.length; k++) {
+        tsest.child(&#x27;puntajetipopregunta&#x27;).push({
+          tipopregunta: resultadocuest[k].tipopregunta,
+          puntaje: resultadocuest[k].puntaje,
+        });
+      }
+
+      for (let k &#x3D; 0; k &lt; resultadocuestcat.length; k++) {
+        tsest.child(&#x27;puntajecategoria&#x27;).push({
+          categoria: resultadocuestcat[k].categoria,
+          puntaje: resultadocuestcat[k].puntaje
+        });
+      }
+
+      idrest &#x3D; tsest.key;
+
+      this.df.database.ref(&#x27;nivelcoeficiente&#x27;)
+        .orderByChild(&#x27;ci&#x27;)
+        .endAt(puntaje)
+        .once(&#x27;value&#x27;)
+        .then(function(auxsnapshot) {
+          auxsnapshot.forEach(function (auxchildSnapshot) {
+            const auxvaluechild &#x3D; auxchildSnapshot.val();
+
+            auxdf.database.ref(&#x27;estudiante_usuario/&#x27; + usuario.id + &#x27;/estudiante/&#x27; + estudiante.$key)
+              .child(&#x27;nivelcognitivo&#x27;)
+              .set(auxvaluechild.estado);
+
+            auxdf.database.ref(&#x27;estudiante_usuario/&#x27; + usuario.id + &#x27;/estudiante/&#x27; + estudiante.$key)
+              .child(&#x27;edadmental&#x27;)
+              .set(null);
+
+            tsest.child(&#x27;nivelcognitivo&#x27;).set(auxvaluechild.estado);
+
+            return idrest;
+          }
+        );
+      }
+      );
+    }
+
+    return resultado;
+  }
+
+  /**
+   *
+   * @param {Usuario} usuario
+   * @param {*} estudiante
+   * @param {string} testeval
+   * @memberof AppService
+   */
+  public export(usuario: Usuario, estudiante: any, testeval: string): void {
+
+    // tslint:disable-next-line:prefer-const
+    let auxdf &#x3D; this.df;
+    // tslint:disable-next-line:prefer-const
+    let auxcaberajson: any[];
+    // tslint:disable-next-line:prefer-const
+    let auxrespuestasjson: any[];
+    // tslint:disable-next-line:prefer-const
+    let auxrespuestastipojson: any[];
+    // tslint:disable-next-line:prefer-const
+    let auxrespuestascategoriajson: any[];
+    // tslint:disable-next-line:prefer-const
+    let auxResultadojson: any[];
+    // tslint:disable-next-line:prefer-const
+    let nombrecompleto;
+
+    this.df.database.ref(&#x27;estudiante_usuario/&#x27;
+      + usuario.id + &#x27;/estudiante/&#x27;
+      + estudiante.$key + &#x27;/testevaluado/&#x27;
+      + testeval)
+      .once(&#x27;value&#x27;)
+      .then(function(auxsnapshot) {
+        // tslint:disable-next-line:prefer-const
+        let auxcaberajsonx: any[];
+        // tslint:disable-next-line:prefer-const
+        let auxrespuestasjsonx: any[] &#x3D; [];
+        // tslint:disable-next-line:prefer-const
+        let auxrespuestastipojsonx: any[];
+        // tslint:disable-next-line:prefer-const
+        let auxrespuestascategoriajsonx: any[] &#x3D; [];
+        // tslint:disable-next-line:prefer-const
+        let auxnombrecompleto;
+
+        auxdf.database.ref(&#x27;estudiante_usuario/&#x27;
+        + usuario.id + &#x27;/estudiante/&#x27;
+        + estudiante.$key)
+        .once(&#x27;value&#x27;)
+        .then(function(auxchildsnapshot) {
+          // tslint:disable-next-line:prefer-const
+          auxcaberajsonx &#x3D; [{
+            &#x27;Nombres&#x27;: auxchildsnapshot.val().nombres,
+            &#x27;Apellidos&#x27;: auxchildsnapshot.val().apellidos,
+            &#x27;Cédula de Identificación&#x27;: auxchildsnapshot.val().ci,
+            &#x27;Fecha de Nacimiento&#x27;: auxchildsnapshot.val().fecha_nacimiento,
+            &#x27;Sexo&#x27;: auxchildsnapshot.val().sexo,
+            &#x27;Fecha Test&#x27;: auxsnapshot.val().fecha}];
+          auxnombrecompleto &#x3D; auxchildsnapshot.val().nombres + &#x27; &#x27; + auxchildsnapshot.val().apellidos;
+        });
+
+        auxdf.database.ref(&#x27;estudiante_usuario/&#x27;
+        + usuario.id + &#x27;/estudiante/&#x27;
+        + estudiante.$key + &#x27;/testevaluado/&#x27;
+        + testeval + &#x27;/respuestas&#x27;)
+        .once(&#x27;value&#x27;)
+        .then(function(auxchildrespsnapshot) {
+          auxchildrespsnapshot.forEach(function (element) {
+            auxrespuestasjsonx.push({
+              &#x27;Número de Pregunta&#x27;: element.val().numero_pregunta,
+              &#x27;Tiempo (segundos)&#x27;: element.val().tiempo,
+              &#x27;Puntaje&#x27;: element.val().puntaje
+            });
+          });
+        });
+
+        if (auxsnapshot.val().tipo_test &#x3D;&#x3D;&#x3D; &#x27;-KqMrQPAJJ2H5Q1Pz01v&#x27;) {
+          auxrespuestastipojsonx &#x3D; [];
+
+          auxdf.database.ref(&#x27;estudiante_usuario/&#x27;
+          + usuario.id + &#x27;/estudiante/&#x27;
+          + estudiante.$key + &#x27;/testevaluado/&#x27;
+          + testeval + &#x27;/puntajetipopregunta&#x27;)
+          .once(&#x27;value&#x27;)
+          .then(function(auxchildrespsnapshot) {
+            auxchildrespsnapshot.forEach(function (element) {
+              auxrespuestastipojsonx.push({
+                &#x27;Tipo de Pregunta&#x27;: element.val().tipopregunta,
+                &#x27;Puntaje&#x27;: element.val().puntaje,
+                &#x27;Puntaje Equivalente&#x27;: element.val().puntosequivalentes
+              });
+            });
+          });
+        }
+
+        auxdf.database.ref(&#x27;estudiante_usuario/&#x27;
+        + usuario.id + &#x27;/estudiante/&#x27;
+        + estudiante.$key + &#x27;/testevaluado/&#x27;
+        + testeval + &#x27;/puntajecategoria&#x27;)
+        .once(&#x27;value&#x27;)
+        .then(function(auxchildrespsnapshot) {
+          auxchildrespsnapshot.forEach(function (element) {
+            auxrespuestascategoriajsonx.push({
+              &#x27;Categoría&#x27;: element.val().categoria &#x3D;&#x3D;&#x3D; 0 ? &#x27;Normal&#x27; :
+                (element.val().categoria &#x3D;&#x3D;&#x3D; 1 ? &#x27;Puntaje de Escala Verbal&#x27; :
+                (element.val().categoria &#x3D;&#x3D;&#x3D; 2 ? &#x27;Puntaje de Escala de Ejecución&#x27; : &#x27;&#x27;)),
+              &#x27;Puntaje&#x27;: element.val().puntaje
+            });
+          });
+        });
+
+        // tslint:disable-next-line:prefer-const
+        let auxedad;
+
+        if (auxsnapshot.val().edadmental) {
+          // tslint:disable-next-line:prefer-const
+          let anios &#x3D; Math.floor(auxsnapshot.val().edadmental / 12);
+          // tslint:disable-next-line:prefer-const
+          let mes &#x3D; auxsnapshot.val().edadmental % 12;
+
+          auxedad &#x3D; anios + &#x27; Años, &#x27; + mes + &#x27; Meses&#x27;;
+        } else {
+          auxedad &#x3D; &#x27;0 Años&#x27;;
+        }
+
+        // tslint:disable-next-line:prefer-const
+        let auxResultadojsonx: any[] &#x3D; [{
+          &#x27;Coeficiente Intelectual&#x27;: auxsnapshot.val().ci,
+          &#x27;Edad Mental&#x27;: auxedad,
+          &#x27;Nivel de Aptitud Cognitiva General&#x27;: auxsnapshot.val().nivelcognitivo
+        }];
+
+        setTimeout(() &#x3D;&gt; {
+          auxcaberajson &#x3D; auxcaberajsonx;
+          auxrespuestasjson &#x3D; auxrespuestasjsonx;
+          auxrespuestastipojson &#x3D; auxrespuestastipojsonx;
+          auxrespuestascategoriajson &#x3D; auxrespuestascategoriajsonx;
+          auxResultadojson &#x3D; auxResultadojsonx;
+          nombrecompleto &#x3D; auxnombrecompleto;
+        }, 500);
+      }
+    );
+
+    setTimeout(() &#x3D;&gt; {
+      this.exportAsExcelFile(
+        auxcaberajson,
+        auxrespuestasjson,
+        auxrespuestastipojson,
+        auxrespuestascategoriajson,
+        auxResultadojson,
+        nombrecompleto);
+    }, 550);
+  }
+
+  /**
+   *
+   * @param {any[]} resultadospresg
+   * @param {string} excelFileName
+   * @memberof AppService
+   */
+  private exportAsExcelFile(
+    datospersonales: any[],
+    datosrespuesta: any[],
+    datosrespuestatipo: any[],
+    datosrespuestacate: any[],
+    datosresultado: any[],
+    excelFileName: string): void {
+
+    const workbook: XLSX.WorkBook &#x3D; XLSX.utils.book_new();
+
+    const worksheetpersonales: XLSX.WorkSheet &#x3D; XLSX.utils.json_to_sheet(datospersonales);
+    this.wrapAndCenterCell(worksheetpersonales.A1);
+    this.wrapAndCenterCell(worksheetpersonales.B1);
+    this.wrapAndCenterCell(worksheetpersonales.C1);
+    this.wrapAndCenterCell(worksheetpersonales.D1);
+    this.wrapAndCenterCell(worksheetpersonales.E1);
+    this.wrapAndCenterCell(worksheetpersonales.F1);
+
+    const worksheetrespuesta: XLSX.WorkSheet &#x3D; XLSX.utils.json_to_sheet(datosrespuesta);
+    this.wrapAndCenterCell(worksheetrespuesta.A1);
+    this.wrapAndCenterCell(worksheetrespuesta.B1);
+    this.wrapAndCenterCell(worksheetrespuesta.C1);
+
+    XLSX.utils.book_append_sheet(workbook, worksheetpersonales, &#x27;Datos de la Persona&#x27;);
+    XLSX.utils.book_append_sheet(workbook, worksheetrespuesta, &#x27;Resumen de Respuestas&#x27;);
+
+    if (datosrespuestatipo) {
+      const worksheetrespuestatipo: XLSX.WorkSheet &#x3D; XLSX.utils.json_to_sheet(datosrespuestatipo);
+      this.wrapAndCenterCell(worksheetrespuestatipo.A1);
+      this.wrapAndCenterCell(worksheetrespuestatipo.B1);
+      this.wrapAndCenterCell(worksheetrespuestatipo.C1);
+
+      XLSX.utils.book_append_sheet(workbook, worksheetrespuestatipo, &#x27;Resumen Puntaje Equivalente&#x27;);
+    }
+
+    const worksheetrespuestacate: XLSX.WorkSheet &#x3D; XLSX.utils.json_to_sheet(datosrespuestacate);
+    this.wrapAndCenterCell(worksheetrespuestacate.A1);
+    this.wrapAndCenterCell(worksheetrespuestacate.B1);
+
+    XLSX.utils.book_append_sheet(workbook, worksheetrespuestacate, &#x27;Resumen Categoría&#x27;);
+
+    const worksheetresultado: XLSX.WorkSheet &#x3D; XLSX.utils.json_to_sheet(datosresultado);
+    this.wrapAndCenterCell(worksheetresultado.A1);
+    this.wrapAndCenterCell(worksheetresultado.B1);
+    this.wrapAndCenterCell(worksheetresultado.C1);
+
+    XLSX.utils.book_append_sheet(workbook, worksheetresultado, &#x27;Resultado&#x27;);
+
+    const excelBuffer: any &#x3D; XLSXStyle.write(workbook, { bookType: &#x27;xlsx&#x27;, type: &#x27;buffer&#x27; });
+    this.saveAsExcelFile(excelBuffer, excelFileName);
+  }
+
+  /**
+   *
+   * @private
+   * @param {XLSX.CellObject} cell
+   * @memberof AppService
+   */
+  private wrapAndCenterCell(cell: XLSX.CellObject) {
+    const wrapAndCenterCellStyle &#x3D; {
+      alignment: { wrapText: true, vertical: &#x27;center&#x27;, horizontal: &#x27;center&#x27; },
+      font: { bold: true } };
+    this.setCellStyle(cell, wrapAndCenterCellStyle);
+  }
+
+  /**
+   *
+   * @private
+   * @param {XLSX.CellObject} cell
+   * @param {{}} style
+   * @memberof AppService
+   */
+  private setCellStyle(cell: XLSX.CellObject, style: {}) {
+    cell.s &#x3D; style;
+  }
+
+  /**
+   *
+   * @private
+   * @param {*} buffer
+   * @param {string} fileName
+   * @memberof AppService
+   */
+  private saveAsExcelFile(buffer: any, fileName: string): void {
+    const data: Blob &#x3D; new Blob([buffer], {
+      type: EXCEL_TYPE
+    });
+    FileSaver.saveAs(data, fileName + &#x27; export &#x27; + new Date().getTime() + EXCEL_EXTENSION);
   }
 }
 </code></pre>

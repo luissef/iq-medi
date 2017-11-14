@@ -408,7 +408,7 @@
                         <tbody>
                             <tr>
                                 <td class="col-md-4">
-                                    <code>constructor(tipopregunta: string, puntaje: number)</code>
+                                    <code>constructor(tipopregunta: string, puntaje: number, puntosequivalentes: number, categoria: number, opcional: boolean)</code>
                                 </td>
                             </tr>
             
@@ -435,6 +435,30 @@
                                                                 
                                                             </div>
                                                         </li>
+                                                        <li>
+                                                            <div>
+                                                                <b>puntosequivalentes</b>
+                                                            </div>
+                                                            <div>
+                                                                
+                                                            </div>
+                                                        </li>
+                                                        <li>
+                                                            <div>
+                                                                <b>categoria</b>
+                                                            </div>
+                                                            <div>
+                                                                
+                                                            </div>
+                                                        </li>
+                                                        <li>
+                                                            <div>
+                                                                <b>opcional</b>
+                                                            </div>
+                                                            <div>
+                                                                
+                                                            </div>
+                                                        </li>
                                                 </ul>
                                         </div>
                                 </td>
@@ -451,12 +475,57 @@
                         <tbody>
                             <tr>
                                 <td class="col-md-4">
+                                    <b> categoria</b>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="col-md-4">
+                                    <code>categoria:     <code>number</code>
+            </bcode>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <table class="table table-sm table-bordered">
+                        <tbody>
+                            <tr>
+                                <td class="col-md-4">
+                                    <b> opcional</b>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="col-md-4">
+                                    <code>opcional:     <code>boolean</code>
+            </bcode>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <table class="table table-sm table-bordered">
+                        <tbody>
+                            <tr>
+                                <td class="col-md-4">
                                     <b> puntaje</b>
                                 </td>
                             </tr>
                             <tr>
                                 <td class="col-md-4">
                                     <code>puntaje:     <code>number</code>
+            </bcode>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <table class="table table-sm table-bordered">
+                        <tbody>
+                            <tr>
+                                <td class="col-md-4">
+                                    <b> puntosequivalentes</b>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="col-md-4">
+                                    <code>puntosequivalentes:     <code>number</code>
             </bcode>
                                 </td>
                             </tr>
@@ -486,11 +555,17 @@
    * Creates an instance of Puntajecuestionario.
    * @param {string} tipopregunta
    * @param {number} puntaje
+   * @param {number} puntosequivalentes
+   * @param {number} categoria
+   * @param {boolean} opcional
    * @memberof Puntajecuestionario
    */
   constructor(
     public tipopregunta: string,
-    public puntaje: number
+    public puntaje: number,
+    public puntosequivalentes: number,
+    public categoria: number,
+    public opcional: boolean
   ) { }
 }
 </code></pre>

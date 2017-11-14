@@ -395,11 +395,27 @@
         </div>
         <ul class="list-group" *ngFor="let preg of pregunta">
           <li class="list-group-item list-group-item-warning" *ngIf="preg.opcional ? true : false"><i class="fa fa-info-circle" aria-hidden="true">&nbsp;<b>Pregunta Opcional&nbsp;</b></i>Puede ir directamente al resumen de resultados para calificar el test.</li>
-          <li class="list-group-item active"><i class="fa fa-question-circle-o" aria-hidden="true">&nbsp;<b>Preguntar:&nbsp;</b></i>{{preg.pregunta}}</li>
-          <li class="list-group-item list-group-item-action"><i class="fa fa-info-circle" aria-hidden="true">&nbsp;<b>Consigna:&nbsp;</b></i>{{ preg.aplicacion}}</li>
-          <li class="list-group-item list-group-item-action"><i class="fa fa-info-circle" aria-hidden="true">&nbsp;<b>Modo de preguntar:&nbsp;</b></i>{{ preg.auxpregunta}}</li>
-          <li class="list-group-item list-group-item-action"><i class="fa fa-info-circle" aria-hidden="true">&nbsp;<b>Consejo:&nbsp;</b></i>{{ preg.consejo}}</li>
-          <li class="list-group-item active"><i class="fa fa-clock-o" aria-hidden="true">&nbsp;<b>Tiempo:&nbsp;</b></i> </li>
+          <li class="list-group-item active"><i class="fa fa-question-circle-o" aria-hidden="true">&nbsp;<b>item:&nbsp;</b></i>{{preg.pregunta}}</li>
+          <li class="list-group-item list-group-item-action"><i class="fa fa-info-circle" aria-hidden="true">&nbsp;<b>Consigna:&nbsp;</b></i>
+            <div style="width: 100%" innerHtml="{{preg.aplicacion}}"></div>
+            <img *ngIf="(test.$key==='-KqMrJZ-UEASUXSbu-n8' && numero_pregunta===12)? true : false" [src]="preguntazazzo12" style="width: 100%; max-width: 200px">
+            <img *ngIf="(test.$key==='-KqMrJZ-UEASUXSbu-n8' && numero_pregunta===46)? true : false" [src]="preguntazazzo46" style="width: 100%; max-width: 400px">
+          </li>
+          <li class="list-group-item list-group-item-action"><i class="fa fa-info-circle" aria-hidden="true">&nbsp;<b>Información adicional:&nbsp;</b></i>
+            <div style="width: 100%" innerHtml="{{preg.auxpregunta}}"></div>
+          </li>
+          <li class="list-group-item list-group-item-action"><i class="fa fa-info-circle" aria-hidden="true">&nbsp;<b>Apreciación de la respuesta:&nbsp;</b></i>
+            <div style="width: 100%" innerHtml="{{preg.apreciacion}}"></div>
+            <img *ngIf="(test.$key==='-KqMrJZ-UEASUXSbu-n8' && numero_pregunta===37)? true : false" [src]="preguntazazzo37" style="width: 100%; max-width: 300px">
+            <img *ngIf="(test.$key==='-KqMrJZ-UEASUXSbu-n8' && numero_pregunta===42)? true : false" [src]="preguntazazzo42" style="width: 100%; max-width: 300px">
+            <img *ngIf="(test.$key==='-KqMrJZ-UEASUXSbu-n8' && numero_pregunta===57)? true : false" [src]="preguntazazzo37" style="width: 100%; max-width: 300px">
+          </li>
+          <li class="list-group-item list-group-item-action"><i class="fa fa-info-circle" aria-hidden="true">&nbsp;<b>Criterios de calificación:&nbsp;</b></i>
+            <div style="width: 100%" innerHtml="{{preg.criterios}}"></div>
+            <img *ngIf="(test.$key==='-KqMrJZ-UEASUXSbu-n8' && numero_pregunta===14)? true : false" [src]="preguntazazzo14" style="width: 100%; max-width: 300px">
+            <img *ngIf="(test.$key==='-KqMrJZ-UEASUXSbu-n8' && numero_pregunta===23)? true : false" [src]="preguntazazzo23" style="width: 100%; max-width: 300px">
+          </li>
+          <li class="list-group-item active"><i class="fa fa-clock-o" aria-hidden="true">&nbsp;<b>Cronometro:&nbsp;</b></i> </li>
           <li class="list-group-item list-group-item-action">
             <p>horas:&nbsp;{{hora}}&nbsp;minutos:&nbsp;{{minuto}}&nbsp;segundos:&nbsp;{{segundo}}</p>
           </li>

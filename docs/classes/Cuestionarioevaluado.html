@@ -408,7 +408,7 @@
                         <tbody>
                             <tr>
                                 <td class="col-md-4">
-                                    <code>constructor(numeropregunta: number, tipopregunta: string, tiempo: number, puntaje: number)</code>
+                                    <code>constructor(numeropregunta: number, tipopregunta: string, tiempo: number, puntaje: number, categoria: number, opcional: boolean)</code>
                                 </td>
                             </tr>
             
@@ -451,6 +451,22 @@
                                                                 
                                                             </div>
                                                         </li>
+                                                        <li>
+                                                            <div>
+                                                                <b>categoria</b>
+                                                            </div>
+                                                            <div>
+                                                                
+                                                            </div>
+                                                        </li>
+                                                        <li>
+                                                            <div>
+                                                                <b>opcional</b>
+                                                            </div>
+                                                            <div>
+                                                                
+                                                            </div>
+                                                        </li>
                                                 </ul>
                                         </div>
                                 </td>
@@ -467,12 +483,42 @@
                         <tbody>
                             <tr>
                                 <td class="col-md-4">
+                                    <b> categoria</b>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="col-md-4">
+                                    <code>categoria:     <code>number</code>
+            </bcode>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <table class="table table-sm table-bordered">
+                        <tbody>
+                            <tr>
+                                <td class="col-md-4">
                                     <b> numeropregunta</b>
                                 </td>
                             </tr>
                             <tr>
                                 <td class="col-md-4">
                                     <code>numeropregunta:     <code>number</code>
+            </bcode>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <table class="table table-sm table-bordered">
+                        <tbody>
+                            <tr>
+                                <td class="col-md-4">
+                                    <b> opcional</b>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="col-md-4">
+                                    <code>opcional:     <code>boolean</code>
             </bcode>
                                 </td>
                             </tr>
@@ -534,13 +580,17 @@
    * @param {string} tipopregunta
    * @param {number} tiempo
    * @param {number} puntaje
+   * @param {number} categoria
+   * @param {boolean} opcional
    * @memberof Cuestionarioevaluado
    */
   constructor(
     public numeropregunta: number,
     public tipopregunta: string,
     public tiempo: number,
-    public puntaje: number
+    public puntaje: number,
+    public categoria: number,
+    public opcional: boolean
   ) { }
 }
 </code></pre>

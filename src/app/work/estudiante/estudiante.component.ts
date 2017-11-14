@@ -37,6 +37,16 @@ export class EstudianteComponent implements OnInit {
   private resultadocuestcat: Puntajecuestionario[] = [];
 
   imageIqMedi: string;
+  preguntazazzo4: string;
+  preguntazazzo8: string;
+  preguntazazzo12: string;
+  preguntazazzo14: string;
+  preguntazazzo23: string;
+  preguntazazzo37: string;
+  preguntazazzo38: string;
+  preguntazazzo42: string;
+  preguntazazzo43: string;
+  preguntazazzo46: string;
   idtestEvaluado: string;
 
   mensaje: string;
@@ -109,6 +119,16 @@ export class EstudianteComponent implements OnInit {
     this.crearComponenteRespuestaPregunta('');
     this.crearComponenteDatosTest();
     this.imageIqMedi = '/assets/resources/iq-medi.png';
+    this.preguntazazzo4 = '/assets/resources/zazzo4.png';
+    this.preguntazazzo8 = '/assets/resources/zazzo8.png';
+    this.preguntazazzo12 = '/assets/resources/zazzo12.png';
+    this.preguntazazzo14 = '/assets/resources/zazzo14.png';
+    this.preguntazazzo23 = '/assets/resources/zazzo23.png';
+    this.preguntazazzo37 = '/assets/resources/zazzo37.png';
+    this.preguntazazzo38 = '/assets/resources/zazzo38.png';
+    this.preguntazazzo42 = '/assets/resources/zazzo42.png';
+    this.preguntazazzo43 = '/assets/resources/zazzo43.png';
+    this.preguntazazzo46 = '/assets/resources/zazzo46.png';
   }
 
   /**

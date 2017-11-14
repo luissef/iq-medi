@@ -408,78 +408,10 @@
                         <tbody>
                             <tr>
                                 <td class="col-md-4">
-                                    <code>constructor(id: string, usuario: string, ci: string, nombres: string, apellidos: string, fecha_nacimiento: string, isactive: boolean)</code>
+                                    <code>constructor(id: string, usuario: string, ci: string, nombres: string, apellidos: string, sexo: string, fecha_nacimiento: string, isactive: boolean)</code>
                                 </td>
                             </tr>
             
-                            <tr>
-                                <td class="col-md-4">
-                                        <div class="io-description"><p>Creates an instance of Estudiante.</p>
-            </div>
-                                        <div class="io-description">
-                                                <b>Parameters :</b>
-                                                <ul class="jsdoc-params">
-                                                        <li>
-                                                            <div>
-                                                                <b>id</b>
-                                                            </div>
-                                                            <div>
-                                                                
-                                                            </div>
-                                                        </li>
-                                                        <li>
-                                                            <div>
-                                                                <b>usuario</b>
-                                                            </div>
-                                                            <div>
-                                                                
-                                                            </div>
-                                                        </li>
-                                                        <li>
-                                                            <div>
-                                                                <b>ci</b>
-                                                            </div>
-                                                            <div>
-                                                                
-                                                            </div>
-                                                        </li>
-                                                        <li>
-                                                            <div>
-                                                                <b>nombres</b>
-                                                            </div>
-                                                            <div>
-                                                                
-                                                            </div>
-                                                        </li>
-                                                        <li>
-                                                            <div>
-                                                                <b>apellidos</b>
-                                                            </div>
-                                                            <div>
-                                                                
-                                                            </div>
-                                                        </li>
-                                                        <li>
-                                                            <div>
-                                                                <b>fecha_nacimiento</b>
-                                                            </div>
-                                                            <div>
-                                                                
-                                                            </div>
-                                                        </li>
-                                                        <li>
-                                                            <div>
-                                                                <b>isactive</b>
-                                                            </div>
-                                                            <div>
-                                                                <p>* </p>
-            
-                                                            </div>
-                                                        </li>
-                                                </ul>
-                                        </div>
-                                </td>
-                            </tr>
                         </tbody>
                     </table>
             </section>
@@ -582,6 +514,21 @@
                         <tbody>
                             <tr>
                                 <td class="col-md-4">
+                                    <b> sexo</b>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="col-md-4">
+                                    <code>sexo:     <code>string</code>
+            </bcode>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <table class="table table-sm table-bordered">
+                        <tbody>
+                            <tr>
+                                <td class="col-md-4">
                                     <b> usuario</b>
                                 </td>
                             </tr>
@@ -598,23 +545,13 @@
     <div class="tab-pane fade tab-source-code" id="source">
         <pre><code class="hljs javascript">export class Estudiante {
 
-  /**
-   * Creates an instance of Estudiante.
-   * @param {string} id
-   * @param {string} usuario
-   * @param {string} ci
-   * @param {string} nombres
-   * @param {string} apellidos
-   * @param {string} fecha_nacimiento
-   * @param {boolean} [isactive&#x3D;false]
-   * @memberof Estudiante
-   */
   constructor(
     public id: string,
     public usuario: string,
     public ci: string,
     public nombres: string,
     public apellidos: string,
+    public sexo: string,
     public fecha_nacimiento: string,
     public isactive: boolean &#x3D; false
   ) { }

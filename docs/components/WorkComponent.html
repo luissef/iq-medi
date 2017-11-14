@@ -816,6 +816,7 @@ export class WorkComponent implements OnInit {
       ci: [&#x27;&#x27;, Validators.required],
       nombres: [&#x27;&#x27;, Validators.required],
       apellidos: [&#x27;&#x27;, Validators.required],
+      sexo: [&#x27;&#x27;, Validators.required],
       fechanacimiento: [&#x27;&#x27;, Validators.required]
     })
   }
@@ -832,6 +833,7 @@ export class WorkComponent implements OnInit {
       this.formRegistrarEstudiante.value.ci,
       this.formRegistrarEstudiante.value.nombres,
       this.formRegistrarEstudiante.value.apellidos,
+      this.formRegistrarEstudiante.value.sexo,
       this.formRegistrarEstudiante.value.fechanacimiento,
       true
     );
