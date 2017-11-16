@@ -19,6 +19,8 @@ import { AngularFireDatabaseModule } from 'angularfire2/database';
 
 import { APP_BASE_HREF } from '@angular/common';
 
+import {ToolTipModule} from 'angular2-tooltip'
+
 export const firebaseConfig = {
   apiKey: 'AIzaSyDz6Z7GWHd3qtjH19l_q3DR63daZrIihIY',
   authDomain: 'iq-medi.firebaseapp.com',
@@ -44,6 +46,7 @@ export const firebaseConfig = {
     FormsModule,
     ReactiveFormsModule,
     AngularFireDatabaseModule,
+    ToolTipModule,
     AngularFireModule.initializeApp(firebaseConfig)
   ],
   providers: [AngularFireAuth, AuthService, AppService, { provide: APP_BASE_HREF, useValue: '/' }],

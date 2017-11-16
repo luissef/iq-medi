@@ -9,6 +9,8 @@ import { Authguard } from '../home/auth.guard';
 import { EstudianteComponent } from './estudiante/estudiante.component';
 import { SaludoComponent } from './saludo/saludo.component';
 
+import {ToolTipModule} from 'angular2-tooltip'
+
 /**
  *
  * @export
@@ -22,6 +24,7 @@ import { SaludoComponent } from './saludo/saludo.component';
   ],
   imports: [
     CommonModule,
+    ToolTipModule,
     ReactiveFormsModule,
     HttpModule,
     WorkRoutingModule

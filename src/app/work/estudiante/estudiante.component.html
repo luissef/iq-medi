@@ -396,24 +396,40 @@
         <ul class="list-group" *ngFor="let preg of pregunta">
           <li class="list-group-item list-group-item-warning" *ngIf="preg.opcional ? true : false"><i class="fa fa-info-circle" aria-hidden="true">&nbsp;<b>Pregunta Opcional&nbsp;</b></i>Puede ir directamente al resumen de resultados para calificar el test.</li>
           <li class="list-group-item active"><i class="fa fa-question-circle-o" aria-hidden="true">&nbsp;<b>item:&nbsp;</b></i>{{preg.pregunta}}</li>
-          <li class="list-group-item list-group-item-action"><i class="fa fa-info-circle" aria-hidden="true">&nbsp;<b>Consigna:&nbsp;</b></i>
-            <div style="width: 100%" innerHtml="{{preg.aplicacion}}"></div>
-            <img *ngIf="(test.$key==='-KqMrJZ-UEASUXSbu-n8' && numero_pregunta===12)? true : false" [src]="preguntazazzo12" style="width: 100%; max-width: 200px">
-            <img *ngIf="(test.$key==='-KqMrJZ-UEASUXSbu-n8' && numero_pregunta===46)? true : false" [src]="preguntazazzo46" style="width: 100%; max-width: 400px">
+          <li class="list-group-item list-group-item-action" data-toggle="collapse" data-target="#consigna" aria-expanded="true" aria-controls="consigna"><i class="fa fa-info-circle" aria-hidden="true">&nbsp;<b>Consigna:&nbsp;</b></i><i class="fa fa-hand-o-up" aria-hidden="true">&nbsp;&nbsp;&nbsp;<b>(Clic para más información)</b></i>
+            <div class="collapse" id="consigna" style="width: 100%">
+              <div class="card card-block">
+                  <div style="width: 100%" innerHtml="{{preg.aplicacion}}"></div>
+                  <img *ngIf="(test.$key==='-KqMrJZ-UEASUXSbu-n8' && numero_pregunta===12)? true : false" [src]="preguntazazzo12" style="width: 100%; max-width: 200px">
+                  <img *ngIf="(test.$key==='-KqMrJZ-UEASUXSbu-n8' && numero_pregunta===46)? true : false" [src]="preguntazazzo46" style="width: 100%; max-width: 400px">
+              </div>
+            </div>
           </li>
-          <li class="list-group-item list-group-item-action"><i class="fa fa-info-circle" aria-hidden="true">&nbsp;<b>Información adicional:&nbsp;</b></i>
-            <div style="width: 100%" innerHtml="{{preg.auxpregunta}}"></div>
+          <li class="list-group-item list-group-item-action" data-toggle="collapse" data-target="#adicional" aria-expanded="false" aria-controls="adicional"><i class="fa fa-info-circle" aria-hidden="true">&nbsp;<b>Información adicional:&nbsp;</b></i><i class="fa fa-hand-o-up" aria-hidden="true">&nbsp;&nbsp;&nbsp;<b>(Clic para más información)</b></i>
+            <div class="collapse" id="adicional" style="width: 100%">
+              <div class="card card-block">
+                  <div style="width: 100%" innerHtml="{{preg.auxpregunta}}"></div>
+              </div>
+            </div>
           </li>
-          <li class="list-group-item list-group-item-action"><i class="fa fa-info-circle" aria-hidden="true">&nbsp;<b>Apreciación de la respuesta:&nbsp;</b></i>
-            <div style="width: 100%" innerHtml="{{preg.apreciacion}}"></div>
-            <img *ngIf="(test.$key==='-KqMrJZ-UEASUXSbu-n8' && numero_pregunta===37)? true : false" [src]="preguntazazzo37" style="width: 100%; max-width: 300px">
-            <img *ngIf="(test.$key==='-KqMrJZ-UEASUXSbu-n8' && numero_pregunta===42)? true : false" [src]="preguntazazzo42" style="width: 100%; max-width: 300px">
-            <img *ngIf="(test.$key==='-KqMrJZ-UEASUXSbu-n8' && numero_pregunta===57)? true : false" [src]="preguntazazzo37" style="width: 100%; max-width: 300px">
+          <li class="list-group-item list-group-item-action" data-toggle="collapse" data-target="#apreciacion" aria-expanded="false" aria-controls="apreciacion"><i class="fa fa-info-circle" aria-hidden="true">&nbsp;<b>Apreciación de la respuesta:&nbsp;</b></i><i class="fa fa-hand-o-up" aria-hidden="true">&nbsp;&nbsp;&nbsp;<b>(Clic para más información)</b></i>
+            <div class="collapse" id="apreciacion" style="width: 100%">
+              <div class="card card-block">
+                <div style="width: 100%" innerHtml="{{preg.apreciacion}}"></div>
+                <img *ngIf="(test.$key==='-KqMrJZ-UEASUXSbu-n8' && numero_pregunta===37)? true : false" [src]="preguntazazzo37" style="width: 100%; max-width: 300px">
+                <img *ngIf="(test.$key==='-KqMrJZ-UEASUXSbu-n8' && numero_pregunta===42)? true : false" [src]="preguntazazzo42" style="width: 100%; max-width: 300px">
+                <img *ngIf="(test.$key==='-KqMrJZ-UEASUXSbu-n8' && numero_pregunta===57)? true : false" [src]="preguntazazzo37" style="width: 100%; max-width: 300px">
+              </div>
+            </div>
           </li>
-          <li class="list-group-item list-group-item-action"><i class="fa fa-info-circle" aria-hidden="true">&nbsp;<b>Criterios de calificación:&nbsp;</b></i>
-            <div style="width: 100%" innerHtml="{{preg.criterios}}"></div>
-            <img *ngIf="(test.$key==='-KqMrJZ-UEASUXSbu-n8' && numero_pregunta===14)? true : false" [src]="preguntazazzo14" style="width: 100%; max-width: 300px">
-            <img *ngIf="(test.$key==='-KqMrJZ-UEASUXSbu-n8' && numero_pregunta===23)? true : false" [src]="preguntazazzo23" style="width: 100%; max-width: 300px">
+          <li class="list-group-item list-group-item-action" data-toggle="collapse" data-target="#criterio" aria-expanded="false" aria-controls="criterio"><i class="fa fa-info-circle" aria-hidden="true">&nbsp;<b>Criterios de calificación:&nbsp;</b></i><i class="fa fa-hand-o-up" aria-hidden="true">&nbsp;&nbsp;&nbsp;<b>(Clic para más información)</b></i>
+            <div class="collapse" id="criterio" style="width: 100%">
+              <div class="card card-block">
+                <div style="width: 100%" innerHtml="{{preg.criterios}}"></div>
+                <img *ngIf="(test.$key==='-KqMrJZ-UEASUXSbu-n8' && numero_pregunta===14)? true : false" [src]="preguntazazzo14" style="width: 100%; max-width: 300px">
+                <img *ngIf="(test.$key==='-KqMrJZ-UEASUXSbu-n8' && numero_pregunta===23)? true : false" [src]="preguntazazzo23" style="width: 100%; max-width: 300px">
+              </div>
+            </div>
           </li>
           <li class="list-group-item active"><i class="fa fa-clock-o" aria-hidden="true">&nbsp;<b>Cronometro:&nbsp;</b></i> </li>
           <li class="list-group-item list-group-item-action">
@@ -440,7 +456,7 @@
         </ul>
         <div style="width: 100%;margin: 0 auto;">
           <button type="button" *ngIf="!(calificar || numero_pregunta==0)" class="btn btn-success btn-block" (click)="start()">
-            <i class="fa fa-clock-o" aria-hidden="true">&nbsp;<b>Iniciar Tiempo</b></i>
+            <i class="fa fa-clock-o" aria-hidden="true">&nbsp;<b>Iniciar Cronometro</b></i>
           </button>
         </div>
         <h5 *ngIf="((calificar && numero_pregunta==0) && !resutadofinal)">Historial de Respuestas</h5>
@@ -606,8 +622,3 @@
       </div>
     </div>
   </div>
-<script>
-  $(function () {
-    $('[data-toggle="popover"]').popover()
-  })
-</script>
