@@ -24,9 +24,56 @@
         </a>
       </div>
     </div>
+    <div class="input-group-btn">
+      <button type="button" class="btn btn-outline-success btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <i class="fa fa-eye" aria-hidden="true">&nbsp;<b>Modo de Vista</b></i>
+      </button>
+      <div class="dropdown-menu dropdown-menu-right">
+        <a class="dropdown-item" (click)="cambiarvista('tabla')">
+          <i class="fa fa-file-text" aria-hidden="true">&nbsp;<b>Tabla</b></i>
+        </a>
+        <div role="separator" class="dropdown-divider"></div>
+        <a class="dropdown-item" (click)="cambiarvista('tarjeta')">
+          <i class="fa fa-file-text" aria-hidden="true">&nbsp;<b>Tarjetas</b></i>
+        </a>
+      </div>
+    </div>
   </div>
 </form>
-<div style="height:350px;overflow-y: scroll;">
+
+<div *ngIf="tarjeta" style="height:350px;overflow-y: scroll;">
+  <div class="row">
+    <div class="col-4" *ngFor="let estucard of estudiantes">
+      <div class="card">
+        <div class="card-block">
+          <div style="width: 100%;text-align: center">
+            <i class="fa fa-user fa-3x" aria-hidden="true"></i>
+          </div>
+          <h4 class="card-title">{{estucard.nombres}}&nbsp;{{estucard.apellidos}}</h4>
+          <p class="card-text">
+            <b>Cédula de Identificación:&nbsp;</b>{{estucard.ci}}<br>
+            <b>Mental:&nbsp;</b>{{estucard.edadmental? mesesanios(estucard.edadmental) : ''}}<br>
+            <b>CI Evaluado:&nbsp;</b>{{estucard.cicalculado}}<br>
+            <b>Nivel de ACG:&nbsp;</b>{{estucard.nivelcognitivo}}<br>
+            <b>Sexo:&nbsp;</b>{{estucard.sexo}}<br>
+            <b>Fecha de Nacimiento:&nbsp;</b>{{estucard.fecha_nacimiento}}
+          </p>
+          <button type="button" class="btn btn-outline-success btn-sm" data-toggle="modal" data-target="#historialTestModal" (click)="setEvalEstudiante(estucard)">
+            <i class="fa fa-list-ol" aria-hidden="true">&nbsp;<b>Evaluar</b></i>
+          </button>
+          <button type="button" class="btn btn-outline-success btn-sm" data-toggle="modal" data-target="#detalleEstudianteModel" (click)="setUpdEstudiante(estucard)">
+            <i class="fa fa-pencil-square-o" aria-hidden="true">&nbsp;<b>Actualizar</b></i>
+          </button>
+          <button type="button" class="btn btn-outline-warning btn-sm" (click)="setDelEstudiante(estucard)">
+            <i class="fa fa-trash-o" aria-hidden="true">&nbsp;<b>Eliminar</b></i>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="tabla"  style="height:350px;overflow-y: scroll;">
   <table class="table table-bordered table-sm table-hover">
       <thead>
         <tr>
@@ -64,7 +111,7 @@
           <td>{{estudiante.ci}}</td>
           <td>{{estudiante.nombres}}</td>
           <td>{{estudiante.apellidos}}</td>
-          <td>{{estudiante.edadmental? mesesanios(estudiante.edadmental) : ''}} </td>
+          <td>{{estudiante.edadmental? mesesanios(estudiante.edadmental) : ''}}</td>
           <td>{{estudiante.cicalculado}}</td>
           <td>{{estudiante.nivelcognitivo}}</td>
           <td>
@@ -90,7 +137,6 @@
 <i class="fa fa-info-circle" aria-hidden="true">&nbsp;(CI - Coeficiente Intelectual)</i>
 <br>
 <i class="fa fa-info-circle" aria-hidden="true">&nbsp;(ACG - Aptitud Cognitiva General)</i>
-
 <div class="modal fade" id="detalleEstudianteModel" tabindex="-1" data-keyboard="false" data-backdrop="static" role="dialog" aria-labelledby="detalleEstudianteModelLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <form novalidate [formGroup]="formDetalleEstudiante">
@@ -113,11 +159,14 @@
               <br>
               <div class="input-group">
               <div class="input-group-addon"><i class="fa fa-file-text" aria-hidden="true">&nbsp;<b>Cédula de Identificación</b></i></div>
-                <input type="number" class="form-control" id="ci" placeholder="Cédula de Identificación" formControlName="ci">
+                <input type="number" maxlength="10" class="form-control" id="ci" placeholder="Cédula de Identificación" formControlName="ci">
               </div>
               <div *ngIf="formDetalleEstudiante.controls.ci.errors && formDetalleEstudiante.controls.ci.touched">
                 <div *ngIf="formDetalleEstudiante.controls.ci.errors.required" class="alert alert-danger">
                   El campo es requerido
+                </div>
+                <div *ngIf="formDetalleEstudiante.controls.ci.errors.maxlength" class="alert alert-danger">
+                  Máximo 10 números
                 </div>
               </div>
               <br>
@@ -393,9 +442,34 @@
           </div>
           <hr>
         </div>
+        <div *ngIf="loadingpreg"  id="loadingpreg">
+          <style>
+            .loader {
+              border: 35px solid #f3f3f3;
+              border-radius: 50%;
+              border-top: 35px solid #3498db;
+              width: 240px;
+              height: 240px;
+              -webkit-animation: spin 5s linear infinite;
+              animation: spin 7s linear infinite;
+              margin: 0 auto;
+            }
+
+            @-webkit-keyframes spin {
+              0% { -webkit-transform: rotate(0deg); }
+              100% { -webkit-transform: rotate(360deg); }
+            }
+
+            @keyframes spin {
+              0% { transform: rotate(0deg); }
+              100% { transform: rotate(360deg); }
+            }
+          </style>
+          <div class="loader"></div>
+        </div>
         <ul class="list-group" *ngFor="let preg of pregunta">
           <li class="list-group-item list-group-item-warning" *ngIf="preg.opcional ? true : false"><i class="fa fa-info-circle" aria-hidden="true">&nbsp;<b>Pregunta Opcional&nbsp;</b></i>Puede ir directamente al resumen de resultados para calificar el test.</li>
-          <li class="list-group-item active"><i class="fa fa-question-circle-o" aria-hidden="true">&nbsp;<b>item:&nbsp;</b></i>{{preg.pregunta}}</li>
+          <li class="list-group-item active"><i class="fa fa-question-circle-o" aria-hidden="true"><b>&nbsp;Pregunta&nbsp;{{numero_pregunta!==0?numero_pregunta:''}}&nbsp;-&nbsp;</b></i>{{preg.pregunta}}</li>
           <li class="list-group-item list-group-item-action" data-toggle="collapse" data-target="#consigna" aria-expanded="true" aria-controls="consigna"><i class="fa fa-info-circle" aria-hidden="true">&nbsp;<b>Consigna:&nbsp;</b></i><i class="fa fa-hand-o-up" aria-hidden="true">&nbsp;&nbsp;&nbsp;<b>(Clic para más información)</b></i>
             <div class="collapse" id="consigna" style="width: 100%">
               <div class="card card-block">
@@ -405,14 +479,14 @@
               </div>
             </div>
           </li>
-          <li class="list-group-item list-group-item-action" data-toggle="collapse" data-target="#adicional" aria-expanded="false" aria-controls="adicional"><i class="fa fa-info-circle" aria-hidden="true">&nbsp;<b>Información adicional:&nbsp;</b></i><i class="fa fa-hand-o-up" aria-hidden="true">&nbsp;&nbsp;&nbsp;<b>(Clic para más información)</b></i>
+          <li *ngIf="verificarValor(preg.auxpregunta)" class="list-group-item list-group-item-action" data-toggle="collapse" data-target="#adicional" aria-expanded="false" aria-controls="adicional"><i class="fa fa-info-circle" aria-hidden="true">&nbsp;<b>Información adicional:&nbsp;</b></i><i class="fa fa-hand-o-up" aria-hidden="true">&nbsp;&nbsp;&nbsp;<b>(Clic para más información)</b></i>
             <div class="collapse" id="adicional" style="width: 100%">
               <div class="card card-block">
                   <div style="width: 100%" innerHtml="{{preg.auxpregunta}}"></div>
               </div>
             </div>
           </li>
-          <li class="list-group-item list-group-item-action" data-toggle="collapse" data-target="#apreciacion" aria-expanded="false" aria-controls="apreciacion"><i class="fa fa-info-circle" aria-hidden="true">&nbsp;<b>Apreciación de la respuesta:&nbsp;</b></i><i class="fa fa-hand-o-up" aria-hidden="true">&nbsp;&nbsp;&nbsp;<b>(Clic para más información)</b></i>
+          <li *ngIf="verificarValor(preg.apreciacion)" class="list-group-item list-group-item-action" data-toggle="collapse" data-target="#apreciacion" aria-expanded="false" aria-controls="apreciacion"><i class="fa fa-info-circle" aria-hidden="true">&nbsp;<b>Apreciación de la respuesta:&nbsp;</b></i><i class="fa fa-hand-o-up" aria-hidden="true">&nbsp;&nbsp;&nbsp;<b>(Clic para más información)</b></i>
             <div class="collapse" id="apreciacion" style="width: 100%">
               <div class="card card-block">
                 <div style="width: 100%" innerHtml="{{preg.apreciacion}}"></div>
@@ -422,7 +496,7 @@
               </div>
             </div>
           </li>
-          <li class="list-group-item list-group-item-action" data-toggle="collapse" data-target="#criterio" aria-expanded="false" aria-controls="criterio"><i class="fa fa-info-circle" aria-hidden="true">&nbsp;<b>Criterios de calificación:&nbsp;</b></i><i class="fa fa-hand-o-up" aria-hidden="true">&nbsp;&nbsp;&nbsp;<b>(Clic para más información)</b></i>
+          <li *ngIf="verificarValor(preg.criterios)" class="list-group-item list-group-item-action" data-toggle="collapse" data-target="#criterio" aria-expanded="false" aria-controls="criterio"><i class="fa fa-info-circle" aria-hidden="true">&nbsp;<b>Criterios de calificación:&nbsp;</b></i><i class="fa fa-hand-o-up" aria-hidden="true">&nbsp;&nbsp;&nbsp;<b>(Clic para más información)</b></i>
             <div class="collapse" id="criterio" style="width: 100%">
               <div class="card card-block">
                 <div style="width: 100%" innerHtml="{{preg.criterios}}"></div>
@@ -436,7 +510,7 @@
             <p>horas:&nbsp;{{hora}}&nbsp;minutos:&nbsp;{{minuto}}&nbsp;segundos:&nbsp;{{segundo}}</p>
           </li>
           <li class="list-group-item active">
-            <i class="fa fa-check-circle-o" aria-hidden="true">&nbsp;<b>Puntaje:&nbsp;</b></i>
+            <i class="fa fa-check-circle-o" aria-hidden="true">&nbsp;<b>Puntuar Respuesta:&nbsp;</b></i>
           </li>
           <select class="form-control" id="respuesta" id="respuesta" formControlName="respuesta" (change)="wait()">
             <option value="" selected disabled>Selecciones el Puntaje</option>

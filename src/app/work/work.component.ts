@@ -51,7 +51,7 @@ export class WorkComponent implements OnInit {
    */
   crearComponenteRegistrarEstuadiante() {
     this.formRegistrarEstudiante = this.fbRegistrarEstudiante.group({
-      ci: ['', Validators.required],
+      ci: ['', Validators.compose([Validators.required, Validators.maxLength(10)])],
       nombres: ['', Validators.required],
       apellidos: ['', Validators.required],
       sexo: ['', Validators.required],

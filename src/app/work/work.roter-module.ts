@@ -15,7 +15,8 @@ const homeRoutes: Routes = [
   children : [
     { path: '', redirectTo: 'saludo', pathMatch: 'full' },
     { path: 'saludo', component: SaludoComponent },
-    { path: 'persona', component: EstudianteComponent }
+    { path: 'persona', component: EstudianteComponent },
+    { path: 'saludo/persona', component: EstudianteComponent }
   ]}
 ]
 

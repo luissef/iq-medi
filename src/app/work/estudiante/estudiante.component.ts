@@ -85,9 +85,12 @@ export class EstudianteComponent implements OnInit {
   intTiempo: any;
 
   calificar: boolean;
+  loadingpreg = false;
   testcompleto = false;
   preguntaopcional = false;
   resutadofinal = false;
+  tabla = true;
+  tarjeta = false;
 
   @ViewChild('btncerrardetalleestudiante') btncerrardetalleestudiante: ElementRef;
   @ViewChild('btnBorrarEstudiante') btnBorrarEstudiante: ElementRef;
@@ -155,7 +158,7 @@ export class EstudianteComponent implements OnInit {
    */
   crearComponenteDetalleEstuadiante() {
     this.formDetalleEstudiante = this.fbDetalleEstudiante.group({
-      ci: ['', Validators.required],
+      ci: ['', Validators.compose([Validators.required, Validators.maxLength(10)])],
       nombres: ['', Validators.required],
       apellidos: ['', Validators.required],
       sexo: ['', Validators.required],
@@ -640,6 +643,8 @@ export class EstudianteComponent implements OnInit {
   irPregunta() {
     this.stop();
 
+    this.loadingpreg = true;
+
     if (this.numero_pregunta !== 0) {
       this.calificar = false;
     }
@@ -656,7 +661,10 @@ export class EstudianteComponent implements OnInit {
 
     if (this.subTipoSubTests) {
       this.subTipoSubTests.unsubscribe();
+      this.tipoSubTests = null;
     }
+
+    this.loadingpreg = false;
 
     if (this.numero_pregunta <= this.numeropreguntas && this.numero_pregunta > 0) {
       this.subPregunta = this.appService.getPregunta(this.test, this.numero_pregunta)
@@ -1078,5 +1086,29 @@ export class EstudianteComponent implements OnInit {
    */
   cerrarloading() {
     setTimeout(() => this.btncerrarloadingest.nativeElement.click(), 500);
+  }
+
+  /**
+   *
+   * @param {string} valor
+   * @returns
+   * @memberof EstudianteComponent
+   */
+  verificarValor(valor: string) {
+    if (valor) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  cambiarvista(modo: string) {
+    if (modo === 'tabla') {
+      this.tarjeta = false;
+      this.tabla = true;
+    }else if (modo === 'tarjeta') {
+      this.tabla = false;
+      this.tarjeta = true;
+    }
   }
 }

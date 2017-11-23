@@ -63,8 +63,8 @@ export class AppComponent {
    */
   crearComponenteLogin() {
     this.formLogin = this.fblogin.group({
-      email: ['', Validators.required],
-      contrasenia: ['', Validators.compose([
+      email: ['demo@demo.com', Validators.required],
+      contrasenia: ['demo123456', Validators.compose([
         Validators.required,
         Validators.maxLength(20)])]
     })
@@ -190,6 +190,7 @@ export class AppComponent {
    */
   limpiarLogin() {
     this.formLogin.reset();
+    this.crearComponenteLogin();
     this.cerrarloading();
   }
 
@@ -225,5 +226,13 @@ export class AppComponent {
    */
   cerrarloading() {
     setTimeout(() => this.btncerrarloading.nativeElement.click(), 500);
+  }
+
+  /**
+   *
+   * @memberof AppComponent
+   */
+  limpiarformulariologin() {
+    this.formLogin.reset();
   }
 }

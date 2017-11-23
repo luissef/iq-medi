@@ -4,7 +4,7 @@
     <div class="dropdown-menu">
       <a class="dropdown-item" href="#" data-toggle="modal" data-target="#registrarEstudianteModel"><i class="fa fa-user-plus" aria-hidden="true">&nbsp;<b>Registrar Persona</b></i></a>
       <div class="dropdown-divider"></div>
-      <a class="dropdown-item" href="#" routerLink="persona" routerLinkActive="active"><i class="fa fa-users" aria-hidden="true">&nbsp;<b>Personas</b></i><span class="sr-only">(current)</span></a>
+      <a class="dropdown-item" href="#" routerLink="persona" routerLinkActive="active"><i class="fa fa-users" aria-hidden="true">&nbsp;<b>Ver Personas</b></i><span class="sr-only">(current)</span></a>
     </div>
   </li>
 </ul>
@@ -31,11 +31,14 @@
               <br>
               <div class="input-group">
               <div class="input-group-addon"><i class="fa fa-file-text" aria-hidden="true">&nbsp;<b>Cédula de Identificación</b></i></div>
-                <input type="number" class="form-control" id="ci" placeholder="Cédula de Identificación" formControlName="ci">
+                <input type="number" maxlength="10" class="form-control" id="ci" placeholder="Cédula de Identificación" formControlName="ci">
               </div>
               <div *ngIf="formRegistrarEstudiante.controls.ci.errors && formRegistrarEstudiante.controls.ci.touched">
                 <div *ngIf="formRegistrarEstudiante.controls.ci.errors.required" class="alert alert-danger">
                   El campo es requerido
+                </div>
+                <div *ngIf="formRegistrarEstudiante.controls.ci.errors.maxlength" class="alert alert-danger">
+                  Máximo 10 números
                 </div>
               </div>
               <br>
