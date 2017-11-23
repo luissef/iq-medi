@@ -1001,6 +1001,11 @@ export class EstudianteComponent implements OnInit {
       this.tipoSubTests = null;
     }
 
+    if (this.subTestCalificado) {
+      this.subTestCalificado.unsubscribe();
+      this.testCalificado = null;
+    }
+
     this.pregunta = null;
     this.stop();
     this.cerrarloading();
